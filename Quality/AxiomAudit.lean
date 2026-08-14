@@ -4,7 +4,7 @@ Authors: Formal Mathematics Curriculum contributors
 -/
 module
 
-public import Lean.Elab.Command
+public meta import Lean.Elab.Command
 import Lean.Util.CollectAxioms
 
 open Lean Elab Command
@@ -50,8 +50,8 @@ public meta def auditModulePrefix (modulePrefix : Name) : CommandElabM Unit := d
     let origin := moduleNameForDecl env declName
     pure <| if moduleHasPrefix modulePrefix origin then acc.push declName else acc
   let names := names.qsort Name.lt
-  let mut failures := 0
-  let mut withAxioms := 0
+  let mut failures : Nat := 0
+  let mut withAxioms : Nat := 0
   for declName in names do
     let axioms ← Lean.collectAxioms declName
     if !axioms.isEmpty then
