@@ -11,7 +11,7 @@ open Lean Elab Command
 
 namespace FormalMathQuality.AxiomAudit
 
-private def moduleNameForDecl (env : Environment) (declName : Name) : Name :=
+private meta def moduleNameForDecl (env : Environment) (declName : Name) : Name :=
   match env.getModuleIdxFor? declName with
   | some modIdx =>
       match env.allImportedModuleNames[modIdx.toNat]? with
@@ -19,22 +19,22 @@ private def moduleNameForDecl (env : Environment) (declName : Name) : Name :=
       | none => env.header.mainModule
   | none => env.header.mainModule
 
-private def moduleHasPrefix (modulePrefix moduleName : Name) : Bool :=
+private meta def moduleHasPrefix (modulePrefix moduleName : Name) : Bool :=
   let p := modulePrefix.toString
   let m := moduleName.toString
   m == p || m.startsWith (p ++ ".")
 
-private def isStandardMathematicalAxiom (name : Name) : Bool :=
+private meta def isStandardMathematicalAxiom (name : Name) : Bool :=
   let s := name.toString
   s == "propext" || s == "Classical.choice" || s == "Quot.sound"
 
-private def isSorryAxiom (name : Name) : Bool :=
+private meta def isSorryAxiom (name : Name) : Bool :=
   name.toString == "sorryAx"
 
-private def isTrustCompilerAxiom (name : Name) : Bool :=
+private meta def isTrustCompilerAxiom (name : Name) : Bool :=
   name.toString == "Lean.trustCompiler"
 
-private def namesString (names : Array Name) : String :=
+private meta def namesString (names : Array Name) : String :=
   String.intercalate ", " <| names.toList.map (·.toString)
 
 /--
