@@ -4,7 +4,7 @@ Authors: Formal Mathematics Curriculum contributors
 -/
 module
 
-import Lean.Elab.Command
+public import Lean.Elab.Command
 import Lean.Util.CollectAxioms
 
 open Lean Elab Command
@@ -19,8 +19,8 @@ private def moduleNameForDecl (env : Environment) (declName : Name) : Name :=
       | none => env.header.mainModule
   | none => env.header.mainModule
 
-private def moduleHasPrefix (prefix moduleName : Name) : Bool :=
-  let p := prefix.toString
+private def moduleHasPrefix (modulePrefix moduleName : Name) : Bool :=
+  let p := modulePrefix.toString
   let m := moduleName.toString
   m == p || m.startsWith (p ++ ".")
 
@@ -76,10 +76,7 @@ public meta def auditModulePrefix (modulePrefix : Name) : CommandElabM Unit := d
   if failures > 0 then
     throwError "formal mathematics axiom audit failed"
 
-syntax (name := formalMathAxiomAudit) "#formal_math_axiom_audit " ident : command
-
-elab_rules : command
-  | `(#formal_math_axiom_audit $prefix:ident) =>
-      auditModulePrefix prefix.getId
+elab "#formal_math_axiom_audit " modulePrefix:ident : command =>
+  auditModulePrefix modulePrefix.getId
 
 end FormalMathQuality.AxiomAudit
