@@ -51,7 +51,7 @@ jobs:
           set -e
           printf '%s\n' "$output"
           test "$status" -ne 0
-          printf '%s\n' "$output" | grep -q "uses 'sorry'"
+          printf '%s\n' "$output" | grep -Fq 'declaration uses `sorry`'
 
       - name: Transitive sorryAx negative control
         shell: bash
