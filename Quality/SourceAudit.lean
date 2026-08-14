@@ -67,12 +67,12 @@ private def auditImport
     (moduleName : String) : Array Finding := Id.run do
   let pathString := normalizedPathString path
   let mut findings := #[]
-  if isProduction && pathString.startsWith "FormalMath/" && moduleName == "FormalMath" then
+  if isProduction && moduleName == "FormalMath" then
     findings := findings.push {
       severity := .error
       rule := "S002"
       path := pathString
-      detail := "production FormalMath.* modules must not import the root FormalMath umbrella"
+      detail := "production modules must not import the root FormalMath umbrella"
     }
   if isProduction && ungovernedTransitivePrefixes.any (fun prefix => hasModulePrefix prefix moduleName) then
     findings := findings.push {
