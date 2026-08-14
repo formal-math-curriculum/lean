@@ -18,6 +18,6 @@ allowNonModules = false
 [[lean_lib]]
 name = "Quality"
 roots = ["Quality"]
-globs = ["Quality.AxiomAudit"]
+globs = ["Quality.AxiomAudit", "Quality.SourceAudit"]
 requiresModuleSystem = true
 allowNonModules = false
