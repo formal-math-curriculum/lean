@@ -36,17 +36,17 @@ jobs:
 
       - name: Production module-origin axiom audit
         shell: bash
-        run: lake env lean --error=warning Quality/RunAxiomAudit.lean
+        run: lake env lean -DwarningAsError=true Quality/RunAxiomAudit.lean
 
       - name: Standard mathematical axiom positive control
         shell: bash
-        run: lake env lean --error=warning Quality/Fixtures/StandardAxiom.lean
+        run: lake env lean -DwarningAsError=true Quality/Fixtures/StandardAxiom.lean
 
       - name: Direct sorry warning negative control
         shell: bash
         run: |
           set +e
-          output=$(lake env lean --error=warning Quality/Fixtures/SorryWarning.lean 2>&1)
+          output=$(lake env lean -DwarningAsError=true Quality/Fixtures/SorryWarning.lean 2>&1)
           status=$?
           set -e
           printf '%s\n' "$output"
