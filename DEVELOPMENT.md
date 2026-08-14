@@ -1,32 +1,60 @@
 # Development environment
 
-The supported FormalMath development environment is defined by the versioned repository state. Editors and caches are conveniences over this command-line baseline.
+The supported FormalMath development environment is defined by **versioned repository state**. Editors and caches are conveniences over this command-line baseline.
 
 ## Prerequisites
 
 - Git
+- authenticated GitHub access to the private `formal-math-curriculum/lean` repository
 - [`elan`](https://github.com/leanprover/elan)
 - network access when the selected Lean toolchain or Git dependencies are not already available locally
 
 A specific editor, GitHub CLI, container runtime, or Nix environment is not required.
 
-## Fresh setup
+## Select the revision you intend to reproduce
+
+Do **not** assume that the repository's default branch already contains the environment you want to reproduce. Environment evidence is always tied to an explicit Git ref/SHA.
 
 ```sh
 git clone https://github.com/formal-math-curriculum/lean.git
 cd lean
+git fetch origin
+# Replace TARGET_REF with the branch, tag, or commit SHA you intend to reproduce.
+git checkout TARGET_REF
 git rev-parse HEAD
 git status --short --branch
+```
+
+When reproducing a reported failure, `TARGET_REF` should be the exact reported commit SHA whenever possible.
+
+### Current pre-merge bootstrap state
+
+At the time this guide was written, bootstrap PR #2 is still unmerged and the default `main` branch does **not** contain the Lean/Lake environment. To inspect the current draft implementation, select the PR branch explicitly, for example:
+
+```sh
+git fetch origin agent/bootstrap-lean-environment
+git checkout agent/bootstrap-lean-environment
+```
+
+Alternatively, check out the exact revision recorded by the current M2.5 baseline/PR evidence. After PR #2 is merged, do not automatically transfer branch verification to the new `main` SHA: first record the merged SHA and either establish implementation-file equivalence to the verified subject or rerun the applicable environment checks.
+
+## Fresh setup from the selected revision
+
+After checking out the intended ref/SHA:
+
+```sh
 cat lean-toolchain
 elan show
 lean --version
 lake --version
 lake update
-git diff --exit-code -- lean-toolchain lake-manifest.json
+git diff --exit-code -- lean-toolchain lakefile.toml lake-manifest.json
 lake build FormalMath
 ```
 
 The current baseline is Lean `4.33.0` with mathlib `v4.33.0`. The effective versions reported by `elan`, Lean, and Lake matter; the contents of `lean-toolchain` alone are not sufficient evidence if an elan override selects something else.
+
+The diff assertion is part of the reproducibility check. If `lean-toolchain`, `lakefile.toml`, or `lake-manifest.json` is intentionally modified, that modified state must be treated as the explicit subject under test rather than silently reported as the versioned baseline.
 
 `lake update` may use mathlib's precompiled cache when the toolchain matches. This is an acceleration path, not a source of semantic truth.
 
@@ -43,7 +71,7 @@ Use this when investigating cache masking or environment drift:
 ```sh
 rm -rf .lake
 MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
-git diff --exit-code -- lean-toolchain lake-manifest.json
+git diff --exit-code -- lean-toolchain lakefile.toml lake-manifest.json
 lake build FormalMath
 ```
 
@@ -94,6 +122,7 @@ Do not use this recovery sequence to erase evidence from an intentional dependen
 Include at least:
 
 ```text
+Repository: formal-math-curriculum/lean
 Git commit:
 Git branch/ref:
 Working tree status:
