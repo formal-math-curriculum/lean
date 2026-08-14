@@ -1,0 +1,91 @@
+name: MAT-177 source and API quality validation
+
+on:
+  push:
+    branches:
+      - agent/source-api-quality-checks
+
+jobs:
+  source-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install elan
+        shell: bash
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Verify environment and resolved dependency state
+        shell: bash
+        run: |
+          lean --version
+          lake --version
+          lake update
+          git diff --exit-code -- lean-toolchain lakefile.toml lake-manifest.json
+          lake exe cache get
+
+      - name: Strict production build
+        shell: bash
+        run: lake build --wfail FormalMath
+
+      - name: Build reusable Quality tooling
+        shell: bash
+        run: lake build --wfail +Quality.AxiomAudit +Quality.SourceAudit
+
+      - name: Production source/API audit
+        shell: bash
+        run: lake env lean --run Quality/RunSourceAudit.lean production
+
+      - name: Missing-header negative control
+        shell: bash
+        run: |
+          set +e
+          output=$(lake env lean --run Quality/RunSourceAudit.lean file Quality/Fixtures/SourceAudit/MissingHeader.lean 2>&1)
+          status=$?
+          set -e
+          printf '%s\n' "$output"
+          test "$status" -ne 0
+          printf '%s\n' "$output" | grep -q 'ERROR S001'
+
+      - name: Root-umbrella negative control
+        shell: bash
+        run: |
+          set +e
+          output=$(lake env lean --run Quality/RunSourceAudit.lean file Quality/Fixtures/SourceAudit/UmbrellaImport.lean 2>&1)
+          status=$?
+          set -e
+          printf '%s\n' "$output"
+          test "$status" -ne 0
+          printf '%s\n' "$output" | grep -q 'ERROR S002'
+
+      - name: Ungoverned-transitive negative control
+        shell: bash
+        run: |
+          set +e
+          output=$(lake env lean --run Quality/RunSourceAudit.lean file Quality/Fixtures/SourceAudit/TransitiveImport.lean 2>&1)
+          status=$?
+          set -e
+          printf '%s\n' "$output"
+          test "$status" -ne 0
+          printf '%s\n' "$output" | grep -q 'ERROR S003'
+
+      - name: Public-Internal negative control
+        shell: bash
+        run: |
+          set +e
+          output=$(lake env lean --run Quality/RunSourceAudit.lean file Quality/Fixtures/SourceAudit/PublicInternal.lean 2>&1)
+          status=$?
+          set -e
+          printf '%s\n' "$output"
+          test "$status" -ne 0
+          printf '%s\n' "$output" | grep -q 'ERROR S004'
+
+      - name: Broad-Mathlib advisory control
+        shell: bash
+        run: |
+          output=$(lake env lean --run Quality/RunSourceAudit.lean file Quality/Fixtures/SourceAudit/BroadMathlib.lean 2>&1)
+          printf '%s\n' "$output"
+          printf '%s\n' "$output" | grep -q 'ADVISORY A001'
+          printf '%s\n' "$output" | grep -q 'errors=0; advisories=1'
