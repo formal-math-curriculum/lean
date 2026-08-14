@@ -1,0 +1,45 @@
+name: MAT-174 onboarding remediation verification
+
+on:
+  push:
+    branches:
+      - agent/mat169-fresh-verification
+
+env:
+  SUBJECT_SHA: 7e0789fd3594370b81757d5b52bf2e9c83e7cea6
+
+jobs:
+  verify-onboarding:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone private repository with authenticated access
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git clone "https://x-access-token:${GH_TOKEN}@github.com/formal-math-curriculum/lean.git" subject
+          cd subject
+          git checkout "$SUBJECT_SHA"
+          test "$(git rev-parse HEAD)" = "$SUBJECT_SHA"
+
+      - name: Verify selected revision contains governed environment state
+        shell: bash
+        run: |
+          cd subject
+          test -f lean-toolchain
+          test -f lakefile.toml
+          test -f lake-manifest.json
+          test -f FormalMath.lean
+          test -f FormalMath/Basic.lean
+          test -f DEVELOPMENT.md
+          git diff --exit-code -- lean-toolchain lakefile.toml lake-manifest.json
+
+      - name: Verify remediation guidance is present
+        shell: bash
+        run: |
+          cd subject
+          grep -q 'authenticated GitHub access' DEVELOPMENT.md
+          grep -q 'git checkout TARGET_REF' DEVELOPMENT.md
+          grep -q 'agent/bootstrap-lean-environment' DEVELOPMENT.md
+          grep -q 'lakefile.toml lake-manifest.json' DEVELOPMENT.md
+          grep -q 'do not automatically transfer branch verification' DEVELOPMENT.md
