@@ -33,6 +33,10 @@ jobs:
           MATHLIB_NO_CACHE_ON_UPDATE: "1"
         run: lake build --wfail FormalMath
 
+      - name: Build reusable Quality audit module only
+        shell: bash
+        run: lake build --wfail +Quality.AxiomAudit
+
       - name: Production module-origin axiom audit
         shell: bash
         run: lake env lean --error=warning Quality/RunAxiomAudit.lean
