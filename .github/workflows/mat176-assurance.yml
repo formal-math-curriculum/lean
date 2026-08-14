@@ -17,20 +17,17 @@ jobs:
           curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
 
-      - name: Verify environment and resolve without mathlib cache download
+      - name: Verify environment and resolved dependency state
         shell: bash
-        env:
-          MATHLIB_NO_CACHE_ON_UPDATE: "1"
         run: |
           lean --version
           lake --version
           lake update
           git diff --exit-code -- lean-toolchain lakefile.toml lake-manifest.json
+          lake exe cache get
 
       - name: Strict production build
         shell: bash
-        env:
-          MATHLIB_NO_CACHE_ON_UPDATE: "1"
         run: lake build --wfail FormalMath
 
       - name: Build reusable Quality audit module only
