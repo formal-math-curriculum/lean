@@ -1,0 +1,41 @@
+name: MAT-168 bootstrap validation
+
+on:
+  push:
+    branches:
+      - agent/bootstrap-lean-environment
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install elan
+        shell: bash
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Verify effective toolchain
+        shell: bash
+        run: |
+          elan show
+          lean --version
+          lake --version
+
+      - name: Resolve dependencies
+        shell: bash
+        run: |
+          lake update
+          echo '---BEGIN_LAKE_MANIFEST---'
+          cat lake-manifest.json
+          echo '---END_LAKE_MANIFEST---'
+
+      - name: Get mathlib cache
+        shell: bash
+        run: lake exe cache get
+
+      - name: Build complete FormalMath library
+        shell: bash
+        run: lake build FormalMath
