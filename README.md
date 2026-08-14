@@ -13,7 +13,7 @@ The repository uses a single root Lake package with the primary Lean library `Fo
 
 ## Build
 
-Install Lean through `elan`, clone the repository, and work from the repository root.
+Use authenticated access to this private repository, clone it, and **check out the branch/ref/SHA you intend to reproduce before running environment commands**. Do not assume the default branch already contains an unmerged environment change.
 
 Verify the effective toolchain:
 
@@ -31,7 +31,7 @@ lake build FormalMath
 
 The committed `lake-manifest.json` records the resolved dependency revisions. `lake exe cache get` may be used as an optional acceleration step when available; caches are not part of the semantic source of truth.
 
-For fresh setup, cold reproduction, toolchain-drift recovery, and environment diagnostics, see [`DEVELOPMENT.md`](DEVELOPMENT.md).
+For exact revision selection, fresh setup, cold reproduction, toolchain-drift recovery, and environment diagnostics, see [`DEVELOPMENT.md`](DEVELOPMENT.md).
 
 ## Source layout
 
