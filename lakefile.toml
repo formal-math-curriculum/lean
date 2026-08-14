@@ -14,3 +14,10 @@ name = "FormalMath"
 globs = ["FormalMath.*"]
 requiresModuleSystem = true
 allowNonModules = false
+
+[[lean_lib]]
+name = "Quality"
+roots = ["Quality"]
+globs = ["Quality.AxiomAudit"]
+requiresModuleSystem = true
+allowNonModules = false
