@@ -7,6 +7,7 @@ module
 import Traceability.IntegrityV1
 import Traceability.NavigationV1
 import Traceability.Order
+import Traceability.ProvenanceV2
 import Traceability.RegistryV1
 import Traceability.Reservations
 import Traceability.Resolve
@@ -14,7 +15,7 @@ import Traceability.RoundTrip
 import Traceability.Views
 
 /-!
-Command-line entry point for governed M2.8 traceability tooling.
+Command-line entry point for governed traceability tooling.
 
 Authored FART/FLOC/FLINK metadata remains authoritative. `validate` is intentionally the strongest
 production acceptance path: after physical/schema checks it reconciles curriculum authority and
@@ -41,7 +42,7 @@ private unsafe def validateRoot (root : FilePath) : IO RegistryData := do
   return data
 
 private def usage : String :=
-  "usage: lake exe traceability <validate|generate|roundtrip|query curriculum <candidate-id>|query artifact <FART-id>|query declaration <module-file-or-declaration>> [--root <repository-root>]"
+  "usage: lake exe traceability <validate|generate|freshness|roundtrip|query curriculum <candidate-id>|query artifact <FART-id>|query declaration <module-file-or-declaration>> [--root <repository-root>]"
 
 public unsafe def main (args : List String) : IO Unit := do
   match args with
@@ -52,8 +53,12 @@ public unsafe def main (args : List String) : IO Unit := do
   | "generate" :: rest =>
       let root ← IO.ofExcept <| parseRoot rest
       let _ ← validateRoot root
-      let _ ← generateViews root
-      return
+      let outDir ← generateViews root
+      let _ ← writeProvenanceV2 root outDir
+      verifyProvenanceV2 root
+  | "freshness" :: rest =>
+      let root ← IO.ofExcept <| parseRoot rest
+      verifyProvenanceV2 root
   | "roundtrip" :: rest =>
       let root ← IO.ofExcept <| parseRoot rest
       let data ← validateRoot root
