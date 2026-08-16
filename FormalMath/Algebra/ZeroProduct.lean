@@ -17,7 +17,7 @@ learner-readiness or curriculum-prerequisite authority.
 namespace FormalMath.Algebra
 
 /-- An integer factored product is zero exactly at either of its two displayed roots. -/
-theorem factoredProduct_eq_zero_iff (a b x : ℤ) :
+public theorem factoredProduct_eq_zero_iff (a b x : ℤ) :
     factoredProduct a b x = 0 ↔ x = a ∨ x = b := by
   constructor
   · intro h
