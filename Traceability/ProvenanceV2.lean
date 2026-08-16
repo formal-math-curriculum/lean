@@ -144,9 +144,9 @@ public def verifyProvenanceV2 (root : FilePath := ".") : IO Unit := do
   let recordedLock ← IO.ofExcept <| stringField "provenance-v2" provenance "curriculum_lock_input_fingerprint"
   let recordedAuthored ← IO.ofExcept <| stringField "provenance-v2" provenance "authoritative_input_fingerprint"
   if recordedRegistry != currentRegistry then
-    provenanceFailIO "traceability:freshness:error:registry-inputs-changed"
+    provenanceFailIO "traceability:freshness:error:registry-inputs-changed\ntraceability:freshness:error:authoritative-inputs-changed"
   if recordedLock != currentLock then
-    provenanceFailIO "traceability:freshness:error:curriculum-lock-inputs-changed"
+    provenanceFailIO "traceability:freshness:error:curriculum-lock-inputs-changed\ntraceability:freshness:error:authoritative-inputs-changed"
   if recordedAuthored != currentAuthored then
     provenanceFailIO "traceability:freshness:error:authoritative-inputs-changed"
 
