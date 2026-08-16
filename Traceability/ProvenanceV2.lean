@@ -38,11 +38,11 @@ private def familyFilesV2 (root : FilePath) (family : String) : IO (List FilePat
 
 private def familyRelativePathV2 (root : FilePath) (family : String) (path : FilePath) : IO String := do
   let dir := root / "metadata" / "formal-artifacts" / family
-  let prefix := dir.toString ++ "/"
+  let pathPrefix := dir.toString ++ "/"
   let text := path.toString
-  if !text.startsWith prefix then
+  if !text.startsWith pathPrefix then
     provenanceFailIO s!"traceability:provenance:error:family-path-outside-root:{family}:{text}"
-  return String.ofList (text.toList.drop prefix.length)
+  return String.ofList (text.toList.drop pathPrefix.length)
 
 private def familyFingerprintV2 (root : FilePath) (family : String) : IO String := do
   let paths ← familyFilesV2 root family
