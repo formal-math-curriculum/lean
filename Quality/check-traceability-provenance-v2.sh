@@ -39,8 +39,18 @@ make_root "$root"
 printf 'traceability-provenance-v2:start:alternate-root-generate\n'
 lake exe traceability generate --root "$root" >/dev/null
 sha="$(git rev-parse HEAD)"
-provenance="$root/.lake/build/traceability/$sha/provenance-v2.json"
+out="$root/.lake/build/traceability/$sha"
+legacy="$out/manifest.json"
+provenance="$out/provenance-v2.json"
+[[ -f "$legacy" ]]
 [[ -f "$provenance" ]]
+# Legacy compatibility output must no longer overclaim the alternate root as the generator checkout.
+grep -Fq '"repository":"not_applicable"' "$legacy"
+grep -Fq '"subject_revision":"not_applicable"' "$legacy"
+grep -Fq '"subject_context":"alternate_root_content_snapshot"' "$legacy"
+grep -Fq '"deterministic_source_time":"not_applicable"' "$legacy"
+grep -Fq "\"generator_revision\":\"$sha\"" "$legacy"
+# V2 provides the explicit content-bound successor contract.
 grep -Fq '"subject_kind":"alternate_root_content_snapshot"' "$provenance"
 grep -Fq '"subject_revision":"not_applicable"' "$provenance"
 grep -Fq '"freshness_contract":"content_bound"' "$provenance"
@@ -51,6 +61,7 @@ if grep -Fq "$WORK" "$provenance"; then
 fi
 lake exe traceability freshness --root "$root" >/dev/null
 printf 'traceability-provenance-v2:pass:alternate-root-no-revision-overclaim\n'
+printf 'traceability-provenance-v2:pass:legacy-alternate-root-no-revision-overclaim\n'
 printf 'traceability-provenance-v2:pass:path-independent-manifest-reference\n'
 
 # The sidecar contract itself is validated, not merely its combined digest.
