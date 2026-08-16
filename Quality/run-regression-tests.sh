@@ -96,6 +96,7 @@ run_pass traceability-generated-controls bash Quality/check-traceability-generat
 run_pass traceability-remediation-controls bash Quality/check-traceability-remediation-controls.sh
 run_pass traceability-provenance-v2-controls bash Quality/check-traceability-provenance-v2.sh
 run_pass traceability-reader-v2-controls bash Quality/check-traceability-reader-v2.sh
+run_pass m29-audit-remediation-controls bash Quality/check-m29-remediation-controls.sh
 run_pass source-positive-lean lake env lean -DwarningAsError=true Quality/Fixtures/SourceQuality/Good.lean
 run_pass source-positive-policy bash Quality/check-source-quality.sh fixture Quality/Fixtures/SourceQuality/Good.lean
 run_pass report-identity-collision-control bash Quality/check-report-identity.sh
