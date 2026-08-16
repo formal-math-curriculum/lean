@@ -4,8 +4,7 @@ Authors: Formal Mathematics Curriculum contributors
 -/
 module
 
-import Traceability.Allocation
-import Traceability.Validate
+import Traceability.Registry
 
 /-!
 Command-line entry point for governed M2.8 traceability tooling.
@@ -27,8 +26,7 @@ def main (args : List String) : IO Unit := do
   match args with
   | "validate" :: rest =>
       let root ← IO.ofExcept <| parseRoot rest
-      validateAllocationRoot root
-      validateRoot root
+      validateRegistryRoot root
   | _ =>
       throw <| IO.userError "usage: lake exe traceability validate [--root <repository-root>]"
 
