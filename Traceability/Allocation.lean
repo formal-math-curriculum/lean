@@ -73,7 +73,9 @@ private def validateShard (path : FilePath) (prefix : String) (next : Nat) : IO 
       failIO s!"traceability:error:allocation:issued-id-not-below-next:{id}:next={next}"
     match previous with
     | some prior =>
-        if !(prior < id) then
+        if prior == id then
+          failIO s!"traceability:error:registry:duplicate-id:{id}"
+        else if !(prior < id) then
           failIO s!"traceability:error:allocation:noncanonical-record-order:{path}:{prior}:{id}"
     | none => pure ()
     previous := some id
