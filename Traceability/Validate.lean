@@ -37,20 +37,20 @@ private def requireExactKeys (context : String) (j : Json) (allowed : List Strin
       failE context s!"missing-field:{key}"
 
 private def strField (context : String) (j : Json) (key : String) : Except String String := do
-  let value ← j.getObjVal? key |>.mapError fun e => s!"{context}:{key}:{e}"
+  let value ← (j.getObjVal? key).mapError fun e => s!"{context}:{key}:{e}"
   value.getStr? |>.mapError fun e => s!"{context}:{key}:{e}"
 
 private def natField (context : String) (j : Json) (key : String) : Except String Nat := do
-  let value ← j.getObjVal? key |>.mapError fun e => s!"{context}:{key}:{e}"
+  let value ← (j.getObjVal? key).mapError fun e => s!"{context}:{key}:{e}"
   value.getNat? |>.mapError fun e => s!"{context}:{key}:{e}"
 
 private def objField (context : String) (j : Json) (key : String) : Except String Json := do
-  let value ← j.getObjVal? key |>.mapError fun e => s!"{context}:{key}:{e}"
+  let value ← (j.getObjVal? key).mapError fun e => s!"{context}:{key}:{e}"
   let _ ← value.getObj? |>.mapError fun e => s!"{context}:{key}:{e}"
   return value
 
 private def arrField (context : String) (j : Json) (key : String) : Except String (Array Json) := do
-  let value ← j.getObjVal? key |>.mapError fun e => s!"{context}:{key}:{e}"
+  let value ← (j.getObjVal? key).mapError fun e => s!"{context}:{key}:{e}"
   value.getArr? |>.mapError fun e => s!"{context}:{key}:{e}"
 
 private def strArrayField (context : String) (j : Json) (key : String) : Except String (List String) := do
@@ -67,15 +67,23 @@ private def requireNonempty (context key value : String) : Except String Unit :=
 private def requireEnum (context key value : String) (allowed : List String) : Except String Unit :=
   if allowed.contains value then pure () else failE context s!"invalid-enum:{key}:{value}"
 
+private def firstDuplicate : List String → Option String
+  | [] => none
+  | value :: rest => if rest.contains value then some value else firstDuplicate rest
+
+private def strictlySorted : List String → Bool
+  | a :: b :: rest => decide (a < b) && strictlySorted (b :: rest)
+  | _ => true
+
+private def requireUnique (context key : String) (values : List String) : Except String Unit :=
+  match firstDuplicate values with
+  | some value => failE context s!"duplicate-set-value:{key}:{value}"
+  | none => pure ()
+
 private def requireSortedUnique (context key : String) (values : List String) : Except String Unit := do
-  let sorted := values.mergeSort (fun a b => a < b)
-  if sorted != values then
+  requireUnique context key values
+  if !strictlySorted values then
     failE context s!"noncanonical-set-order:{key}"
-  let rec dup : List String → Bool
-    | a :: b :: rest => a == b || dup (b :: rest)
-    | _ => false
-  if dup values then
-    failE context s!"duplicate-set-value:{key}"
 
 private def idNumber (context prefix value : String) : Except String Nat := do
   if !value.startsWith prefix then
@@ -101,7 +109,8 @@ private def readCanonicalJson (path : FilePath) : IO Json := do
   if !(← path.pathExists) then
     failIO s!"traceability:error:{path}:missing-file"
   let text ← IO.FS.readFile path
-  let json ← IO.ofExcept <| Json.parse text |>.mapError fun e => s!"traceability:error:{path}:json-parse:{e}"
+  let parsed := (Json.parse text).mapError fun e => s!"traceability:error:{path}:json-parse:{e}"
+  let json ← IO.ofExcept parsed
   let canonical := Json.compress json ++ "\n"
   if text != canonical then
     failIO s!"traceability:error:{path}:noncanonical-json"
@@ -121,8 +130,8 @@ private def readCanonicalJsonl (path : FilePath) : IO (Array Json) := do
     lineNo := lineNo + 1
     if line.isEmpty then
       failIO s!"traceability:error:{path}:{lineNo}:blank-jsonl-line"
-    let json ← IO.ofExcept <| Json.parse line |>.mapError fun e =>
-      s!"traceability:error:{path}:{lineNo}:json-parse:{e}"
+    let parsed := (Json.parse line).mapError fun e => s!"traceability:error:{path}:{lineNo}:json-parse:{e}"
+    let json ← IO.ofExcept parsed
     if Json.compress json != line then
       failIO s!"traceability:error:{path}:{lineNo}:noncanonical-jsonl"
     out := out.push json
@@ -192,6 +201,8 @@ private def validateManifest (j : Json) : Except String RegistryManifest := do
   for value in reservationValues do
     requireExactKeys "registry-manifest.reservation" value ["id", "reason", "state"]
     let rid ← strField "registry-manifest.reservation" value "id"
+    if !(rid.startsWith "FART-P2-" || rid.startsWith "FLOC-P2-" || rid.startsWith "FLINK-P2-") then
+      failE "registry-manifest.reservation" s!"invalid-id:{rid}"
     let state ← strField "registry-manifest.reservation" value "state"
     requireEnum "registry-manifest.reservation" "state" state ["reserved_unissued", "retired_identity"]
     requireNonempty "registry-manifest.reservation" "reason" (← strField "registry-manifest.reservation" value "reason")
@@ -211,12 +222,16 @@ private structure FlocSummary where
   number : Nat
   fart : String
   locatorStatus : String
+  sourceKind : String
+  filePath : String
 
 private structure FlinkSummary where
   id : String
   number : Nat
   fart : String
   candidateRecorded : String
+  linkStatus : String
+  lineageState : String
 
 private def validateSourceProvenance (context : String) (j : Json) : Except String Unit := do
   requireExactKeys context j ["proof_or_implementation_provenance_notes", "provenance_kind", "source_refs", "statement_provenance_notes"]
@@ -262,10 +277,14 @@ private def validateFart (located : LocatedJson) : Except String FartSummary := 
   requireSortedUnique context "curriculum_link_refs" curriculumLinks
   requireSortedUnique context "supersedes" supersedes
   requireSortedUnique context "superseded_by" supersededBy
-  for ref in currentLocators do let _ ← idNumber context "FLOC-P2-" ref
-  for ref in curriculumLinks do let _ ← idNumber context "FLINK-P2-" ref
-  for ref in supersedes do let _ ← idNumber context "FART-P2-" ref
-  for ref in supersededBy do let _ ← idNumber context "FART-P2-" ref
+  for ref in currentLocators do
+    let _ ← idNumber context "FLOC-P2-" ref
+  for ref in curriculumLinks do
+    let _ ← idNumber context "FLINK-P2-" ref
+  for ref in supersedes do
+    let _ ← idNumber context "FART-P2-" ref
+  for ref in supersededBy do
+    let _ ← idNumber context "FART-P2-" ref
   let provenance ← objField context j "source_provenance"
   validateSourceProvenance "fart.source_provenance" provenance
   requireNonempty context "lean_toolchain_ref" (← strField context j "lean_toolchain_ref")
@@ -273,64 +292,56 @@ private def validateFart (located : LocatedJson) : Except String FartSummary := 
   requireNonempty context "created_revision" (← strField context j "created_revision")
   return { id, number, currentLocators, curriculumLinks }
 
-private def validateFloc (root : FilePath) (located : LocatedJson) : ExceptT String IO FlocSummary := do
+private def validateFlocPure (located : LocatedJson) : Except String FlocSummary := do
   let j := located.value
   let context := "floc"
-  ExceptT.lift <| pure ()
-  let result : Except String FlocSummary := do
-    requireExactKeys context j [
-      "created_revision", "declaration_names", "dependency_baseline_ref", "file_path", "formal_artifact_ref",
-      "id", "locator_status", "module_name", "observed_at", "record_status", "repository", "revision",
-      "schema_version", "source_kind", "structural_anchors", "superseded_by_locator_refs", "supersedes_locator_refs"
-    ]
-    if (← natField context j "schema_version") != 1 then failE context "unsupported-schema-version"
-    let id ← strField context j "id"
-    let number ← idNumber context "FLOC-P2-" id
-    if located.path.fileName.getD "" != expectedShard number then
-      failE context s!"wrong-shard:{id}:{located.path.fileName.getD ""}"
-    let fart ← strField context j "formal_artifact_ref"
-    let _ ← idNumber context "FART-P2-" fart
-    let sourceKind ← strField context j "source_kind"
-    requireEnum context "source_kind" sourceKind ["project_repository", "dependency_repository"]
-    let repository ← strField context j "repository"
-    let revision ← strField context j "revision"
-    let dependencyBaseline ← strField context j "dependency_baseline_ref"
-    let moduleName ← strField context j "module_name"
-    let filePath ← strField context j "file_path"
-    requireNonempty context "repository" repository
-    requireNonempty context "revision" revision
-    requireNonempty context "module_name" moduleName
-    requireNonempty context "file_path" filePath
-    if sourceKind == "project_repository" then
-      if dependencyBaseline != "not_applicable" then failE context "project-locator-dependency-baseline-must-be-not_applicable"
-    else
-      if dependencyBaseline == "not_applicable" || dependencyBaseline.isEmpty then failE context "dependency-locator-missing-baseline"
-    let decls ← strArrayField context j "declaration_names"
-    let anchors ← strArrayField context j "structural_anchors"
-    let supersedes ← strArrayField context j "supersedes_locator_refs"
-    let supersededBy ← strArrayField context j "superseded_by_locator_refs"
-    requireSortedUnique context "declaration_names" decls
-    requireSortedUnique context "structural_anchors" anchors
-    requireSortedUnique context "supersedes_locator_refs" supersedes
-    requireSortedUnique context "superseded_by_locator_refs" supersededBy
-    for ref in supersedes do let _ ← idNumber context "FLOC-P2-" ref
-    for ref in supersededBy do let _ ← idNumber context "FLOC-P2-" ref
-    let locatorStatus ← strField context j "locator_status"
-    requireEnum context "locator_status" locatorStatus ["current", "historical", "superseded", "unresolved"]
-    requireEnum context "record_status" (← strField context j "record_status") ["active", "historical", "superseded", "retired", "unresolved"]
-    requireNonempty context "observed_at" (← strField context j "observed_at")
-    requireNonempty context "created_revision" (← strField context j "created_revision")
-    return { id, number, fart, locatorStatus }
-  let summary ← ExceptT.ofExcept result
-  if summary.locatorStatus == "current" then
-    let sourceKind ← ExceptT.ofExcept <| strField context j "source_kind"
-    if sourceKind == "project_repository" then
-      let filePath ← ExceptT.ofExcept <| strField context j "file_path"
-      if !(← (root / filePath).pathExists) then
-        throw s!"traceability:error:floc:missing-current-project-file:{summary.id}:{filePath}"
-  return summary
+  requireExactKeys context j [
+    "created_revision", "declaration_names", "dependency_baseline_ref", "file_path", "formal_artifact_ref",
+    "id", "locator_status", "module_name", "observed_at", "record_status", "repository", "revision",
+    "schema_version", "source_kind", "structural_anchors", "superseded_by_locator_refs", "supersedes_locator_refs"
+  ]
+  if (← natField context j "schema_version") != 1 then failE context "unsupported-schema-version"
+  let id ← strField context j "id"
+  let number ← idNumber context "FLOC-P2-" id
+  if located.path.fileName.getD "" != expectedShard number then
+    failE context s!"wrong-shard:{id}:{located.path.fileName.getD ""}"
+  let fart ← strField context j "formal_artifact_ref"
+  let _ ← idNumber context "FART-P2-" fart
+  let sourceKind ← strField context j "source_kind"
+  requireEnum context "source_kind" sourceKind ["project_repository", "dependency_repository"]
+  let repository ← strField context j "repository"
+  let revision ← strField context j "revision"
+  let dependencyBaseline ← strField context j "dependency_baseline_ref"
+  let moduleName ← strField context j "module_name"
+  let filePath ← strField context j "file_path"
+  requireNonempty context "repository" repository
+  requireNonempty context "revision" revision
+  requireNonempty context "module_name" moduleName
+  requireNonempty context "file_path" filePath
+  if sourceKind == "project_repository" then
+    if dependencyBaseline != "not_applicable" then failE context "project-locator-dependency-baseline-must-be-not_applicable"
+  else if dependencyBaseline == "not_applicable" || dependencyBaseline.isEmpty then
+    failE context "dependency-locator-missing-baseline"
+  let decls ← strArrayField context j "declaration_names"
+  let anchors ← strArrayField context j "structural_anchors"
+  let supersedes ← strArrayField context j "supersedes_locator_refs"
+  let supersededBy ← strArrayField context j "superseded_by_locator_refs"
+  requireSortedUnique context "declaration_names" decls
+  requireSortedUnique context "structural_anchors" anchors
+  requireSortedUnique context "supersedes_locator_refs" supersedes
+  requireSortedUnique context "superseded_by_locator_refs" supersededBy
+  for ref in supersedes do
+    let _ ← idNumber context "FLOC-P2-" ref
+  for ref in supersededBy do
+    let _ ← idNumber context "FLOC-P2-" ref
+  let locatorStatus ← strField context j "locator_status"
+  requireEnum context "locator_status" locatorStatus ["current", "historical", "superseded", "unresolved"]
+  requireEnum context "record_status" (← strField context j "record_status") ["active", "historical", "superseded", "retired", "unresolved"]
+  requireNonempty context "observed_at" (← strField context j "observed_at")
+  requireNonempty context "created_revision" (← strField context j "created_revision")
+  return { id, number, fart, locatorStatus, sourceKind, filePath }
 
-private def validateLineage (j : Json) : Except String Unit := do
+private def validateLineage (j : Json) : Except String String := do
   let context := "flink.candidate_lineage_resolution"
   requireExactKeys context j ["resolution_context", "resolution_path", "review_ref", "state"]
   let state ← strField context j "state"
@@ -338,7 +349,8 @@ private def validateLineage (j : Json) : Except String Unit := do
   requireNonempty context "resolution_context" (← strField context j "resolution_context")
   requireNonempty context "review_ref" (← strField context j "review_ref")
   let path ← strArrayField context j "resolution_path"
-  requireSortedUnique context "resolution_path" path
+  requireUnique context "resolution_path" path
+  return state
 
 private def validateFlink (located : LocatedJson) : Except String FlinkSummary := do
   let j := located.value
@@ -361,22 +373,22 @@ private def validateFlink (located : LocatedJson) : Except String FlinkSummary :
   requireNonempty context "candidate_ref_current_resolved" (← strField context j "candidate_ref_current_resolved")
   requireNonempty context "curriculum_release_ref" (← strField context j "curriculum_release_ref")
   let lineage ← objField context j "candidate_lineage_resolution"
-  validateLineage lineage
-  let treatment ← j.getObjVal? "treatment_scope" |>.mapError fun e => s!"{context}:treatment_scope:{e}"
+  let lineageState ← validateLineage lineage
+  let treatment ← (j.getObjVal? "treatment_scope").mapError fun e => s!"{context}:treatment_scope:{e}"
   if treatment.isNull then failE context "null-treatment_scope"
-  let coverage ← j.getObjVal? "coverage_claim_scope" |>.mapError fun e => s!"{context}:coverage_claim_scope:{e}"
+  let coverage ← (j.getObjVal? "coverage_claim_scope").mapError fun e => s!"{context}:coverage_claim_scope:{e}"
   if coverage.isNull then failE context "null-coverage_claim_scope"
   let _ ← strField context j "assumptions_or_formulation_notes"
   requireEnum context "representation_relation" (← strField context j "representation_relation")
     ["represents", "partially_represents", "example_of", "exercise_for", "implementation_support_for", "model_for", "other"]
   requireEnum context "link_confidence" (← strField context j "link_confidence")
     ["established", "reviewed_provisional", "provisional", "unresolved"]
-  requireEnum context "link_status" (← strField context j "link_status")
-    ["current", "historical", "superseded", "needs_review", "unresolved"]
+  let linkStatus ← strField context j "link_status"
+  requireEnum context "link_status" linkStatus ["current", "historical", "superseded", "needs_review", "unresolved"]
   requireEnum context "record_status" (← strField context j "record_status")
     ["active", "historical", "superseded", "retired", "unresolved"]
   requireNonempty context "created_revision" (← strField context j "created_revision")
-  return { id, number, fart, candidateRecorded }
+  return { id, number, fart, candidateRecorded, linkStatus, lineageState }
 
 private structure LockManifest where
   release : String
@@ -420,17 +432,10 @@ private def validateLockIdentity (j : Json) : Except String LockIdentity := do
   requireEnum context "resolution_state" state ["resolved_exact", "resolved_lineage", "needs_scope_review", "ambiguous", "stale", "unresolved"]
   let path ← strArrayField context j "resolution_path"
   let scopes ← strArrayField context j "treatment_scopes"
-  requireSortedUnique context "resolution_path" path
+  requireUnique context "resolution_path" path
   requireSortedUnique context "treatment_scopes" scopes
   requireEnum context "record_status" (← strField context j "record_status") ["current", "historical", "unresolved"]
   return { recorded, current, resolutionState := state }
-
-private def duplicate? (values : List String) : Option String :=
-  let sorted := values.mergeSort (fun a b => a < b)
-  let rec go : List String → Option String
-    | a :: b :: rest => if a == b then some a else go (b :: rest)
-    | _ => none
-  go sorted
 
 private def findFart? (farts : List FartSummary) (id : String) : Option FartSummary :=
   farts.find? fun f => f.id == id
@@ -449,10 +454,15 @@ private def reservationNumbers (prefix context : String) (reservations : List St
   return result
 
 private def requireDenseIssued (context : String) (next : Nat) (issued : List Nat) : Except String Unit := do
-  let all := List.range (next - 1) |>.map (· + 1)
+  let all := (List.range (next - 1)).map (· + 1)
   for n in all do
     if !issued.contains n then
       failE context s!"silent-unissued-hole:{n}"
+
+private def lockContains (lockIds : List LockIdentity) (candidate : String) : Bool :=
+  match lockIds.find? (fun x => x.recorded == candidate) with
+  | some _ => true
+  | none => false
 
 private def validateCrossReferences
     (manifest : RegistryManifest)
@@ -463,10 +473,10 @@ private def validateCrossReferences
   if manifest.countFlink != links.length then failE "registry" "record-count-mismatch:flink"
   if lock.identityCount != lockIds.length then failE "curriculum-lock" "identity-count-mismatch"
 
-  if let some id := duplicate? (farts.map (·.id)) then failE "registry" s!"duplicate-id:{id}"
-  if let some id := duplicate? (flocs.map (·.id)) then failE "registry" s!"duplicate-id:{id}"
-  if let some id := duplicate? (links.map (·.id)) then failE "registry" s!"duplicate-id:{id}"
-  if let some id := duplicate? manifest.reservations then failE "registry" s!"duplicate-reservation:{id}"
+  if let some id := firstDuplicate (farts.map (·.id)) then failE "registry" s!"duplicate-id:{id}"
+  if let some id := firstDuplicate (flocs.map (·.id)) then failE "registry" s!"duplicate-id:{id}"
+  if let some id := firstDuplicate (links.map (·.id)) then failE "registry" s!"duplicate-id:{id}"
+  if let some id := firstDuplicate manifest.reservations then failE "registry" s!"duplicate-reservation:{id}"
 
   let reservedFart ← reservationNumbers "FART-P2-" "registry.reservations" manifest.reservations
   let reservedFloc ← reservationNumbers "FLOC-P2-" "registry.reservations" manifest.reservations
@@ -479,8 +489,12 @@ private def validateCrossReferences
     if (findFart? farts loc.fart).isNone then failE "registry" s!"dangling-floc-fart:{loc.id}:{loc.fart}"
   for link in links do
     if (findFart? farts link.fart).isNone then failE "registry" s!"dangling-flink-fart:{link.id}:{link.fart}"
-    if !lockIds.any (fun x => x.recorded == link.candidateRecorded) then
-      failE "curriculum-lock" s!"missing-linked-identity:{link.id}:{link.candidateRecorded}"
+    if !lockContains lockIds link.candidateRecorded then
+      let explicitNonSuccess := link.linkStatus == "needs_review" || link.linkStatus == "unresolved" ||
+        link.lineageState == "needs_scope_review" || link.lineageState == "ambiguous" ||
+        link.lineageState == "stale" || link.lineageState == "unresolved"
+      if !explicitNonSuccess then
+        failE "curriculum-lock" s!"missing-linked-identity:{link.id}:{link.candidateRecorded}"
 
   for fart in farts do
     for locId in fart.currentLocators do
@@ -500,43 +514,42 @@ private def validateCrossReferences
       | none => pure ()
       | some fart => if !fart.currentLocators.contains loc.id then failE "registry" s!"current-locator-missing-from-fart:{loc.id}:{fart.id}"
 
-private def validateRootE (root : FilePath) : ExceptT String IO Unit := do
-  let registryJson ← ExceptT.lift <| readCanonicalJson (root / "metadata" / "formal-artifacts" / "registry.json")
-  let registry ← ExceptT.ofExcept <| validateManifest registryJson
+public def validateRoot (root : FilePath := ".") : IO Unit := do
+  let registryJson ← readCanonicalJson (root / "metadata" / "formal-artifacts" / "registry.json")
+  let registry ← IO.ofExcept <| validateManifest registryJson
 
-  let fartRaw ← ExceptT.lift <| readFamily root "fart"
-  let flocRaw ← ExceptT.lift <| readFamily root "floc"
-  let flinkRaw ← ExceptT.lift <| readFamily root "flink"
+  let fartRaw ← readFamily root "fart"
+  let flocRaw ← readFamily root "floc"
+  let flinkRaw ← readFamily root "flink"
 
   let mut farts := []
   for record in fartRaw do
-    farts := (← ExceptT.ofExcept <| validateFart record) :: farts
+    farts := (← IO.ofExcept <| validateFart record) :: farts
   farts := farts.reverse
 
   let mut flocs := []
   for record in flocRaw do
-    flocs := (← validateFloc root record) :: flocs
+    let summary ← IO.ofExcept <| validateFlocPure record
+    if summary.locatorStatus == "current" && summary.sourceKind == "project_repository" then
+      if !(← (root / summary.filePath).pathExists) then
+        failIO s!"traceability:error:floc:missing-current-project-file:{summary.id}:{summary.filePath}"
+    flocs := summary :: flocs
   flocs := flocs.reverse
 
   let mut links := []
   for record in flinkRaw do
-    links := (← ExceptT.ofExcept <| validateFlink record) :: links
+    links := (← IO.ofExcept <| validateFlink record) :: links
   links := links.reverse
 
-  let lockJson ← ExceptT.lift <| readCanonicalJson (root / "metadata" / "curriculum-lock" / "manifest.json")
-  let lock ← ExceptT.ofExcept <| validateLockManifest lockJson
-  let lockRaw ← ExceptT.lift <| readCanonicalJsonl (root / "metadata" / "curriculum-lock" / "linked-identities.jsonl")
+  let lockJson ← readCanonicalJson (root / "metadata" / "curriculum-lock" / "manifest.json")
+  let lock ← IO.ofExcept <| validateLockManifest lockJson
+  let lockRaw ← readCanonicalJsonl (root / "metadata" / "curriculum-lock" / "linked-identities.jsonl")
   let mut lockIds := []
   for record in lockRaw do
-    lockIds := (← ExceptT.ofExcept <| validateLockIdentity record) :: lockIds
+    lockIds := (← IO.ofExcept <| validateLockIdentity record) :: lockIds
   lockIds := lockIds.reverse
 
-  ExceptT.ofExcept <| validateCrossReferences registry farts flocs links lock lockIds
-  ExceptT.lift <| IO.println s!"traceability:validate:pass:fart={farts.length};floc={flocs.length};flink={links.length};curriculum-identities={lockIds.length};curriculum-lock-status={lock.status};curriculum-release={lock.release}"
-
-public def validateRoot (root : FilePath := ".") : IO Unit := do
-  match ← validateRootE root with
-  | .ok _ => pure ()
-  | .error e => failIO e
+  IO.ofExcept <| validateCrossReferences registry farts flocs links lock lockIds
+  IO.println s!"traceability:validate:pass:fart={farts.length};floc={flocs.length};flink={links.length};curriculum-identities={lockIds.length};curriculum-lock-status={lock.status};curriculum-release={lock.release}"
 
 end FormalMathTraceability
