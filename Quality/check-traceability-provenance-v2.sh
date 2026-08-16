@@ -44,8 +44,14 @@ provenance="$root/.lake/build/traceability/$sha/provenance-v2.json"
 grep -Fq '"subject_kind":"alternate_root_content_snapshot"' "$provenance"
 grep -Fq '"subject_revision":"not_applicable"' "$provenance"
 grep -Fq '"freshness_contract":"content_bound"' "$provenance"
+grep -Fq '"legacy_generated_manifest":"manifest.json"' "$provenance"
+if grep -Fq "$WORK" "$provenance"; then
+  printf 'traceability-provenance-v2:fail:path-dependent-provenance\n' >&2
+  exit 1
+fi
 lake exe traceability freshness --root "$root" >/dev/null
 printf 'traceability-provenance-v2:pass:alternate-root-no-revision-overclaim\n'
+printf 'traceability-provenance-v2:pass:path-independent-manifest-reference\n'
 
 first_digest="$(git hash-object "$provenance")"
 lake exe traceability generate --root "$root" >/dev/null
