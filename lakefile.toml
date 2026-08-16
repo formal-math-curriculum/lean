@@ -28,3 +28,8 @@ roots = ["QualityTests"]
 globs = ["QualityTests.*"]
 requiresModuleSystem = true
 allowNonModules = false
+
+[[lean_exe]]
+name = "traceability"
+root = "Traceability.Main"
+supportInterpreter = true
