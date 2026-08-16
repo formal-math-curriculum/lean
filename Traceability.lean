@@ -4,8 +4,7 @@ Authors: Formal Mathematics Curriculum contributors
 -/
 module
 
-public import Traceability.Allocation
-public import Traceability.Validate
+public import Traceability.Registry
 
 /-!
 Non-default root module for M2.8 curriculum-to-code traceability tooling.
