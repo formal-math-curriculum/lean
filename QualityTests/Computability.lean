@@ -23,9 +23,10 @@ def executableDouble (n : Nat) : Nat := n + n
 
 /--
 Representative mathematical specification that may use classical choice. Its presence is valid as a
-specification and is not an assertion that the declaration has executable code.
+specification and is not an assertion that the declaration has executable code. It is public only
+inside the non-default `QualityTests` test library so the negative execution fixture can import it.
 -/
-noncomputable def specificationChoice {α : Type} (h : Nonempty α) : α :=
+public noncomputable def specificationChoice {α : Type} (h : Nonempty α) : α :=
   Classical.choice h
 
 example (h : Nonempty Nat) : specificationChoice h = specificationChoice h := rfl
