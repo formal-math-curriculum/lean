@@ -199,12 +199,20 @@ private def outputFingerprint (files : List (String × FilePath)) : IO String :=
   for (name, path) in files do parts := s!"{name}:{← gitBlobHash path}" :: parts
   return String.intercalate ";" parts.reverse
 
-private def humanIndex (data : RegistryData) (sha lockStatus release : String) : String :=
-  s!"# Generated curriculum-to-code traceability index\n\n**Authority:** generated derived view — do not edit as source of truth.\n\n- Repository subject: `{sha}`\n- Curriculum release: `{release}`\n- Curriculum-lock state: `{lockStatus}`\n- FART records: {data.farts.length}\n- FLOC records: {data.flocs.length}\n- FLINK records: {data.flinks.length}\n\nUse the authored registry under `metadata/formal-artifacts/` for Project-2 traceability truth and the governed Project-1 release for curriculum truth.\n"
+private def humanIndex (data : RegistryData) (subjectContext subjectRevision lockStatus release : String) : String :=
+  s!"# Generated curriculum-to-code traceability index\n\n**Authority:** generated derived view — do not edit as source of truth.\n\n- Subject context: `{subjectContext}`\n- Subject revision: `{subjectRevision}`\n- Curriculum release: `{release}`\n- Curriculum-lock state: `{lockStatus}`\n- FART records: {data.farts.length}\n- FLOC records: {data.flocs.length}\n- FLINK records: {data.flinks.length}\n\nUse the authored registry under `metadata/formal-artifacts/` for Project-2 traceability truth and the governed Project-1 release for curriculum truth.\n"
 
 public def generateViews (root : FilePath := ".") : IO FilePath := do
   let data ← loadRegistryData root
   let sha ← currentGitSha
+  let governedSubject := root.toString == "."
+  let subjectRevision := if governedSubject then sha else "not_applicable"
+  let subjectContext ← if governedSubject then
+      pure (if (← IO.getEnv "GITHUB_EVENT_NAME").isSome then "github_actions" else "local")
+    else
+      pure "alternate_root_content_snapshot"
+  let repository := if governedSubject then "formal-math-curriculum/lean" else "not_applicable"
+  let sourceTime ← if governedSubject then currentGitTimestamp else pure "not_applicable"
   let outDir := root / ".lake" / "build" / "traceability" / sha
   IO.FS.createDirAll outDir
   let curriculum ← byCurriculum data
@@ -225,21 +233,20 @@ public def generateViews (root : FilePath := ".") : IO FilePath := do
   writeJsonl unresolvedPath unresolved
   let lockStatus ← IO.ofExcept <| stringField "curriculum-lock" data.lockManifest "mirror_status"
   let release ← IO.ofExcept <| stringField "curriculum-lock" data.lockManifest "curriculum_release_ref"
-  IO.FS.writeFile indexPath (humanIndex data sha lockStatus release)
+  IO.FS.writeFile indexPath (humanIndex data subjectContext subjectRevision lockStatus release)
   let fingerprint ← outputFingerprint [
     ("by-artifact", artifactPath), ("by-curriculum", curriculumPath), ("by-source", sourcePath),
     ("history", historyPath), ("index", indexPath), ("unresolved", unresolvedPath)
   ]
   let dependencyBaseline ← IO.ofExcept <| stringField "registry-manifest" data.registryManifest "dependency_baseline_ref"
   let toolchain ← IO.ofExcept <| stringField "registry-manifest" data.registryManifest "lean_toolchain_ref"
-  let sourceTime ← currentGitTimestamp
   let manifest := Json.mkObj [
     ("authority", Json.str "generated_derived"),
     ("generated_schema_version", Json.num 1),
     ("generator_revision", Json.str sha),
-    ("repository", Json.str "formal-math-curriculum/lean"),
-    ("subject_revision", Json.str sha),
-    ("subject_context", Json.str (if (← IO.getEnv "GITHUB_EVENT_NAME").isSome then "github_actions" else "local")),
+    ("repository", Json.str repository),
+    ("subject_revision", Json.str subjectRevision),
+    ("subject_context", Json.str subjectContext),
     ("trace_registry_schema_ref", Json.str "P2-TRACE-M2.8-REGISTRY-v1"),
     ("curriculum_release_ref", Json.str release),
     ("curriculum_lock_status", Json.str lockStatus),
