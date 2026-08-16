@@ -47,8 +47,9 @@ jobs:
           BENCH_SIZES: '8 32 128'
           BENCH_REPETITIONS: '3'
         run: |
-          # MAT-201 validation keeps compiler diagnostics visible. This does not change benchmark semantics.
+          # MAT-201 validation keeps compiler diagnostics visible and applies the confirmed module-visibility repair.
           sed -i 's/lake build Bench >\/dev\/null/lake build Bench/' Benchmarks/run-build-scaling.sh
+          sed -i 's/def commonSeed/public def commonSeed/' Benchmarks/run-build-scaling.sh
           bash Benchmarks/run-build-scaling.sh
 
       - name: Upload benchmark evidence
