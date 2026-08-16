@@ -189,6 +189,11 @@ case "$mode" in
       done < <(find Quality -type f -name '*.lean' ! -path 'Quality/Fixtures/*' -print | LC_ALL=C sort)
     fi
 
+    for file in Traceability.lean TraceabilityCli.lean; do
+      if [[ -f "$file" ]]; then
+        check_tooling_file "$file"
+      fi
+    done
     if [[ -d Traceability ]]; then
       while IFS= read -r file; do
         check_tooling_file "$file"
