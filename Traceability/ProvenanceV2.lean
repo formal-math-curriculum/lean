@@ -68,8 +68,33 @@ public def authoritativeInputFingerprintV2 (root : FilePath := ".") : IO String 
 private def governedRootV2 (root : FilePath) : Bool :=
   root.toString == "."
 
+private def outputDirV2 (root : FilePath) (generatorRevision : String) : FilePath :=
+  root / ".lake" / "build" / "traceability" / generatorRevision
+
 private def provenancePathV2 (root : FilePath) (generatorRevision : String) : FilePath :=
-  root / ".lake" / "build" / "traceability" / generatorRevision / "provenance-v2.json"
+  outputDirV2 root generatorRevision / "provenance-v2.json"
+
+private def generatedOutputFingerprintV2 (outDir : FilePath) : IO String := do
+  let files := [
+    ("by-artifact", outDir / "by-artifact.jsonl"),
+    ("by-curriculum", outDir / "by-curriculum.jsonl"),
+    ("by-source", outDir / "by-source.jsonl"),
+    ("history", outDir / "history.jsonl"),
+    ("index", outDir / "index.md"),
+    ("unresolved", outDir / "unresolved.jsonl")
+  ]
+  let mut parts := []
+  for (name, path) in files do
+    if !(← path.pathExists) then
+      provenanceFailIO s!"traceability:freshness:error:missing-generated-output:{name}"
+    parts := s!"{name}:{← blobHashV2 path}" :: parts
+  return String.intercalate ";" parts.reverse
+
+private def legacyManifestFingerprintV2 (outDir : FilePath) : IO String := do
+  let path := outDir / "manifest.json"
+  if !(← path.pathExists) then
+    provenanceFailIO "traceability:freshness:error:missing-legacy-manifest"
+  blobHashV2 path
 
 private def requireStringV2 (provenance : Json) (key expected : String) : IO Unit := do
   let actual ← IO.ofExcept <| stringField "provenance-v2" provenance key
@@ -83,6 +108,8 @@ public def writeProvenanceV2 (root outDir : FilePath) : IO FilePath := do
   let registryFingerprint ← registryInputFingerprintV2 root
   let lockFingerprint ← curriculumLockFingerprintV2 root
   let authoredFingerprint ← authoritativeInputFingerprintV2 root
+  let generatedFingerprint ← generatedOutputFingerprintV2 outDir
+  let legacyFingerprint ← legacyManifestFingerprintV2 outDir
   let release ← IO.ofExcept <| stringField "curriculum-lock" data.lockManifest "curriculum_release_ref"
   let lockStatus ← IO.ofExcept <| stringField "curriculum-lock" data.lockManifest "mirror_status"
   let dependencyBaseline ← IO.ofExcept <| stringField "registry-manifest" data.registryManifest "dependency_baseline_ref"
@@ -102,7 +129,9 @@ public def writeProvenanceV2 (root outDir : FilePath) : IO FilePath := do
     ("registry_input_fingerprint", Json.str registryFingerprint),
     ("curriculum_lock_input_fingerprint", Json.str lockFingerprint),
     ("authoritative_input_fingerprint", Json.str authoredFingerprint),
-    ("freshness_contract", Json.str "content_bound"),
+    ("generated_output_fingerprint", Json.str generatedFingerprint),
+    ("legacy_manifest_fingerprint", Json.str legacyFingerprint),
+    ("freshness_contract", Json.str "content_and_projection_bound"),
     ("curriculum_release_ref", Json.str release),
     ("curriculum_lock_status", Json.str lockStatus),
     ("dependency_baseline_ref", Json.str dependencyBaseline),
@@ -117,6 +146,7 @@ public def writeProvenanceV2 (root outDir : FilePath) : IO FilePath := do
 
 public def verifyProvenanceV2 (root : FilePath := ".") : IO Unit := do
   let generatorRevision ← currentGitSha
+  let outDir := outputDirV2 root generatorRevision
   let path := provenancePathV2 root generatorRevision
   if !(← path.pathExists) then
     provenanceFailIO s!"traceability:freshness:error:missing-provenance:{path}"
@@ -132,9 +162,18 @@ public def verifyProvenanceV2 (root : FilePath := ".") : IO Unit := do
   requireStringV2 provenance "provenance_ref" "P2-TRACE-M2.9-PROVENANCE-v2"
   requireStringV2 provenance "generator_revision" generatorRevision
   requireStringV2 provenance "output_namespace_revision" generatorRevision
-  requireStringV2 provenance "freshness_contract" "content_bound"
+  requireStringV2 provenance "freshness_contract" "content_and_projection_bound"
   requireStringV2 provenance "legacy_generated_manifest" "manifest.json"
   requireStringV2 provenance "result_state" "pass"
+
+  let currentGenerated ← generatedOutputFingerprintV2 outDir
+  let currentLegacy ← legacyManifestFingerprintV2 outDir
+  let recordedGenerated ← IO.ofExcept <| stringField "provenance-v2" provenance "generated_output_fingerprint"
+  let recordedLegacy ← IO.ofExcept <| stringField "provenance-v2" provenance "legacy_manifest_fingerprint"
+  if recordedGenerated != currentGenerated then
+    provenanceFailIO "traceability:freshness:error:generated-outputs-changed"
+  if recordedLegacy != currentLegacy then
+    provenanceFailIO "traceability:freshness:error:legacy-manifest-changed"
 
   let data ← loadRegistryData root
   let currentRegistry ← registryInputFingerprintV2 root
