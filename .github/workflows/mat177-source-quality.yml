@@ -36,7 +36,9 @@ jobs:
 
       - name: Source-quality positive control
         shell: bash
-        run: bash Quality/check-source-quality.sh fixture Quality/Fixtures/SourceQuality/Good.lean
+        run: |
+          lake env lean --error=warning Quality/Fixtures/SourceQuality/Good.lean
+          bash Quality/check-source-quality.sh fixture Quality/Fixtures/SourceQuality/Good.lean
 
       - name: Structural negative controls
         shell: bash
