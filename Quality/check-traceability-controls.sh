@@ -8,6 +8,7 @@ trap 'rm -rf "$TMP_ROOT"' EXIT
 
 BASE_REGISTRY='{"default_curriculum_baseline_ref":"P1-CURR-v1","dependency_baseline_ref":"P2-DEP-M2.2-v1","format":"formal-artifacts-jsonl-v1","lean_toolchain_ref":"P2-ENV-M2.5-v1","next_ids":{"fart":"FART-P2-000002","flink":"FLINK-P2-000001","floc":"FLOC-P2-000003"},"protocol_ref":"P2-TRACE-M2.8-PROTOCOL-v1","record_counts":{"fart":1,"flink":0,"floc":2},"registry_semantics_ref":"P2-TRACE-M2.8-REGISTRY-v1","registry_status":"active","reservations":[],"schema_version":1,"shard_size":1000}'
 FART='{"artifact_kind":"theorem","created_revision":"fixture-r2","current_locator_refs":["FLOC-P2-000002"],"curriculum_link_refs":[],"dependency_baseline_ref":"P2-DEP-M2.2-v1","id":"FART-P2-000001","lean_toolchain_ref":"P2-ENV-M2.5-v1","quality_state":"draft","record_status":"active","representation_state":"represented","schema_version":1,"source_provenance":{"proof_or_implementation_provenance_notes":"fixture","provenance_kind":"original_project","source_refs":[],"statement_provenance_notes":"fixture"},"superseded_by":[],"supersedes":[],"title_or_summary":"Fixture theorem","verification_state":"kernel_checked"}'
+FART2='{"artifact_kind":"theorem","created_revision":"fixture-r2","current_locator_refs":[],"curriculum_link_refs":[],"dependency_baseline_ref":"P2-DEP-M2.2-v1","id":"FART-P2-000002","lean_toolchain_ref":"P2-ENV-M2.5-v1","quality_state":"draft","record_status":"active","representation_state":"represented","schema_version":1,"source_provenance":{"proof_or_implementation_provenance_notes":"fixture","provenance_kind":"original_project","source_refs":[],"statement_provenance_notes":"fixture"},"superseded_by":[],"supersedes":[],"title_or_summary":"Second fixture theorem","verification_state":"kernel_checked"}'
 FLOC1='{"created_revision":"fixture-registry","declaration_names":["Fixture.old"],"dependency_baseline_ref":"not_applicable","file_path":"Fixture/Old.lean","formal_artifact_ref":"FART-P2-000001","id":"FLOC-P2-000001","locator_status":"historical","module_name":"Fixture.Old","observed_at":"fixture-r1","record_status":"historical","repository":"formal-math-curriculum/lean","revision":"fixture-r1","schema_version":1,"source_kind":"project_repository","structural_anchors":[],"superseded_by_locator_refs":["FLOC-P2-000002"],"supersedes_locator_refs":[]}'
 FLOC2='{"created_revision":"fixture-registry","declaration_names":["Fixture.current"],"dependency_baseline_ref":"not_applicable","file_path":"Fixture/Current.lean","formal_artifact_ref":"FART-P2-000001","id":"FLOC-P2-000002","locator_status":"current","module_name":"Fixture.Current","observed_at":"fixture-r2","record_status":"active","repository":"formal-math-curriculum/lean","revision":"fixture-r2","schema_version":1,"source_kind":"project_repository","structural_anchors":[],"superseded_by_locator_refs":[],"supersedes_locator_refs":["FLOC-P2-000001"]}'
 LOCK='{"authority":"project1_external_authority","curriculum_release_ref":"P1-CURR-v1","identity_count":0,"mirror_status":"verified_snapshot","schema_version":1,"source_refs":["P1-CURR-v1","P1-P2-HANDOFF-v1"],"verified_by_trace_record":"TRVER-M2-000001"}'
@@ -89,5 +90,17 @@ cp -R "$valid" "$noncanonical"
 sed -i 's/{"artifact_kind"/{ "artifact_kind"/' \
   "$noncanonical/metadata/formal-artifacts/fart/000001-001000.jsonl"
 expect_fail_contains noncanonical-jsonl 'noncanonical-jsonl' "$noncanonical"
+
+future_id="$TMP_ROOT/future-id"
+cp -R "$valid" "$future_id"
+printf '%s\n' "$FART2" > "$future_id/metadata/formal-artifacts/fart/000001-001000.jsonl"
+expect_fail_contains cursor-upper-bound 'issued-id-not-below-next:FART-P2-000002:next=2' "$future_id"
+
+unsorted="$TMP_ROOT/unsorted"
+cp -R "$valid" "$unsorted"
+printf '%s\n%s\n' "$FART2" "$FART" > "$unsorted/metadata/formal-artifacts/fart/000001-001000.jsonl"
+sed -i 's/"fart":"FART-P2-000002"/"fart":"FART-P2-000003"/' "$unsorted/metadata/formal-artifacts/registry.json"
+sed -i 's/"fart":1/"fart":2/' "$unsorted/metadata/formal-artifacts/registry.json"
+expect_fail_contains shard-record-order 'noncanonical-record-order' "$unsorted"
 
 printf 'traceability-control:summary:pass\n'
