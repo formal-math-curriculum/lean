@@ -7,6 +7,7 @@ on:
       - 'Traceability/Main.lean'
       - 'Traceability.lean'
       - 'TRACEABILITY_M2.9.md'
+      - 'Quality/check-traceability-provenance-v2.sh'
       - 'Benchmarks/run-traceability-scaling.sh'
       - '.github/workflows/m29-traceability-scale.yml'
   workflow_dispatch:
@@ -48,6 +49,14 @@ jobs:
       - name: Validate selected environment and warm dependency cache
         shell: bash
         run: bash Quality/quality.sh env
+
+      - name: Build traceability tool before timed workloads
+        shell: bash
+        run: lake build --wfail traceability
+
+      - name: Run provenance v2 freshness falsifiers
+        shell: bash
+        run: bash Quality/check-traceability-provenance-v2.sh
 
       - name: Run traceability scale and freshness benchmark
         shell: bash
