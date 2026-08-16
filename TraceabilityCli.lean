@@ -10,5 +10,5 @@ import Traceability.Main
 Executable root for the non-default M2.8 traceability CLI.
 -/
 
-def main (args : List String) : IO Unit :=
+public def main (args : List String) : IO Unit :=
   FormalMathTraceability.main args
