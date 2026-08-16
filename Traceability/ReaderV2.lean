@@ -36,12 +36,13 @@ private def countState (count : Nat) : String :=
   if count == 0 then "zero_matches" else if count == 1 then "matches" else "multiple_matches"
 
 private def envelope (kind value : String) (results : List Json)
-    (stateOverride : Option String := none) : Json :=
+    (stateOverride : Option String := none) (queryParameters : Json := Json.mkObj []) : Json :=
   Json.mkObj [
     ("reader_contract_ref", Json.str "P2-TRACE-M2.9-READER-v2"),
     ("authority", Json.str "derived_read_only"),
     ("query_kind", Json.str kind),
     ("query_value", Json.str value),
+    ("query_parameters", queryParameters),
     ("match_count", Json.num results.length),
     ("result_state", Json.str (stateOverride.getD (countState results.length))),
     ("results", jsonArrayV2 results)
@@ -82,7 +83,9 @@ public def inspectCurriculumV2 (data : RegistryData) (candidateId : String)
             | .error e => readerFailIO e
       if treatmentMatches then
         results := decorateCurriculum record candidateId :: results
-  IO.println <| Json.compress <| envelope "curriculum" candidateId results.reverse
+  let treatmentValue := treatment.getD "not_applied"
+  let parameters := Json.mkObj [("treatment_filter", Json.str treatmentValue)]
+  IO.println <| Json.compress <| envelope "curriculum" candidateId results.reverse (queryParameters := parameters)
 
 private def locatorStatus (locator : Json) : String :=
   match stringField "floc" locator "locator_status" with
