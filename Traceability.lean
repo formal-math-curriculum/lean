@@ -7,6 +7,9 @@ module
 public import Traceability.Order
 public import Traceability.RegistryV1
 public import Traceability.Reservations
+public import Traceability.Views
+public import Traceability.Resolve
+public import Traceability.RoundTrip
 
 /-!
 Non-default root module for M2.8 curriculum-to-code traceability tooling.
