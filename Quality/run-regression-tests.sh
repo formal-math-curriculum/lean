@@ -64,11 +64,11 @@ run_pass strict-production-build lake build --wfail FormalMath
 run_pass reusable-axiom-auditor-build lake build --wfail +Quality.AxiomAudit
 run_pass positive-regression-and-contract-build lake build --wfail QualityTests
 run_pass production-source-quality bash Quality/check-source-quality.sh production
-run_pass source-positive-lean lake env lean --error=warning Quality/Fixtures/SourceQuality/Good.lean
+run_pass source-positive-lean lake env lean -DwarningAsError=true Quality/Fixtures/SourceQuality/Good.lean
 run_pass source-positive-policy bash Quality/check-source-quality.sh fixture Quality/Fixtures/SourceQuality/Good.lean
 
 expect_fail_contains direct-sorry "declaration uses \`sorry\`" \
-  lake env lean --error=warning Quality/Fixtures/SorryWarning.lean
+  lake env lean -DwarningAsError=true Quality/Fixtures/SorryWarning.lean
 expect_fail_contains transitive-sorryAx "unfinished=[sorryAx]" \
   lake env lean Quality/Fixtures/SorryAxiom.lean
 expect_fail_contains custom-axiom "custom-or-unclassified" \
