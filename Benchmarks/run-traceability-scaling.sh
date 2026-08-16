@@ -25,6 +25,8 @@ benchmark_protocol=P2-SCALE-M2.9-PROTOCOL-v1
 benchmark_schema=P2-SCALE-M2.9-EVIDENCE-v1
 traceability_provenance=P2-TRACE-M2.9-PROVENANCE-v2
 synthetic=true
+synthetic_registry_status=synthetic_fixture
+synthetic_identity_namespace=SFART-M2,SFLOC-M2,SFLINK-M2,SCAND-M2
 production_traceability_ids_allocated=false
 subject_head_sha=$SUBJECT_HEAD_SHA
 subject_integration_sha=$SUBJECT_INTEGRATION_SHA
@@ -74,20 +76,20 @@ def ident(prefix, i):
     return f"{prefix}{i:06d}"
 
 registry={
-  "default_curriculum_baseline_ref":"P1-CURR-v1",
+  "default_curriculum_baseline_ref":"SYNTHETIC-M2",
   "dependency_baseline_ref":"P2-DEP-M2.2-v1",
   "format":"formal-artifacts-jsonl-v1",
   "lean_toolchain_ref":"P2-ENV-M2.5-v1",
-  "next_ids":{"fart":ident("FART-P2-",n+1),"flink":ident("FLINK-P2-",n+1),"floc":ident("FLOC-P2-",n+1)},
+  "next_ids":{"fart":ident("SFART-M2-",n+1),"flink":ident("SFLINK-M2-",n+1),"floc":ident("SFLOC-M2-",n+1)},
   "protocol_ref":"P2-TRACE-M2.8-PROTOCOL-v1",
   "record_counts":{"fart":n,"flink":n,"floc":n},
   "registry_semantics_ref":"P2-TRACE-M2.8-REGISTRY-v1",
-  "registry_status":"active","reservations":[],"schema_version":1,"shard_size":1000}
+  "registry_status":"synthetic_fixture","reservations":[],"schema_version":1,"shard_size":1000}
 open(os.path.join(root,"metadata/formal-artifacts/registry.json"),'w').write(dump(registry)+'\n')
 
 farts=[]; flocs=[]; flinks=[]; locks=[]
 for i in range(1,n+1):
-    fart=ident("FART-P2-",i); floc=ident("FLOC-P2-",i); flink=ident("FLINK-P2-",i); cand=ident("CAND-P1-",i)
+    fart=ident("SFART-M2-",i); floc=ident("SFLOC-M2-",i); flink=ident("SFLINK-M2-",i); cand=ident("SCAND-M2-",i)
     farts.append({
       "artifact_kind":"theorem","created_revision":"synthetic-scale","current_locator_refs":[floc],
       "curriculum_link_refs":[flink],"dependency_baseline_ref":"P2-DEP-M2.2-v1","id":fart,
@@ -111,7 +113,7 @@ for i in range(1,n+1):
         "review_ref":"not_applicable","state":"resolved_exact"},
       "candidate_ref_as_recorded":cand,"candidate_ref_current_resolved":cand,
       "coverage_claim_scope":"synthetic_nonproduction","created_revision":"synthetic-scale",
-      "curriculum_release_ref":"P1-CURR-v1","formal_artifact_ref":fart,"id":flink,
+      "curriculum_release_ref":"SYNTHETIC-M2","formal_artifact_ref":fart,"id":flink,
       "link_confidence":"established","link_status":"current","record_status":"active",
       "representation_relation":"represents","schema_version":1,"treatment_scope":"core"})
     locks.append({
@@ -122,9 +124,9 @@ for family, records in (("fart",farts),("floc",flocs),("flink",flinks)):
     p=os.path.join(root,f"metadata/formal-artifacts/{family}/000001-001000.jsonl")
     with open(p,'w') as f:
         for r in records: f.write(dump(r)+'\n')
-lock_manifest={"authority":"project1_external_authority","curriculum_release_ref":"P1-CURR-v1","identity_count":n,
-  "mirror_status":"verified_snapshot","schema_version":1,"source_refs":["P1-CURR-v1","P1-P2-HANDOFF-v1"],
-  "verified_by_trace_record":"TRVER-M2-synthetic-scale"}
+lock_manifest={"authority":"synthetic_fixture_authority","curriculum_release_ref":"SYNTHETIC-M2","identity_count":n,
+  "mirror_status":"synthetic_fixture","schema_version":1,"source_refs":["SYNTHETIC-M2"],
+  "verified_by_trace_record":"SYNTHETIC-M2-scale"}
 open(os.path.join(root,"metadata/curriculum-lock/manifest.json"),'w').write(dump(lock_manifest)+'\n')
 with open(os.path.join(root,"metadata/curriculum-lock/linked-identities.jsonl"),'w') as f:
     for r in locks: f.write(dump(r)+'\n')
@@ -156,10 +158,9 @@ for n in $SIZES; do
     rm -rf "$out"
     measure "$n" generate-with-validation "$rep" "$out" lake exe traceability generate --root "$root"
     measure "$n" freshness "$rep" "$out" lake exe traceability freshness --root "$root"
-    measure "$n" query-with-validation "$rep" "$out" lake exe traceability query curriculum "$(printf 'CAND-P1-%06d' "$n")" --root "$root" >/dev/null
+    measure "$n" query-with-validation "$rep" "$out" lake exe traceability query curriculum "$(printf 'SCAND-M2-%06d' "$n")" --root "$root" >/dev/null
   done
 
-  # Determinism: same authoritative inputs must reproduce both generated semantic and input fingerprints.
   rm -rf "$out"
   lake exe traceability generate --root "$root" >/dev/null
   semantic1="$(manifest_value "$out/manifest.json" semantic_fingerprint)"
@@ -174,7 +175,6 @@ for n in $SIZES; do
   [[ "$(manifest_value "$out/provenance-v2.json" subject_revision)" == "not_applicable" ]]
   printf 'trace-benchmark:determinism:pass:records=%d\n' "$n"
 
-  # Registry mutation after generation must make freshness fail before regeneration.
   python3 - "$root/metadata/formal-artifacts/fart/000001-001000.jsonl" <<'PY'
 import json, sys
 p=sys.argv[1]; rows=[json.loads(x) for x in open(p) if x.strip()]
@@ -189,12 +189,11 @@ PY
   grep -Fq 'traceability:freshness:error:authoritative-inputs-changed' "$RESULT_DIR/stale-registry-$n.log"
   printf 'trace-benchmark:stale-registry:expected-reject:records=%d\n' "$n"
 
-  # Recreate, generate, then mutate curriculum lock; freshness must also fail.
   make_fixture "$n" "$root"
   lake exe traceability generate --root "$root" >/dev/null
   python3 - "$root/metadata/curriculum-lock/manifest.json" <<'PY'
 import json, sys
-p=sys.argv[1]; d=json.load(open(p)); d["mirror_status"]="stale_snapshot"
+p=sys.argv[1]; d=json.load(open(p)); d["verified_by_trace_record"] += "-changed"
 open(p,'w').write(json.dumps(d, sort_keys=True, separators=(',', ':'))+'\n')
 PY
   if lake exe traceability freshness --root "$root" >"$RESULT_DIR/stale-lock-$n.log" 2>&1; then
