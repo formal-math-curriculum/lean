@@ -1,0 +1,46 @@
+name: m29-audit
+
+on:
+  pull_request:
+    paths:
+      - 'Quality/Audit/**'
+      - '.github/workflows/m29-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: audit / m29-candidate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout exact audit revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install checksum-pinned Elan
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/elan-x86_64-unknown-linux-gnu.tar.gz"
+          curl --fail --location --retry 3 --output "$archive" \
+            "https://github.com/leanprover/elan/releases/download/v4.2.3/elan-x86_64-unknown-linux-gnu.tar.gz"
+          echo "df0b2b3a439961ffcbb3985214365ffe40f49bc871df04dff268c7d8e21ca8b2  ${archive}" | sha256sum --check -
+          tar -xzf "$archive" -C "$RUNNER_TEMP"
+          "$RUNNER_TEMP/elan-init" -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Validate selected environment
+        shell: bash
+        run: bash Quality/quality.sh env
+
+      - name: Build traceability audit subject
+        shell: bash
+        run: lake build --wfail traceability
+
+      - name: Execute adversarial falsifiers
+        shell: bash
+        run: bash Quality/Audit/check-m29-candidate-audit.sh
