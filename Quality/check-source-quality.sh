@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# License: see the repository LICENSE file.
+# Authors: Formal Mathematics Curriculum contributors
 set -euo pipefail
 
 mode="${1:-production}"
