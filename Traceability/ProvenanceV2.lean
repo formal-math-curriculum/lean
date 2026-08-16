@@ -36,16 +36,22 @@ private def familyFilesV2 (root : FilePath) (family : String) : IO (List FilePat
   let paths := (← dir.walkDir).filter fun p => p.extension == some "jsonl"
   return (paths.qsort fun a b => decide (a.toString < b.toString)).toList
 
+private def familyRelativePathV2 (root : FilePath) (family : String) (path : FilePath) : IO String := do
+  let dir := root / "metadata" / "formal-artifacts" / family
+  let prefix := dir.toString ++ "/"
+  let text := path.toString
+  if !text.startsWith prefix then
+    provenanceFailIO s!"traceability:provenance:error:family-path-outside-root:{family}:{text}"
+  return String.ofList (text.toList.drop prefix.length)
+
 private def familyFingerprintV2 (root : FilePath) (family : String) : IO String := do
   let paths ← familyFilesV2 root family
   let mut parts := []
   let mut index := 0
   for path in paths do
     index := index + 1
-    let fileName := match path.fileName with
-      | some name => name
-      | none => s!"unnamed-{index}.jsonl"
-    parts := s!"{family}:{index}:{fileName}:{← blobHashV2 path}" :: parts
+    let relativePath ← familyRelativePathV2 root family path
+    parts := s!"{family}:{index}:{relativePath}:{← blobHashV2 path}" :: parts
   return String.intercalate ";" parts.reverse
 
 public def registryInputFingerprintV2 (root : FilePath := ".") : IO String := do
