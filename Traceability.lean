@@ -13,6 +13,7 @@ public import Traceability.IntegrityV1
 public import Traceability.Resolve
 public import Traceability.RoundTrip
 public import Traceability.NavigationV1
+public import Traceability.ReaderV2
 
 /-!
 Non-default root module for curriculum-to-code traceability tooling.
