@@ -42,7 +42,10 @@ private def familyFingerprintV2 (root : FilePath) (family : String) : IO String 
   let mut index := 0
   for path in paths do
     index := index + 1
-    parts := s!"{family}:{index}:{← blobHashV2 path}" :: parts
+    let fileName := match path.fileName with
+      | some name => name
+      | none => s!"unnamed-{index}.jsonl"
+    parts := s!"{family}:{index}:{fileName}:{← blobHashV2 path}" :: parts
   return String.intercalate ";" parts.reverse
 
 public def registryInputFingerprintV2 (root : FilePath := ".") : IO String := do
