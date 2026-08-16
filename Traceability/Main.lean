@@ -6,6 +6,7 @@ module
 
 import Traceability.Order
 import Traceability.RegistryV1
+import Traceability.Reservations
 
 /-!
 Command-line entry point for governed M2.8 traceability tooling.
@@ -28,6 +29,7 @@ public def main (args : List String) : IO Unit := do
   | "validate" :: rest =>
       let root ← IO.ofExcept <| parseRoot rest
       validateShardOrderRoot root
+      validateReservationBoundsRoot root
       validateRegistryV1Root root
   | _ =>
       throw <| IO.userError "usage: lake exe traceability validate [--root <repository-root>]"
