@@ -99,7 +99,7 @@ public def writeProvenanceV2 (root outDir : FilePath) : IO FilePath := do
     ("curriculum_lock_status", Json.str lockStatus),
     ("dependency_baseline_ref", Json.str dependencyBaseline),
     ("lean_toolchain_ref", Json.str toolchain),
-    ("legacy_generated_manifest", Json.str (outDir / "manifest.json").toString),
+    ("legacy_generated_manifest", Json.str "manifest.json"),
     ("result_state", Json.str "pass")
   ]
   let path := outDir / "provenance-v2.json"
