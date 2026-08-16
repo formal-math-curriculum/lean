@@ -5,6 +5,7 @@ Authors: Formal Mathematics Curriculum contributors
 module
 
 import Traceability.IntegrityV1
+import Traceability.NavigationV1
 import Traceability.Order
 import Traceability.RegistryV1
 import Traceability.Reservations
@@ -60,7 +61,7 @@ public unsafe def main (args : List String) : IO Unit := do
   | "query" :: "curriculum" :: candidateId :: rest =>
       let root ← IO.ofExcept <| parseRoot rest
       let data ← validateRoot root
-      queryCurriculum data candidateId
+      queryCurriculumV1 data candidateId
   | "query" :: "artifact" :: artifactId :: rest =>
       let root ← IO.ofExcept <| parseRoot rest
       let data ← validateRoot root
