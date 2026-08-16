@@ -105,8 +105,6 @@ expect_false_accept dangling-fart-lifecycle-reference \
 # A12 — contradictory current/historical status axes are accepted.
 case_status="$WORK/status-conflict"
 make_base "$case_status"
-sed -i 's/"locator_status":"current","module_name"/"locator_status":"current","module_name"/' \
-  "$case_status/metadata/formal-artifacts/floc/000001-001000.jsonl"
 sed -i 's/"observed_at":"fixture-current","record_status":"active"/"observed_at":"fixture-current","record_status":"historical"/' \
   "$case_status/metadata/formal-artifacts/floc/000001-001000.jsonl"
 expect_false_accept current-locator-historical-record-status \
@@ -151,8 +149,10 @@ EOF
 lake exe traceability validate --root "$case_query"
 recorded_query="$(lake exe traceability query curriculum CAND-P1-000001 --root "$case_query")"
 current_query="$(lake exe traceability query curriculum CAND-P1-000002 --root "$case_query")"
-[[ -n "$recorded_query" ]]
-[[ -z "$current_query" ]]
+recorded_rows="$(grep '^{' <<<"$recorded_query" || true)"
+current_rows="$(grep '^{' <<<"$current_query" || true)"
+[[ -n "$recorded_rows" ]]
+[[ -z "$current_rows" ]]
 printf 'traceability-audit2:confirmed-current-query-miss:CAND-P1-000002\n'
 
 # A16 — FART environment refs are not reconciled with the registry manifest baselines.
