@@ -93,6 +93,7 @@ run_pass production-source-quality bash Quality/check-source-quality.sh producti
 run_pass production-traceability-registry lake exe traceability validate
 run_pass traceability-negative-controls bash Quality/check-traceability-controls.sh
 run_pass traceability-generated-controls bash Quality/check-traceability-generated-controls.sh
+run_pass traceability-adversarial-audit bash Quality/check-traceability-adversarial-audit.sh
 run_pass source-positive-lean lake env lean -DwarningAsError=true Quality/Fixtures/SourceQuality/Good.lean
 run_pass source-positive-policy bash Quality/check-source-quality.sh fixture Quality/Fixtures/SourceQuality/Good.lean
 run_pass report-identity-collision-control bash Quality/check-report-identity.sh
