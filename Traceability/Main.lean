@@ -23,7 +23,7 @@ private def parseRoot : List String → Except String FilePath
   | ["--root", root] => pure root
   | _ => throw "usage: lake exe traceability validate [--root <repository-root>]"
 
-def main (args : List String) : IO Unit := do
+public def main (args : List String) : IO Unit := do
   match args with
   | "validate" :: rest =>
       let root ← IO.ofExcept <| parseRoot rest
