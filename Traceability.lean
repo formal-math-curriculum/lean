@@ -11,6 +11,7 @@ public import Traceability.Views
 public import Traceability.IntegrityV1
 public import Traceability.Resolve
 public import Traceability.RoundTrip
+public import Traceability.NavigationV1
 
 /-!
 Non-default root module for M2.8 curriculum-to-code traceability tooling.
