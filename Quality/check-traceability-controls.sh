@@ -96,6 +96,12 @@ cp -R "$valid" "$future_id"
 printf '%s\n' "$FART2" > "$future_id/metadata/formal-artifacts/fart/000001-001000.jsonl"
 expect_fail_contains cursor-upper-bound 'issued-id-not-below-next:FART-P2-000002:next=2' "$future_id"
 
+reserved_future="$TMP_ROOT/reserved-future"
+cp -R "$valid" "$reserved_future"
+sed -i 's/"reservations":\[\]/"reservations":[{"id":"FART-P2-000002","reason":"fixture","state":"reserved_unissued"}]/' \
+  "$reserved_future/metadata/formal-artifacts/registry.json"
+expect_fail_contains reservation-upper-bound 'reserved-id-not-below-next:FART-P2-000002:next=2' "$reserved_future"
+
 unsorted="$TMP_ROOT/unsorted"
 cp -R "$valid" "$unsorted"
 printf '%s\n%s\n' "$FART2" "$FART" > "$unsorted/metadata/formal-artifacts/fart/000001-001000.jsonl"
