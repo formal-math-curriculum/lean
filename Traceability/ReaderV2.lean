@@ -70,7 +70,7 @@ private def decorateCurriculum (record : Json) (candidateId : String) : Json :=
 public def inspectCurriculumV2 (data : RegistryData) (candidateId : String)
     (treatment : Option String := none) : IO Unit := do
   let records ← byCurriculum data
-  let mut matches := []
+  let mut results := []
   for record in records do
     let reasons := curriculumMatchReasons record candidateId
     if !reasons.isEmpty then
@@ -81,8 +81,8 @@ public def inspectCurriculumV2 (data : RegistryData) (candidateId : String)
             | .ok actual => pure (actual == expected)
             | .error e => readerFailIO e
       if treatmentMatches then
-        matches := decorateCurriculum record candidateId :: matches
-  IO.println <| Json.compress <| envelope "curriculum" candidateId matches.reverse
+        results := decorateCurriculum record candidateId :: results
+  IO.println <| Json.compress <| envelope "curriculum" candidateId results.reverse
 
 private def locatorStatus (locator : Json) : String :=
   match stringField "floc" locator "locator_status" with
@@ -114,11 +114,11 @@ private def decorateArtifact (record : Json) : IO Json := do
 
 public def inspectArtifactV2 (data : RegistryData) (artifactId : String) : IO Unit := do
   let records ← byArtifact data
-  let mut matches := []
+  let mut results := []
   for record in records do
     let id ← IO.ofExcept <| stringField "by-artifact" record "artifact_id"
-    if id == artifactId then matches := (← decorateArtifact record) :: matches
-  IO.println <| Json.compress <| envelope "artifact" artifactId matches.reverse
+    if id == artifactId then results := (← decorateArtifact record) :: results
+  IO.println <| Json.compress <| envelope "artifact" artifactId results.reverse
 
 private def sourceMatchReasons (record : Json) (needle : String) : Except String (List String) := do
   let locator ← jsonField "by-source" record "locator"
@@ -133,15 +133,15 @@ private def sourceMatchReasons (record : Json) (needle : String) : Except String
 
 public def inspectSourceV2 (data : RegistryData) (needle : String) : IO Unit := do
   let records ← bySource data
-  let mut matches := []
+  let mut results := []
   for record in records do
     let reasons ← IO.ofExcept <| sourceMatchReasons record needle
     if !reasons.isEmpty then
-      matches := Json.mkObj [
+      results := Json.mkObj [
         ("match_reasons", jsonStringArrayV2 reasons),
         ("record", record)
-      ] :: matches
-  IO.println <| Json.compress <| envelope "source" needle matches.reverse
+      ] :: results
+  IO.println <| Json.compress <| envelope "source" needle results.reverse
 
 public def inspectUnresolvedV2 (data : RegistryData) : IO Unit := do
   let records ← unresolvedView data
