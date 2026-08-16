@@ -62,6 +62,23 @@ second_digest="$(git hash-object "$provenance")"
 }
 printf 'traceability-provenance-v2:pass:deterministic-regeneration:digest=%s\n' "$first_digest"
 
+# The authored shard filename is part of the canonical physical input surface. Renaming the shard
+# without changing its bytes must therefore make the generated provenance stale.
+fart_dir="$root/metadata/formal-artifacts/fart"
+mv "$fart_dir/000001-001000.jsonl" "$fart_dir/000101-001100.jsonl"
+set +e
+rename_output="$(lake exe traceability freshness --root "$root" 2>&1)"
+rename_status=$?
+set -e
+[[ "$rename_status" -ne 0 ]] || {
+  printf 'traceability-provenance-v2:fail:shard-rename-unexpected-pass\n' >&2
+  exit 1
+}
+grep -Fq 'traceability:freshness:error:authoritative-inputs-changed' <<<"$rename_output"
+mv "$fart_dir/000101-001100.jsonl" "$fart_dir/000001-001000.jsonl"
+lake exe traceability freshness --root "$root" >/dev/null
+printf 'traceability-provenance-v2:pass:shard-rename-rejected\n'
+
 sed -i 's/Provenance v2 fixture theorem/Provenance v2 fixture theorem changed/' \
   "$root/metadata/formal-artifacts/fart/000001-001000.jsonl"
 set +e
