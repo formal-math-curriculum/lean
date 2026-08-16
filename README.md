@@ -47,11 +47,26 @@ bash Quality/quality.sh regression
 
 `bash Quality/quality.sh all` is convenience orchestration only; it does not collapse the underlying gate dimensions into one canonical truth.
 
+## Curriculum-to-code traceability
+
+Authored formal-artifact identity/location/link records and the deterministic validator are documented in [`TRACEABILITY.md`](TRACEABILITY.md).
+
+Validate the selected revision's authored traceability state with:
+
+```sh
+lake exe traceability validate
+```
+
+The traceability registry does not define curriculum taxonomy, learner prerequisites, Levels, readiness, or mathematical coverage. It links governed Project-1 curriculum identities/treatments to stable Project-2 formal-artifact identities and versioned code/dependency locations.
+
 ## Source layout
 
 - `FormalMath.lean` — convenience root for the supported library API.
 - `FormalMath/` — Lean modules in the `FormalMath.*` module hierarchy.
-- `.lake/` — local Lake dependencies/build artifacts; ignored by Git.
+- `Traceability/` — non-default M2.8 traceability validator/tooling; not part of the mathematical API.
+- `metadata/formal-artifacts/` — authored FART/FLOC/FLINK registry surface.
+- `metadata/curriculum-lock/` — minimal non-authoritative offline mirror for linked curriculum identities.
+- `.lake/` — local Lake dependencies/build/generated artifacts; ignored by Git.
 
 Repository structure and Lean module/import structure are software architecture and do not define curriculum taxonomy or learner prerequisites.
 
