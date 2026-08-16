@@ -4,6 +4,7 @@ Authors: Formal Mathematics Curriculum contributors
 -/
 module
 
+import Traceability.Allocation
 import Traceability.Validate
 
 /-!
@@ -26,6 +27,7 @@ def main (args : List String) : IO Unit := do
   match args with
   | "validate" :: rest =>
       let root ← IO.ofExcept <| parseRoot rest
+      validateAllocationRoot root
       validateRoot root
   | _ =>
       throw <| IO.userError "usage: lake exe traceability validate [--root <repository-root>]"
