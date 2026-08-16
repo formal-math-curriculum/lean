@@ -1,0 +1,6 @@
+# Supported-source warning suppression exceptions.
+# Format: repository/path<TAB>CEXC-M2-...<TAB>bounded rationale
+#
+# The default policy is no local `set_option warningAsError false` in supported FormalMath,
+# permanent Quality tooling, or QualityTests source. An exception must be represented by a governed
+# M2.4/M2.6 convention-exception ID and reviewed as part of the affected quality baseline.

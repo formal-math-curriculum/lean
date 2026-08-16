@@ -9,6 +9,7 @@ target="${2:-}"
 failures=0
 advisories=0
 files_checked=0
+WARNING_EXCEPTIONS="Quality/warning-suppression-exceptions.tsv"
 
 error() {
   local file="$1"
@@ -39,6 +40,15 @@ is_forbidden_transitive_root() {
   esac
 }
 
+warning_suppression_allowed() {
+  local file="$1"
+  [[ -f "$WARNING_EXCEPTIONS" ]] || return 1
+  awk -F '\t' -v file="$file" '
+    $0 !~ /^#/ && $1 == file && $2 ~ /^CEXC-M2-/ { found = 1 }
+    END { exit found ? 0 : 1 }
+  ' "$WARNING_EXCEPTIONS"
+}
+
 check_header() {
   local file="$1"
   local prefix
@@ -53,13 +63,31 @@ check_header() {
 
 check_module_doc() {
   local file="$1"
-  if ! head -n 80 "$file" | grep -Fq '/-!'; then
-    error "$file" "module-doc" "supported mathematical module lacks a module docstring"
+  if ! head -n 100 "$file" | grep -Fq '/-!'; then
+    error "$file" "module-doc" "supported module lacks a module docstring"
   fi
+}
+
+check_warning_policy() {
+  local file="$1"
+  local line line_no code
+  line_no=0
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    line_no=$((line_no + 1))
+    code="${line%%--*}"
+    if [[ "$code" =~ ^[[:space:]]*set_option[[:space:]]+warningAsError[[:space:]]+false([[:space:]]+in)?([[:space:]]|$) ]]; then
+      if warning_suppression_allowed "$file"; then
+        advisory "$file:$line_no" "warning-suppression-exception" "local warningAsError suppression allowed by governed CEXC entry"
+      else
+        error "$file:$line_no" "warning-suppression-disabled" "local warningAsError=false is prohibited without a governed CEXC exception"
+      fi
+    fi
+  done < "$file"
 }
 
 check_imports() {
   local file="$1"
+  local profile="${2:-production}"
   local line line_no code qualifiers modules module public_import
   line_no=0
   while IFS= read -r line || [[ -n "$line" ]]; do
@@ -75,14 +103,14 @@ check_imports() {
       for module in $modules; do
         module="${module%%,*}"
         [[ -z "$module" ]] && continue
-        if [[ "$module" == "FormalMath" ]]; then
+        if [[ "$profile" == "production" && "$module" == "FormalMath" ]]; then
           error "$file:$line_no" "root-umbrella-import" "production modules must import semantic dependencies, not the FormalMath umbrella"
         fi
         if is_forbidden_transitive_root "$module"; then
           error "$file:$line_no" "ungoverned-transitive-import" "direct import of transitive package module '$module' is not governed as a project dependency"
         fi
         if (( public_import )) && { [[ "$module" == "FormalMath.Internal" ]] || [[ "$module" == FormalMath.Internal.* ]]; }; then
-          error "$file:$line_no" "internal-reexport" "supported module must not publicly re-export FormalMath.Internal"
+          error "$file:$line_no" "internal-reexport" "supported source must not publicly re-export FormalMath.Internal"
         fi
         if [[ "$module" == "Mathlib" ]]; then
           advisory "$file:$line_no" "broad-mathlib-import" "broad Mathlib import requires human import-cost review"
@@ -97,13 +125,24 @@ check_math_file() {
   files_checked=$((files_checked + 1))
   check_header "$file"
   check_module_doc "$file"
-  check_imports "$file"
+  check_warning_policy "$file"
+  check_imports "$file" production
+}
+
+check_test_file() {
+  local file="$1"
+  files_checked=$((files_checked + 1))
+  check_header "$file"
+  check_module_doc "$file"
+  check_warning_policy "$file"
+  check_imports "$file" test
 }
 
 check_tooling_file() {
   local file="$1"
   files_checked=$((files_checked + 1))
   check_header "$file"
+  check_warning_policy "$file"
 }
 
 check_path_as_math() {
@@ -120,12 +159,24 @@ check_path_as_math() {
   fi
 }
 
+check_path_as_test() {
+  local path="$1"
+  if [[ -f "$path" ]]; then
+    check_test_file "$path"
+  elif [[ -d "$path" ]]; then
+    while IFS= read -r file; do
+      check_test_file "$file"
+    done < <(find "$path" -type f -name '*.lean' -print | LC_ALL=C sort)
+  else
+    printf 'source-quality:error:%s:input:test fixture/target path does not exist\n' "$path" >&2
+    exit 2
+  fi
+}
+
 case "$mode" in
   production)
     [[ -f FormalMath.lean ]] || { printf 'source-quality:error:FormalMath.lean:input:missing root umbrella\n' >&2; exit 2; }
-    check_header FormalMath.lean
-    check_module_doc FormalMath.lean
-    files_checked=$((files_checked + 1))
+    check_math_file FormalMath.lean
 
     while IFS= read -r file; do
       check_math_file "$file"
@@ -136,13 +187,26 @@ case "$mode" in
         check_tooling_file "$file"
       done < <(find Quality -type f -name '*.lean' ! -path 'Quality/Fixtures/*' -print | LC_ALL=C sort)
     fi
+
+    if [[ -f QualityTests.lean ]]; then
+      check_test_file QualityTests.lean
+    fi
+    if [[ -d QualityTests ]]; then
+      while IFS= read -r file; do
+        check_test_file "$file"
+      done < <(find QualityTests -type f -name '*.lean' -print | LC_ALL=C sort)
+    fi
     ;;
   fixture)
     [[ -n "$target" ]] || { printf 'usage: %s fixture <file-or-directory>\n' "$0" >&2; exit 2; }
     check_path_as_math "$target"
     ;;
+  test-fixture)
+    [[ -n "$target" ]] || { printf 'usage: %s test-fixture <file-or-directory>\n' "$0" >&2; exit 2; }
+    check_path_as_test "$target"
+    ;;
   *)
-    printf 'usage: %s [production | fixture <file-or-directory>]\n' "$0" >&2
+    printf 'usage: %s [production | fixture <file-or-directory> | test-fixture <file-or-directory>]\n' "$0" >&2
     exit 2
     ;;
 esac

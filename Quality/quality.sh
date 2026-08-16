@@ -4,6 +4,7 @@
 set -uo pipefail
 
 REPORT_DIR="${QUALITY_REPORT_DIR:-.lake/build/quality}"
+BASELINE_FILE="${QUALITY_BASELINE_FILE:-Quality/environment-baseline.env}"
 mkdir -p "$REPORT_DIR"
 
 usage() {
@@ -11,24 +12,24 @@ usage() {
 Usage: bash Quality/quality.sh <command> [dimension]
 
 Commands:
-  env         Resolve/verify the governed Lean/Lake/dependency environment.
-  build       Build the complete FormalMath target with warnings as failures.
-  proof       Build/run production proof and axiom assurance checks.
-  source      Run production source/import/API-boundary checks.
-  regression  Run positive regressions and deliberate negative controls.
+  env         Validate the selected Lean/Lake/dependency environment; cache warmup is best-effort.
+  build       Validate selected environment, then build complete FormalMath with warnings as failures.
+  proof       Validate selected environment, then run production proof/axiom assurance.
+  source      Validate selected environment, then run source/import/API-boundary checks.
+  regression  Validate selected environment, then run positive regressions and negative controls.
   all         Run env, then every quality dimension with independent results.
-  report      Print the latest compact report for the current SHA (optionally one dimension).
+  report      Print the latest compact report for the current full SHA (optionally one dimension).
 
-Every executed dimension writes a revision-bound compact .report file and a diagnostic .log file
-under .lake/build/quality by default. `all` is convenience orchestration only; dimension reports
-remain the canonical execution records.
+Every semantic dimension enforces the selected M2.5 environment before it can emit PASS. Each run
+writes a unique revision-bound directory with `result.report` and `output.log` under
+`.lake/build/quality` by default. `all` is orchestration only; dimension records remain canonical.
 EOF
 }
 
 current_sha() { git rev-parse HEAD; }
-current_short_sha() { git rev-parse --short=12 HEAD; }
 current_ref() { git symbolic-ref --short -q HEAD || printf 'detached'; }
 manifest_blob() { git hash-object lake-manifest.json 2>/dev/null || printf 'missing'; }
+baseline_blob() { git hash-object "$BASELINE_FILE" 2>/dev/null || printf 'missing'; }
 resolved_mathlib() {
   if [[ -d .lake/packages/mathlib/.git ]]; then
     git -C .lake/packages/mathlib rev-parse HEAD 2>/dev/null || printf 'unresolved'
@@ -40,7 +41,6 @@ lean_version() { lean --version 2>&1 | head -n 1 || true; }
 lake_version() { lake --version 2>&1 | head -n 1 || true; }
 platform_string() { uname -srm; }
 timestamp_utc() { date -u '+%Y-%m-%dT%H:%M:%SZ'; }
-file_timestamp() { date -u '+%Y%m%dT%H%M%SZ'; }
 
 write_report() {
   local dimension="$1"
@@ -53,12 +53,14 @@ write_report() {
   local report_path="$8"
 
   cat > "$report_path" <<EOF
-quality_report_version=1
+quality_report_version=2
 dimension=$dimension
 status=$status_name
 exit_code=$exit_code
 git_sha=$(current_sha)
 git_ref=$(current_ref)
+selected_environment_baseline=$BASELINE_FILE
+selected_environment_baseline_git_blob=$(baseline_blob)
 lean_toolchain=$(tr -d '\n' < lean-toolchain 2>/dev/null || printf 'missing')
 lean_version=$(lean_version)
 lake_version=$(lake_version)
@@ -72,6 +74,10 @@ log_path=$log_path
 EOF
 }
 
+new_run_dir() {
+  bash Quality/create-quality-run-dir.sh "$1" "$(current_sha)"
+}
+
 run_recorded() {
   local dimension="$1"
   shift
@@ -79,12 +85,10 @@ run_recorded() {
   printf -v command_text '%q ' "$@"
   command_text="${command_text% }"
 
-  local short_sha stamp base log_path report_path started_at finished_at status status_name
-  short_sha="$(current_short_sha)"
-  stamp="$(file_timestamp)"
-  base="$REPORT_DIR/${dimension}-${short_sha}-${stamp}"
-  log_path="${base}.log"
-  report_path="${base}.report"
+  local run_dir log_path report_path started_at finished_at status status_name
+  run_dir="$(new_run_dir "$dimension")" || return $?
+  log_path="$run_dir/output.log"
+  report_path="$run_dir/result.report"
   started_at="$(timestamp_utc)"
 
   printf 'quality-command:start:%s:%s\n' "$dimension" "$command_text"
@@ -105,34 +109,44 @@ run_recorded() {
 }
 
 run_env() {
-  run_recorded env bash -c \
-    'lake update && git diff --exit-code -- lean-toolchain lakefile.toml lake-manifest.json && lake exe cache get'
+  run_recorded env bash -c '
+    bash Quality/check-environment.sh semantic || exit $?
+    if bash Quality/check-environment.sh cache; then
+      printf "quality-env:cache:pass\n"
+    else
+      status=$?
+      printf "quality-env:cache:nonblocking-fail:exit=%d\n" "$status"
+    fi
+    exit 0
+  '
 }
 
 run_build() {
-  run_recorded build lake build --wfail FormalMath
+  run_recorded build bash -c \
+    'bash Quality/check-environment.sh semantic && lake build --wfail FormalMath'
 }
 
 run_proof() {
   run_recorded proof bash -c \
-    'lake build --wfail +Quality.AxiomAudit && lake env lean -DwarningAsError=true Quality/RunAxiomAudit.lean && lake env lean -DwarningAsError=true Quality/Fixtures/StandardAxiom.lean'
+    'bash Quality/check-environment.sh semantic && lake build --wfail +Quality.AxiomAudit && lake env lean -DwarningAsError=true Quality/RunAxiomAudit.lean && lake env lean -DwarningAsError=true Quality/Fixtures/StandardAxiom.lean'
 }
 
 run_source() {
-  run_recorded source bash Quality/check-source-quality.sh production
+  run_recorded source bash -c \
+    'bash Quality/check-environment.sh semantic && bash Quality/check-source-quality.sh production'
 }
 
 run_regression() {
-  run_recorded regression bash Quality/run-regression-tests.sh
+  run_recorded regression bash -c \
+    'bash Quality/check-environment.sh semantic && bash Quality/run-regression-tests.sh'
 }
 
 write_skip_report() {
   local dimension="$1"
   local reason="$2"
-  local short_sha stamp report_path now
-  short_sha="$(current_short_sha)"
-  stamp="$(file_timestamp)"
-  report_path="$REPORT_DIR/${dimension}-${short_sha}-${stamp}.report"
+  local run_dir report_path now
+  run_dir="$(new_run_dir "$dimension")" || return $?
+  report_path="$run_dir/result.report"
   now="$(timestamp_utc)"
   write_report "$dimension" "not-run" skipped 125 "none" "$now" "$now" "$report_path"
   printf 'skip_reason=%s\n' "$reason" >> "$report_path"
@@ -174,18 +188,21 @@ run_all() {
 
 show_report() {
   local dimension="${1:-}"
-  local short_sha pattern latest
-  short_sha="$(current_short_sha)"
+  local sha latest
+  local -a matches=()
+  sha="$(current_sha)"
+  shopt -s nullglob
   if [[ -n "$dimension" ]]; then
-    pattern="$REPORT_DIR/${dimension}-${short_sha}-"'*.report'
+    matches=("$REPORT_DIR/${dimension}-${sha}-"*/result.report)
   else
-    pattern="$REPORT_DIR/"'*'"-${short_sha}-"'*.report'
+    matches=("$REPORT_DIR/"*"-${sha}-"*/result.report)
   fi
-  latest=$(ls -1t $pattern 2>/dev/null | head -n 1 || true)
-  if [[ -z "$latest" ]]; then
-    printf 'quality-report:error:no-report-for-current-sha:%s\n' "$short_sha" >&2
+  shopt -u nullglob
+  if (( ${#matches[@]} == 0 )); then
+    printf 'quality-report:error:no-report-for-current-sha:%s\n' "$sha" >&2
     return 2
   fi
+  latest="$(ls -1t "${matches[@]}" | head -n 1)"
   cat "$latest"
 }
 
