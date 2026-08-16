@@ -4,6 +4,7 @@ Authors: Formal Mathematics Curriculum contributors
 -/
 module
 
+public import Traceability.Order
 public import Traceability.Registry
 
 /-!
