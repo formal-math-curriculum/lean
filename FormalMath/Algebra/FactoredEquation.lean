@@ -17,7 +17,7 @@ a replacement integer, equation structure, or learner-prerequisite claim.
 namespace FormalMath.Algebra
 
 /-- The integer expression `(x - a) * (x - b)` used by the M2.10 factored-equation slice. -/
-def factoredProduct (a b x : ℤ) : ℤ :=
+public def factoredProduct (a b x : ℤ) : ℤ :=
   (x - a) * (x - b)
 
 end FormalMath.Algebra
