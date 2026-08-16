@@ -35,14 +35,15 @@ private def jsonArrayFieldV2 (context : String) (j : Json) (key : String) : Exce
 private def countState (count : Nat) : String :=
   if count == 0 then "zero_matches" else if count == 1 then "matches" else "multiple_matches"
 
-private def envelope (kind value : String) (results : List Json) (state? : Option String := none) : Json :=
+private def envelope (kind value : String) (results : List Json)
+    (stateOverride : Option String := none) : Json :=
   Json.mkObj [
     ("reader_contract_ref", Json.str "P2-TRACE-M2.9-READER-v2"),
     ("authority", Json.str "derived_read_only"),
     ("query_kind", Json.str kind),
     ("query_value", Json.str value),
     ("match_count", Json.num results.length),
-    ("result_state", Json.str (state?.getD (countState results.length))),
+    ("result_state", Json.str (stateOverride.getD (countState results.length))),
     ("results", jsonArrayV2 results)
   ]
 
@@ -53,10 +54,8 @@ private def curriculumMatchReasons (record : Json) (candidateId : String) : List
   let current := match stringField "by-curriculum" record "candidate_ref_current_resolved" with
     | .ok id => id == candidateId
     | .error _ => false
-  let mut reasons := []
-  if recorded then reasons := "recorded_identity" :: reasons
-  if current then reasons := "current_resolved_identity" :: reasons
-  reasons.reverse
+  let reasons := if recorded then ["recorded_identity"] else []
+  if current then reasons ++ ["current_resolved_identity"] else reasons
 
 private def curriculumTreatment? (record : Json) : Except String String := do
   let link ← jsonField "by-curriculum" record "link"
