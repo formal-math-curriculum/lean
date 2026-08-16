@@ -7,6 +7,11 @@ ROOT="$(git rev-parse --show-toplevel)"
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 
+# The alternate-root fixture carries a current project FLOC. Strong validation must resolve that
+# declaration through the selected Lean environment, so materialize the governed fixture module
+# explicitly before exercising the copied alternate-root source tree.
+lake build --wfail +QualityTests.TraceabilityFixture
+
 make_root() {
   local root="$1"
   mkdir -p "$root/metadata/formal-artifacts/fart" "$root/metadata/formal-artifacts/floc" \
