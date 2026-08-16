@@ -8,6 +8,7 @@ import Traceability.IntegrityV1
 import Traceability.NavigationV1
 import Traceability.Order
 import Traceability.ProvenanceV2
+import Traceability.ReaderV2
 import Traceability.RegistryV1
 import Traceability.Reservations
 import Traceability.Resolve
@@ -31,6 +32,25 @@ private def parseRoot : List String → Except String FilePath
   | ["--root", root] => pure root
   | _ => throw "expected optional --root <repository-root>"
 
+private structure CurriculumInspectOptions where
+  root : FilePath := "."
+  treatment : Option String := none
+
+private def parseCurriculumInspectOptionsAux
+    (root : FilePath) (treatment : Option String) (seenRoot seenTreatment : Bool) :
+    List String → Except String CurriculumInspectOptions
+  | [] => pure { root := root, treatment := treatment }
+  | "--root" :: value :: rest =>
+      if seenRoot then throw "duplicate --root"
+      else parseCurriculumInspectOptionsAux value treatment true seenTreatment rest
+  | "--treatment" :: value :: rest =>
+      if seenTreatment then throw "duplicate --treatment"
+      else parseCurriculumInspectOptionsAux root (some value) seenRoot true rest
+  | _ => throw "expected optional --treatment <scope> and/or --root <repository-root>"
+
+private def parseCurriculumInspectOptions (args : List String) : Except String CurriculumInspectOptions :=
+  parseCurriculumInspectOptionsAux "." none false false args
+
 private unsafe def validateRoot (root : FilePath) : IO RegistryData := do
   validateShardOrderRoot root
   validateReservationBoundsRoot root
@@ -42,7 +62,7 @@ private unsafe def validateRoot (root : FilePath) : IO RegistryData := do
   return data
 
 private def usage : String :=
-  "usage: lake exe traceability <validate|generate|freshness|roundtrip|query curriculum <candidate-id>|query artifact <FART-id>|query declaration <module-file-or-declaration>> [--root <repository-root>]"
+  "usage: lake exe traceability <validate|generate|freshness|roundtrip|query curriculum <candidate-id>|query artifact <FART-id>|query declaration <module-file-or-declaration>|inspect curriculum <candidate-id> [--treatment <scope>]|inspect artifact <FART-id>|inspect source <module-file-or-declaration>|inspect unresolved> [--root <repository-root>]"
 
 public unsafe def main (args : List String) : IO Unit := do
   match args with
@@ -75,6 +95,22 @@ public unsafe def main (args : List String) : IO Unit := do
       let root ← IO.ofExcept <| parseRoot rest
       let data ← validateRoot root
       querySource data needle
+  | "inspect" :: "curriculum" :: candidateId :: rest =>
+      let opts ← IO.ofExcept <| parseCurriculumInspectOptions rest
+      let data ← validateRoot opts.root
+      inspectCurriculumV2 data candidateId opts.treatment
+  | "inspect" :: "artifact" :: artifactId :: rest =>
+      let root ← IO.ofExcept <| parseRoot rest
+      let data ← validateRoot root
+      inspectArtifactV2 data artifactId
+  | "inspect" :: "source" :: needle :: rest =>
+      let root ← IO.ofExcept <| parseRoot rest
+      let data ← validateRoot root
+      inspectSourceV2 data needle
+  | "inspect" :: "unresolved" :: rest =>
+      let root ← IO.ofExcept <| parseRoot rest
+      let data ← validateRoot root
+      inspectUnresolvedV2 data
   | _ =>
       throw <| IO.userError usage
 
