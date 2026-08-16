@@ -13,6 +13,12 @@ RESULT="$OUT_DIR/migration-result.env"
 subject_sha="$(git rev-parse HEAD)"
 resolved_mathlib="$(git -C .lake/packages/mathlib rev-parse HEAD 2>/dev/null || printf 'unresolved')"
 
+# The contract checks import project modules through LEAN_PATH, so materialize the exact
+# fixture modules first. This is setup, not a relaxation of the compatibility check.
+printf 'maintenance-migration:start:fixture-build\n'
+lake build --wfail +QualityTests.MigrationBefore +QualityTests.MigrationAfter
+printf 'maintenance-migration:fixture-build:pass\n'
+
 printf 'maintenance-migration:start:contract-positive\n'
 cat > "$TMP/Compatible.lean" <<'EOF'
 import QualityTests.MigrationBefore
