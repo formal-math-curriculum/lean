@@ -176,7 +176,7 @@ public def unresolvedView (data : RegistryData) : IO (List Json) := do
   return out.reverse
 
 private def writeJsonl (path : FilePath) (records : List Json) : IO Unit := do
-  let text := String.join "" (records.map fun record => Json.compress record ++ "\n")
+  let text := String.join (records.map fun record => Json.compress record ++ "\n")
   IO.FS.writeFile path text
 
 private def processOutput (cmd : String) (args : Array String) : IO String := do
