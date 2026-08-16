@@ -75,7 +75,7 @@ case_enum="$WORK/invalid-enum"
 make_base "$case_enum"
 sed -i 's/"representation_state":"represented"/"representation_state":"made_up_state"/' \
   "$case_enum/metadata/formal-artifacts/fart/000001-001000.jsonl"
-expect_reject_contains invalid-enum 'invalid-enum:made_up_state' \
+expect_reject_contains invalid-enum 'invalid-enum:representation_state:made_up_state' \
   lake exe traceability validate --root "$case_enum"
 
 # N2 — direct dangling FLINK→FART is correctly rejected.
