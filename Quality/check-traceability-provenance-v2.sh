@@ -50,10 +50,12 @@ grep -Fq '"subject_revision":"not_applicable"' "$legacy"
 grep -Fq '"subject_context":"alternate_root_content_snapshot"' "$legacy"
 grep -Fq '"deterministic_source_time":"not_applicable"' "$legacy"
 grep -Fq "\"generator_revision\":\"$sha\"" "$legacy"
-# V2 provides the explicit content-bound successor contract.
+# V2 provides the explicit content+projection-bound successor contract.
 grep -Fq '"subject_kind":"alternate_root_content_snapshot"' "$provenance"
 grep -Fq '"subject_revision":"not_applicable"' "$provenance"
-grep -Fq '"freshness_contract":"content_bound"' "$provenance"
+grep -Fq '"freshness_contract":"content_and_projection_bound"' "$provenance"
+grep -Fq '"generated_output_fingerprint"' "$provenance"
+grep -Fq '"legacy_manifest_fingerprint"' "$provenance"
 grep -Fq '"legacy_generated_manifest":"manifest.json"' "$provenance"
 if grep -Fq "$WORK" "$provenance"; then
   printf 'traceability-provenance-v2:fail:path-dependent-provenance\n' >&2
@@ -80,10 +82,46 @@ set -e
   printf 'traceability-provenance-v2:fail:tampered-sidecar-unexpected-pass\n' >&2
   exit 1
 }
-grep -Fq 'traceability:freshness:error:freshness_contract-mismatch:timestamp_only:content_bound' <<<"$contract_output"
+grep -Fq 'traceability:freshness:error:freshness_contract-mismatch:timestamp_only:content_and_projection_bound' <<<"$contract_output"
 lake exe traceability generate --root "$root" >/dev/null
 lake exe traceability freshness --root "$root" >/dev/null
 printf 'traceability-provenance-v2:pass:tampered-sidecar-rejected\n'
+
+# Derived output mutation must be detected before regeneration.
+printf '\nmanual generated mutation\n' >> "$out/index.md"
+set +e
+generated_output="$(lake exe traceability freshness --root "$root" 2>&1)"
+generated_status=$?
+set -e
+[[ "$generated_status" -ne 0 ]] || {
+  printf 'traceability-provenance-v2:fail:generated-output-mutation-unexpected-pass\n' >&2
+  exit 1
+}
+grep -Fq 'traceability:freshness:error:generated-outputs-changed' <<<"$generated_output"
+lake exe traceability generate --root "$root" >/dev/null
+lake exe traceability freshness --root "$root" >/dev/null
+printf 'traceability-provenance-v2:pass:generated-output-mutation-rejected\n'
+
+# Legacy manifest mutation is also part of projection freshness.
+python3 - "$legacy" <<'PY'
+import json, sys
+p=sys.argv[1]
+d=json.load(open(p))
+d["result_state"]="tampered"
+open(p,"w").write(json.dumps(d, sort_keys=True, separators=(",", ":"))+"\n")
+PY
+set +e
+legacy_output="$(lake exe traceability freshness --root "$root" 2>&1)"
+legacy_status=$?
+set -e
+[[ "$legacy_status" -ne 0 ]] || {
+  printf 'traceability-provenance-v2:fail:legacy-manifest-mutation-unexpected-pass\n' >&2
+  exit 1
+}
+grep -Fq 'traceability:freshness:error:legacy-manifest-changed' <<<"$legacy_output"
+lake exe traceability generate --root "$root" >/dev/null
+lake exe traceability freshness --root "$root" >/dev/null
+printf 'traceability-provenance-v2:pass:legacy-manifest-mutation-rejected\n'
 
 first_digest="$(git hash-object "$provenance")"
 lake exe traceability generate --root "$root" >/dev/null
