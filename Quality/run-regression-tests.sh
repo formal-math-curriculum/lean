@@ -3,6 +3,9 @@
 # Authors: Formal Mathematics Curriculum contributors
 set -euo pipefail
 
+CONTROL_REPORT_DIR="$(mktemp -d)"
+trap 'rm -rf "$CONTROL_REPORT_DIR"' EXIT
+
 run_pass() {
   local label="$1"
   shift
@@ -119,10 +122,12 @@ expect_fail_regex intended-executable-noncomputable \
   lake env lean Quality/Fixtures/Regression/NoncomputableExecutable.lean
 
 expect_fail_contains standalone-environment-mismatch "quality-env:error:toolchain-file-mismatch" \
-  env QUALITY_BASELINE_FILE=Quality/Fixtures/Environment/Mismatch.env \
+  env QUALITY_REPORT_DIR="$CONTROL_REPORT_DIR" \
+  QUALITY_BASELINE_FILE=Quality/Fixtures/Environment/Mismatch.env \
   bash Quality/quality.sh source
 
 run_pass_contains optional-cache-failure-nonblocking "quality-env:cache:nonblocking-fail:exit=73" \
-  env QUALITY_CACHE_FAIL_FIXTURE=1 bash Quality/quality.sh env
+  env QUALITY_REPORT_DIR="$CONTROL_REPORT_DIR" QUALITY_CACHE_FAIL_FIXTURE=1 \
+  bash Quality/quality.sh env
 
 printf 'quality-regression:summary:pass\n'
