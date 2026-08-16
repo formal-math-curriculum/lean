@@ -71,6 +71,11 @@ private def governedRootV2 (root : FilePath) : Bool :=
 private def provenancePathV2 (root : FilePath) (generatorRevision : String) : FilePath :=
   root / ".lake" / "build" / "traceability" / generatorRevision / "provenance-v2.json"
 
+private def requireStringV2 (provenance : Json) (key expected : String) : IO Unit := do
+  let actual ← IO.ofExcept <| stringField "provenance-v2" provenance key
+  if actual != expected then
+    provenanceFailIO s!"traceability:freshness:error:{key}-mismatch:{actual}:{expected}"
+
 public def writeProvenanceV2 (root outDir : FilePath) : IO FilePath := do
   let data ← loadRegistryData root
   let generatorRevision ← currentGitSha
@@ -117,16 +122,52 @@ public def verifyProvenanceV2 (root : FilePath := ".") : IO Unit := do
     provenanceFailIO s!"traceability:freshness:error:missing-provenance:{path}"
   let jsonText ← IO.FS.readFile path
   let provenance ← IO.ofExcept <| (Json.parse jsonText).mapError fun e => s!"traceability:freshness:error:json:{e}"
-  let recorded ← IO.ofExcept <| stringField "provenance-v2" provenance "authoritative_input_fingerprint"
-  let current ← authoritativeInputFingerprintV2 root
-  if recorded != current then
+
+  let schemaJson ← IO.ofExcept <| jsonField "provenance-v2" provenance "provenance_schema_version"
+  let schema ← IO.ofExcept <| schemaJson.getNat? |>.mapError fun e => s!"traceability:freshness:error:provenance_schema_version:{e}"
+  if schema != 2 then
+    provenanceFailIO s!"traceability:freshness:error:unsupported-provenance-schema:{schema}"
+
+  requireStringV2 provenance "authority" "generated_derived_provenance"
+  requireStringV2 provenance "provenance_ref" "P2-TRACE-M2.9-PROVENANCE-v2"
+  requireStringV2 provenance "generator_revision" generatorRevision
+  requireStringV2 provenance "output_namespace_revision" generatorRevision
+  requireStringV2 provenance "freshness_contract" "content_bound"
+  requireStringV2 provenance "legacy_generated_manifest" "manifest.json"
+  requireStringV2 provenance "result_state" "pass"
+
+  let data ← loadRegistryData root
+  let currentRegistry ← registryInputFingerprintV2 root
+  let currentLock ← curriculumLockFingerprintV2 root
+  let currentAuthored ← authoritativeInputFingerprintV2 root
+  let recordedRegistry ← IO.ofExcept <| stringField "provenance-v2" provenance "registry_input_fingerprint"
+  let recordedLock ← IO.ofExcept <| stringField "provenance-v2" provenance "curriculum_lock_input_fingerprint"
+  let recordedAuthored ← IO.ofExcept <| stringField "provenance-v2" provenance "authoritative_input_fingerprint"
+  if recordedRegistry != currentRegistry then
+    provenanceFailIO "traceability:freshness:error:registry-inputs-changed"
+  if recordedLock != currentLock then
+    provenanceFailIO "traceability:freshness:error:curriculum-lock-inputs-changed"
+  if recordedAuthored != currentAuthored then
     provenanceFailIO "traceability:freshness:error:authoritative-inputs-changed"
+
+  let release ← IO.ofExcept <| stringField "curriculum-lock" data.lockManifest "curriculum_release_ref"
+  let lockStatus ← IO.ofExcept <| stringField "curriculum-lock" data.lockManifest "mirror_status"
+  let dependencyBaseline ← IO.ofExcept <| stringField "registry-manifest" data.registryManifest "dependency_baseline_ref"
+  let toolchain ← IO.ofExcept <| stringField "registry-manifest" data.registryManifest "lean_toolchain_ref"
+  requireStringV2 provenance "curriculum_release_ref" release
+  requireStringV2 provenance "curriculum_lock_status" lockStatus
+  requireStringV2 provenance "dependency_baseline_ref" dependencyBaseline
+  requireStringV2 provenance "lean_toolchain_ref" toolchain
+
   let subjectKind ← IO.ofExcept <| stringField "provenance-v2" provenance "subject_kind"
   let subjectRevision ← IO.ofExcept <| stringField "provenance-v2" provenance "subject_revision"
+  let revisionClaim ← IO.ofExcept <| stringField "provenance-v2" provenance "repository_revision_claim"
   if governedRootV2 root then
-    if subjectKind != "governed_repository_revision" || subjectRevision != generatorRevision then
+    if subjectKind != "governed_repository_revision" || subjectRevision != generatorRevision ||
+        revisionClaim != "exact_generator_checkout" then
       provenanceFailIO "traceability:freshness:error:governed-subject-mismatch"
-  else if subjectKind != "alternate_root_content_snapshot" || subjectRevision != "not_applicable" then
+  else if subjectKind != "alternate_root_content_snapshot" || subjectRevision != "not_applicable" ||
+      revisionClaim != "none" then
     provenanceFailIO "traceability:freshness:error:alternate-root-overclaim"
   IO.println s!"traceability:freshness:pass:subject-kind={subjectKind}"
 
