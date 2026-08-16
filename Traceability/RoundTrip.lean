@@ -16,18 +16,18 @@ namespace FormalMathTraceability
 private def failIO (msg : String) : IO α :=
   throw <| IO.userError msg
 
-private def nestedId (context outerKey : String) (record : Json) : IO String := do
+private def nestedId (context outerKey : String) (record : Lean.Json) : IO String := do
   let nested ← IO.ofExcept <| jsonField context record outerKey
   IO.ofExcept <| stringField context nested "id"
 
-private def artifactViewHasLink (record : Json) (linkId : String) : IO Bool := do
+private def artifactViewHasLink (record : Lean.Json) (linkId : String) : IO Bool := do
   let links ← IO.ofExcept <| jsonField "by-artifact" record "curriculum_links"
   let values ← IO.ofExcept <| links.getArr? |>.mapError fun e => s!"traceability:error:roundtrip:curriculum_links:{e}"
   for link in values do
     if (← IO.ofExcept <| stringField "flink" link "id") == linkId then return true
   return false
 
-private def sourceViewHasLink (record : Json) (linkId : String) : IO Bool := do
+private def sourceViewHasLink (record : Lean.Json) (linkId : String) : IO Bool := do
   let links ← IO.ofExcept <| jsonField "by-source" record "curriculum_links"
   let values ← IO.ofExcept <| links.getArr? |>.mapError fun e => s!"traceability:error:roundtrip:source-links:{e}"
   for link in values do
