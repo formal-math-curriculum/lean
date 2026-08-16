@@ -4,7 +4,7 @@ Authors: Formal Mathematics Curriculum contributors
 -/
 module
 
-import FormalMath.Algebra.FactoredEquation
+public import FormalMath.Algebra.FactoredEquation
 
 /-!
 # Zero-product solution characterization
