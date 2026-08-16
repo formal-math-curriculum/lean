@@ -9,7 +9,8 @@ RESULT_DIR="$OUT_ROOT/results"
 WORK_ROOT="$OUT_ROOT/work"
 SIZES="${BENCH_SIZES:-8 32 128}"
 REPETITIONS="${BENCH_REPETITIONS:-3}"
-SUBJECT_SHA="$(git -C "$ROOT" rev-parse HEAD)"
+SUBJECT_HEAD_SHA="${BENCH_HEAD_SHA:-$(git -C "$ROOT" rev-parse HEAD)}"
+SUBJECT_INTEGRATION_SHA="${BENCH_INTEGRATION_SHA:-$(git -C "$ROOT" rev-parse HEAD)}"
 LEAN_TOOLCHAIN="$(tr -d '\n' < "$ROOT/lean-toolchain")"
 
 mkdir -p "$RESULT_DIR" "$WORK_ROOT"
@@ -17,7 +18,7 @@ CSV="$RESULT_DIR/build-scaling.csv"
 META="$RESULT_DIR/metadata.env"
 
 cat > "$CSV" <<'EOF'
-subject_sha,workload,topology,modules,import_edges,graph_depth,max_fanout,iteration,warmup,project_artifact_state,change_state,wall_ms,result
+subject_head_sha,subject_integration_sha,workload,topology,modules,import_edges,graph_depth,max_fanout,iteration,warmup,project_artifact_state,change_state,wall_ms,result
 EOF
 
 cat > "$META" <<EOF
@@ -25,7 +26,8 @@ benchmark_protocol=P2-SCALE-M2.9-PROTOCOL-v1
 benchmark_schema=P2-SCALE-M2.9-EVIDENCE-v1
 synthetic=true
 production_traceability_ids_allocated=false
-subject_sha=$SUBJECT_SHA
+subject_head_sha=$SUBJECT_HEAD_SHA
+subject_integration_sha=$SUBJECT_INTEGRATION_SHA
 lean_toolchain=$LEAN_TOOLCHAIN
 sizes=$SIZES
 repetitions=$REPETITIONS
@@ -49,9 +51,10 @@ measure() {
   end="$(now_ns)"
   elapsed=$(( (end - start) / 1000000 ))
   if [[ "$status" -eq 0 ]]; then result=pass; else result=fail; fi
-  printf '%s,%s,%s,%d,%d,%d,%d,%d,%s,%s,%s,%d,%s\n' \
-    "$SUBJECT_SHA" "$workload" "$topology" "$modules" "$edges" "$depth" "$fanout" \
-    "$iteration" "$warmup" "$artifact_state" "$change_state" "$elapsed" "$result" >> "$CSV"
+  printf '%s,%s,%s,%s,%d,%d,%d,%d,%d,%s,%s,%s,%d,%s\n' \
+    "$SUBJECT_HEAD_SHA" "$SUBJECT_INTEGRATION_SHA" "$workload" "$topology" \
+    "$modules" "$edges" "$depth" "$fanout" "$iteration" "$warmup" \
+    "$artifact_state" "$change_state" "$elapsed" "$result" >> "$CSV"
   return "$status"
 }
 
@@ -86,7 +89,7 @@ EOF
 
   {
     write_header
-    printf '\nnamespace Bench\n\ndef commonSeed : Nat := 1\n\nend Bench\n'
+    printf '\nnamespace Bench\n\npublic def commonSeed : Nat := 1\n\nend Bench\n'
   } > "$ws/Bench/Common.lean"
 
   {
@@ -107,8 +110,13 @@ EOF
 }
 
 build_workspace() {
-  local ws="$1"
-  (cd "$ws" && lake build Bench >/dev/null)
+  local ws="$1" log_path
+  log_path="$ws/.benchmark-last-build.log"
+  if (cd "$ws" && lake build Bench >"$log_path" 2>&1); then
+    return 0
+  fi
+  cat "$log_path" >&2
+  return 1
 }
 
 mutate_leaf() {
@@ -117,9 +125,9 @@ mutate_leaf() {
   printf '\nnamespace Bench\ndef leafMutation%d : Nat := %d\nend Bench\n' "$rep" "$rep" >> "$leaf"
 }
 
-mutate_central() {
+mutate_central_public() {
   local ws="$1" rep="$2"
-  printf '\nnamespace Bench\ndef centralMutation%d : Nat := %d\nend Bench\n' "$rep" "$rep" >> "$ws/Bench/Common.lean"
+  printf '\nnamespace Bench\npublic def centralMutation%d : Nat := %d\nend Bench\n' "$rep" "$rep" >> "$ws/Bench/Common.lean"
 }
 
 for n in $SIZES; do
@@ -133,6 +141,12 @@ for n in $SIZES; do
   edges=$((2 * n))
   depth=3
   fanout=$n
+
+  # One declared warmup clean build per cardinality. It is retained in evidence but excluded from comparable-series summaries.
+  make_star_workspace "$n" "$ws"
+  rm -rf "$ws/.lake"
+  measure clean-project-build star "$modules" "$edges" "$depth" "$fanout" \
+    0 true project_clean no_source_change build_workspace "$ws"
 
   # Clean-series: recreate root build state before every measured repetition.
   for ((rep=1; rep<=REPETITIONS; rep++)); do
@@ -150,7 +164,7 @@ for n in $SIZES; do
       "$rep" false project_warm no_source_change build_workspace "$ws"
   done
 
-  # Leaf edit: prepare identical warm workspace for each repetition, mutate one leaf, rebuild.
+  # Leaf edit: a private leaf-only change after a warm build.
   for ((rep=1; rep<=REPETITIONS; rep++)); do
     make_star_workspace "$n" "$ws"
     build_workspace "$ws"
@@ -159,15 +173,14 @@ for n in $SIZES; do
       "$rep" false project_warm leaf_local_change build_workspace "$ws"
   done
 
-  # Central edit: prepare identical warm workspace, mutate Common imported by all leaves, rebuild.
+  # Central edit: a PUBLIC change to Common, imported by every leaf, after a warm build.
   for ((rep=1; rep<=REPETITIONS; rep++)); do
     make_star_workspace "$n" "$ws"
     build_workspace "$ws"
-    mutate_central "$ws" "$rep"
+    mutate_central_public "$ws" "$rep"
     measure central-module-edit star "$modules" "$edges" "$depth" "$fanout" \
       "$rep" false project_warm central_project_change build_workspace "$ws"
   done
-
 done
 
 printf 'benchmark:build-scaling:pass:csv=%s\n' "$CSV"
