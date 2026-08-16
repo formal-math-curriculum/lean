@@ -34,7 +34,7 @@ private def familyFilesV2 (root : FilePath) (family : String) : IO (List FilePat
   if !(← dir.pathExists) then return []
   if !(← dir.isDir) then provenanceFailIO s!"traceability:provenance:error:{dir}:not-directory"
   let paths := (← dir.walkDir).filter fun p => p.extension == some "jsonl"
-  return paths.qsort fun a b => decide (a.toString < b.toString)
+  return (paths.qsort fun a b => decide (a.toString < b.toString)).toList
 
 private def familyFingerprintV2 (root : FilePath) (family : String) : IO String := do
   let paths ← familyFilesV2 root family
@@ -51,7 +51,8 @@ public def registryInputFingerprintV2 (root : FilePath := ".") : IO String := do
   let fart ← familyFingerprintV2 root "fart"
   let floc ← familyFingerprintV2 root "floc"
   let flink ← familyFingerprintV2 root "flink"
-  return String.intercalate ";" [s!"registry:{registryHash}", fart, floc, flink].filter (fun x => !x.isEmpty)
+  let parts := [s!"registry:{registryHash}", fart, floc, flink].filter (fun x => !x.isEmpty)
+  return String.intercalate ";" parts
 
 public def curriculumLockFingerprintV2 (root : FilePath := ".") : IO String := do
   let manifestPath := root / "metadata" / "curriculum-lock" / "manifest.json"
