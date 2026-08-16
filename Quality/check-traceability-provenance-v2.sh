@@ -53,6 +53,27 @@ lake exe traceability freshness --root "$root" >/dev/null
 printf 'traceability-provenance-v2:pass:alternate-root-no-revision-overclaim\n'
 printf 'traceability-provenance-v2:pass:path-independent-manifest-reference\n'
 
+# The sidecar contract itself is validated, not merely its combined digest.
+python3 - "$provenance" <<'PY'
+import json, sys
+p=sys.argv[1]
+d=json.load(open(p))
+d["freshness_contract"]="timestamp_only"
+open(p,"w").write(json.dumps(d, sort_keys=True, separators=(",", ":"))+"\n")
+PY
+set +e
+contract_output="$(lake exe traceability freshness --root "$root" 2>&1)"
+contract_status=$?
+set -e
+[[ "$contract_status" -ne 0 ]] || {
+  printf 'traceability-provenance-v2:fail:tampered-sidecar-unexpected-pass\n' >&2
+  exit 1
+}
+grep -Fq 'traceability:freshness:error:freshness_contract-mismatch:timestamp_only:content_bound' <<<"$contract_output"
+lake exe traceability generate --root "$root" >/dev/null
+lake exe traceability freshness --root "$root" >/dev/null
+printf 'traceability-provenance-v2:pass:tampered-sidecar-rejected\n'
+
 first_digest="$(git hash-object "$provenance")"
 lake exe traceability generate --root "$root" >/dev/null
 second_digest="$(git hash-object "$provenance")"
@@ -74,7 +95,7 @@ set -e
   printf 'traceability-provenance-v2:fail:shard-rename-unexpected-pass\n' >&2
   exit 1
 }
-grep -Fq 'traceability:freshness:error:authoritative-inputs-changed' <<<"$rename_output"
+grep -Fq 'traceability:freshness:error:registry-inputs-changed' <<<"$rename_output"
 mv "$fart_dir/000101-001100.jsonl" "$fart_dir/000001-001000.jsonl"
 lake exe traceability freshness --root "$root" >/dev/null
 printf 'traceability-provenance-v2:pass:shard-rename-rejected\n'
@@ -89,7 +110,7 @@ set -e
   printf 'traceability-provenance-v2:fail:stale-input-unexpected-pass\n' >&2
   exit 1
 }
-grep -Fq 'traceability:freshness:error:authoritative-inputs-changed' <<<"$stale_output"
+grep -Fq 'traceability:freshness:error:registry-inputs-changed' <<<"$stale_output"
 printf 'traceability-provenance-v2:pass:stale-authored-input-rejected\n'
 
 lake exe traceability generate --root "$root" >/dev/null
