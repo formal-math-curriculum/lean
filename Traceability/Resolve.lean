@@ -86,8 +86,8 @@ private def requireProjectSourceCoupling (root : FilePath) (filePath : String) :
     failIO s!"traceability:error:resolve:alternate-root-source-mismatch:{filePath}"
 
 private def projectBlobDigest (id : String) (anchors : List String) : IO String := do
-  let matches := anchors.filter fun anchor => anchor.startsWith "git-blob:"
-  match matches with
+  let blobAnchors := anchors.filter fun anchor => anchor.startsWith "git-blob:"
+  match blobAnchors with
   | [anchor] =>
       let digest := String.ofList ((anchor.toList).drop "git-blob:".length)
       if digest.length != 40 then
