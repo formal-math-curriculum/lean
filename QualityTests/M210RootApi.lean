@@ -17,15 +17,16 @@ curriculum coverage.
 namespace QualityTests.M210RootApi
 
 /-- The root exposes the construction. -/
-example : FormalMath.Algebra.factoredProduct 2 5 2 = 0 := by
-  rfl
+example (a b x : Int) : Int :=
+  FormalMath.Algebra.factoredProduct a b x
 
 /-- The root exposes the general bounded theorem. -/
-example (x : ℤ) : FormalMath.Algebra.factoredProduct 2 5 x = 0 ↔ x = 2 ∨ x = 5 :=
-  FormalMath.Algebra.factoredProduct_eq_zero_iff 2 5 x
+example (a b x : Int) :
+    FormalMath.Algebra.factoredProduct a b x = 0 ↔ x = a ∨ x = b :=
+  FormalMath.Algebra.factoredProduct_eq_zero_iff a b x
 
 /-- The root exposes the concrete example. -/
-example (x : ℤ) : FormalMath.Algebra.factoredProduct 2 5 x = 0 ↔ x = 2 ∨ x = 5 :=
+example (x : Int) : FormalMath.Algebra.factoredProduct 2 5 x = 0 ↔ x = 2 ∨ x = 5 :=
   FormalMath.Algebra.Examples.two_five_factored_equation x
 
 end QualityTests.M210RootApi

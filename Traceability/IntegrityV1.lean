@@ -117,6 +117,31 @@ private def validateFartLinkBackrefs (data : RegistryData) : IO Unit := do
     if !refs.contains linkId then
       failIO s!"traceability:error:integrity:flink-missing-from-fart:{linkId}:{fartId}"
 
+private def validateFartLocatorBackrefs (data : RegistryData) : IO Unit := do
+  for fart in data.farts do
+    let fartId ← requiredString "fart" fart "id"
+    let locatorRefs ← requiredStrings "fart" fart "current_locator_refs"
+    for locatorId in locatorRefs do
+      let some floc ← findJsonById? data.flocs locatorId
+        | failIO s!"traceability:error:integrity:dangling-fart-current-locator:{fartId}:{locatorId}"
+      let owner ← requiredString "floc" floc "formal_artifact_ref"
+      if owner != fartId then
+        failIO s!"traceability:error:integrity:fart-current-locator-crosses-artifact:{fartId}:{locatorId}:{owner}"
+      let status ← requiredString "floc" floc "locator_status"
+      if status != "current" then
+        failIO s!"traceability:error:integrity:current-locator-ref-not-current:{fartId}:{locatorId}:{status}"
+  for floc in data.flocs do
+    let locatorId ← requiredString "floc" floc "id"
+    let fartId ← requiredString "floc" floc "formal_artifact_ref"
+    let status ← requiredString "floc" floc "locator_status"
+    let some fart ← findJsonById? data.farts fartId
+      | failIO s!"traceability:error:integrity:dangling-floc-fart:{locatorId}:{fartId}"
+    let locatorRefs ← requiredStrings "fart" fart "current_locator_refs"
+    if status == "current" && !locatorRefs.contains locatorId then
+      failIO s!"traceability:error:integrity:current-floc-missing-from-fart:{locatorId}:{fartId}"
+    if status != "current" && locatorRefs.contains locatorId then
+      failIO s!"traceability:error:integrity:noncurrent-floc-listed-current:{locatorId}:{fartId}:{status}"
+
 private def validateFartLifecycle (data : RegistryData) : IO Unit := do
   for fart in data.farts do
     let id ← requiredString "fart" fart "id"
@@ -210,6 +235,7 @@ private def validateCurriculumAuthority (data : RegistryData) : IO Unit := do
 public def validateIntegrityV1 (data : RegistryData) : IO Unit := do
   validateFartBaselines data
   validateFartLinkBackrefs data
+  validateFartLocatorBackrefs data
   validateFartLifecycle data
   validateFlocLifecycle data
   validateCurriculumAuthority data
