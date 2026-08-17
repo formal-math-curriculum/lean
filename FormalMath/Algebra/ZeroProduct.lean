@@ -25,8 +25,8 @@ public theorem factoredProduct_eq_zero_iff (a b x : ℤ) :
     have hmul : (x - a) * (x - b) = 0 := by
       simpa [factoredProduct] using h
     rcases Int.eq_zero_or_eq_zero_of_mul_eq_zero hmul with ha | hb
-    · exact Or.inl (sub_eq_zero.mp ha)
-    · exact Or.inr (sub_eq_zero.mp hb)
+    · exact Or.inl (Int.eq_of_sub_eq_zero ha)
+    · exact Or.inr (Int.eq_of_sub_eq_zero hb)
   · intro h
     rcases h with rfl | rfl <;> simp [factoredProduct]
 
