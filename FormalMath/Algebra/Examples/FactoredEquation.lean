@@ -4,7 +4,7 @@ Authors: Formal Mathematics Curriculum contributors
 -/
 module
 
-import FormalMath.Algebra.ZeroProduct
+public import FormalMath.Algebra.ZeroProduct
 
 /-!
 # Factored-equation examples
