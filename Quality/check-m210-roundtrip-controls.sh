@@ -192,7 +192,7 @@ for record in records:
         record["current_locator_refs"] = ["FLOC-P2-000003"]
 path.write_text("".join(json.dumps(record, sort_keys=True, separators=(",", ":")) + "\n" for record in records))
 PY
-expect_failure current-backreference 'current-locator-ref-not-current:FART-P2-000003:FLOC-P2-000003:historical' \
+expect_failure current-backreference 'traceability:error:registry:noncurrent-locator-in-current-set:FART-P2-000003:FLOC-P2-000003' \
   lake exe traceability validate --root "$bad_backref"
 
 printf 'm210-roundtrip:start:wrong-declaration-control\n'
