@@ -4,6 +4,7 @@ Authors: Formal Mathematics Curriculum contributors
 -/
 module
 
+import all FormalMath.Algebra.FactoredEquation
 public import FormalMath.Algebra.FactoredEquation
 
 /-!
