@@ -4,6 +4,7 @@ Authors: Formal Mathematics Curriculum contributors
 -/
 module
 
+import all FormalMath.Algebra.ZeroProduct
 public import FormalMath.Algebra.ZeroProduct
 
 /-!
