@@ -8,7 +8,7 @@ import all FormalMath.Algebra.ZeroProduct
 public import FormalMath.Algebra.ZeroProduct
 
 /-!
-# Factored-equation examples
+# Factored-integer-equation examples
 
 Concrete specialization of the M2.10 integer factored-equation theorem. This example is another
 formal representation of the existing bounded curriculum treatment, not a new curriculum identity.
