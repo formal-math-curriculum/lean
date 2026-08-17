@@ -225,8 +225,8 @@ path = pathlib.Path(sys.argv[1])
 records = [json.loads(line) for line in path.read_text().splitlines() if line]
 for record in records:
     if record["id"] == "FLOC-P2-000002":
-        record["module_name"] = "FormalMath.Algebra.Examples.FactoredEquation"
-        record["file_path"] = "FormalMath/Algebra/Examples/FactoredEquation.lean"
+        record["module_name"] = "FormalMath.Algebra.Examples.FactoredIntegerEquation"
+        record["file_path"] = "FormalMath/Algebra/Examples/FactoredIntegerEquation.lean"
 path.write_text("".join(json.dumps(record, sort_keys=True, separators=(",", ":")) + "\n" for record in records))
 PY
 expect_failure wrong-module 'declaration-module-mismatch:FLOC-P2-000002' \
