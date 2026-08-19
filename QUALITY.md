@@ -67,7 +67,22 @@ After the selected-environment preflight, this dimension:
 3. runs the production module-origin axiom audit under direct Lean `-DwarningAsError=true`;
 4. runs the standard mathematical axiom positive control.
 
-The auditor distinguishes standard mathematical Lean axioms, `sorryAx`, `Lean.trustCompiler`, and custom/unclassified axioms. Deliberate bad controls live in regression.
+The auditor enumerates both imported and locally declared kernel constants, reports each declaration's
+origin module and complete transitive axiom dependency set, and rejects an empty match as a coverage
+failure. The production runner additionally requires the three governed declarations at this revision:
+
+- `FormalMath.Algebra.factoredProduct`;
+- `FormalMath.Algebra.factoredProduct_eq_zero_iff`;
+- `FormalMath.Algebra.Examples.two_five_factored_equation`.
+
+Any missing governed declaration fails the coverage gate. Additional implementation-internal kernel
+declarations remain named and audited, but do not thereby become governed FLOC records. The auditor
+independently distinguishes standard mathematical Lean axioms, `sorryAx`, `Lean.trustCompiler`, and
+custom/unclassified axioms. Deliberate bad controls live in regression.
+
+The earlier MAT-176 bootstrap evidence, where the project contained no kernel declarations and the
+production audit reported zero, is historical revision-bound evidence only. It is not transferable to
+the current nonempty `FormalMath` surface or to any later source-changing revision.
 
 ## `source` — source/API and authored traceability integrity
 
@@ -110,6 +125,9 @@ After selected-environment validation, the permanent regression harness includes
 - **generated traceability controls** through `Quality/check-traceability-generated-controls.sh`;
 - source positive checks and source-policy negative controls;
 - direct `sorry`, transitive `sorryAx`, custom axiom, and `Lean.trustCompiler` controls;
+- a safe declaration imported from a separate module, proving imported constants are enumerated;
+- a custom axiom imported from a separate module, proving its intended classification still fails;
+- a deliberately vacuous imported-surface prefix, proving zero matches fail as a coverage error;
 - executable/noncomputable contract control;
 - selected-environment mismatch rejection;
 - optional-cache failure nonblocking control;

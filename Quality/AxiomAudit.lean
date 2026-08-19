@@ -43,17 +43,35 @@ Audit every kernel declaration whose origin module is `modulePrefix` or one of i
 Standard Lean mathematical axioms (`propext`, `Classical.choice`, `Quot.sound`) are reported but do
 not fail the default audit. `sorryAx`, `Lean.trustCompiler`, and all other unclassified axioms fail.
 The module-origin filter is intentional: project declaration namespaces need not mirror module paths.
+Imported and locally declared constants are both inspected. An empty result is a coverage failure by
+default, and callers may provide declarations required for a governed production surface. Additional
+implementation-internal declarations remain visible and audited without becoming governed locators.
 -/
-public meta def auditModulePrefix (modulePrefix : Name) : CommandElabM Unit := do
+public meta def auditModulePrefix (modulePrefix : Name)
+    (requiredDeclarations : Array Name := #[]) (requireNonempty := true) :
+    CommandElabM Unit := do
   let env ← getEnv
-  let names ← env.checked.get.constants.map₂.foldlM (init := #[]) fun acc declName _ => do
+  let names := env.constants.fold (init := #[]) fun acc declName _ =>
     let origin := moduleNameForDecl env declName
-    pure <| if moduleHasPrefix modulePrefix origin then acc.push declName else acc
+    if moduleHasPrefix modulePrefix origin then acc.push declName else acc
   let names := names.qsort Name.lt
-  let mut failures : Nat := 0
+
+  let mut coverageFailures : Nat := 0
+  if requireNonempty && names.isEmpty then
+    coverageFailures := coverageFailures + 1
+    logError m!"axiom audit: module-prefix={modulePrefix}; coverage-empty"
+  let requiredDeclarations := requiredDeclarations.qsort Name.lt
+  let missingRequired := requiredDeclarations.filter fun declName => !names.contains declName
+  if !missingRequired.isEmpty then
+    coverageFailures := coverageFailures + 1
+    logError m!"axiom audit: module-prefix={modulePrefix}; coverage-missing=[{namesString missingRequired}]"
+
+  let mut axiomFailures : Nat := 0
   let mut withAxioms : Nat := 0
   for declName in names do
-    let axioms ← Lean.collectAxioms declName
+    let origin := moduleNameForDecl env declName
+    let axioms := (← Lean.collectAxioms declName).qsort Name.lt
+    logInfo m!"axiom audit: declaration={declName}; origin={origin}; axioms=[{namesString axioms}]"
     if !axioms.isEmpty then
       withAxioms := withAxioms + 1
       let standard := axioms.filter isStandardMathematicalAxiom
@@ -64,15 +82,16 @@ public meta def auditModulePrefix (modulePrefix : Name) : CommandElabM Unit := d
       if !standard.isEmpty then
         logInfo m!"axiom audit: {declName}: standard=[{namesString standard}]"
       if !sorries.isEmpty then
-        failures := failures + 1
+        axiomFailures := axiomFailures + 1
         logError m!"axiom audit: {declName}: unfinished=[{namesString sorries}]"
       if !trust.isEmpty then
-        failures := failures + 1
+        axiomFailures := axiomFailures + 1
         logError m!"axiom audit: {declName}: trust-review=[{namesString trust}]"
       if !custom.isEmpty then
-        failures := failures + 1
+        axiomFailures := axiomFailures + 1
         logError m!"axiom audit: {declName}: custom-or-unclassified=[{namesString custom}]"
-  logInfo m!"axiom audit: module-prefix={modulePrefix}; declarations={names.size}; declarations-with-axioms={withAxioms}; failures={failures}"
+  let failures := coverageFailures + axiomFailures
+  logInfo m!"axiom audit: module-prefix={modulePrefix}; declarations={names.size}; names=[{namesString names}]; required=[{namesString requiredDeclarations}]; missing-required=[{namesString missingRequired}]; declarations-with-axioms={withAxioms}; coverage-failures={coverageFailures}; axiom-failures={axiomFailures}; failures={failures}"
   if failures > 0 then
     throwError "formal mathematics axiom audit failed"
 
