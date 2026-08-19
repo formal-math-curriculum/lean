@@ -4,10 +4,15 @@ on:
   pull_request:
     paths:
       - 'Traceability/ProvenanceV2.lean'
+      - 'Traceability/Views.lean'
+      - 'Traceability/IntegrityV1.lean'
+      - 'Traceability/RegistryV1.lean'
+      - 'Traceability/NavigationV1.lean'
       - 'Traceability/Main.lean'
       - 'Traceability.lean'
       - 'TRACEABILITY_M2.9.md'
       - 'Quality/check-traceability-provenance-v2.sh'
+      - 'Quality/check-traceability-reader-v2.sh'
       - 'Benchmarks/run-traceability-scaling.sh'
       - '.github/workflows/m29-traceability-scale.yml'
   workflow_dispatch:

@@ -159,11 +159,21 @@ private def lineageState (link : Json) : IO String := do
   let lineage ← IO.ofExcept <| jsonField "flink" link "candidate_lineage_resolution"
   IO.ofExcept <| stringField "flink.lineage" lineage "state"
 
+private def lockIdentityUnresolved (identity : Json) : IO Bool := do
+  let recordStatus ← IO.ofExcept <| stringField "curriculum-lock-identity" identity "record_status"
+  let resolutionState ← IO.ofExcept <| stringField "curriculum-lock-identity" identity "resolution_state"
+  return recordStatus == "stale" || recordStatus == "unresolved" ||
+    resolutionState == "needs_scope_review" || resolutionState == "ambiguous" ||
+    resolutionState == "stale" || resolutionState == "unresolved"
+
 public def unresolvedView (data : RegistryData) : IO (List Json) := do
   let mut out := []
   let lockStatus ← IO.ofExcept <| stringField "curriculum-lock" data.lockManifest "mirror_status"
   if lockStatus != "verified_snapshot" then
     out := Json.mkObj [("kind", Json.str "curriculum_lock"), ("record", data.lockManifest)] :: out
+  for identity in data.lockIdentities do
+    if ← lockIdentityUnresolved identity then
+      out := Json.mkObj [("kind", Json.str "curriculum_lock_identity"), ("record", identity)] :: out
   for floc in data.flocs do
     if (← IO.ofExcept <| stringField "floc" floc "locator_status") == "unresolved" then
       out := Json.mkObj [("kind", Json.str "floc"), ("record", floc)] :: out

@@ -128,6 +128,32 @@ private def readFamily (root : FilePath) (family : String) : IO (List LocatedJso
         out := { path := path, value := value } :: out
   return out.reverse
 
+private structure IdNamespace where
+  fartPrefix : String
+  flocPrefix : String
+  flinkPrefix : String
+  candidatePrefix : String
+  synthetic : Bool
+
+private def namespaceForStatus (context status : String) : Except String IdNamespace := do
+  if status == "active" then
+    return {
+      fartPrefix := "FART-P2-"
+      flocPrefix := "FLOC-P2-"
+      flinkPrefix := "FLINK-P2-"
+      candidatePrefix := "CAND-P1-"
+      synthetic := false
+    }
+  if status == "synthetic_fixture" then
+    return {
+      fartPrefix := "SFART-M2-"
+      flocPrefix := "SFLOC-M2-"
+      flinkPrefix := "SFLINK-M2-"
+      candidatePrefix := "SCAND-M2-"
+      synthetic := true
+    }
+  failE context s!"invalid-enum:registry_status:{status}"
+
 private structure Manifest where
   nextFart : Nat
   nextFloc : Nat
@@ -136,6 +162,8 @@ private structure Manifest where
   countFloc : Nat
   countFlink : Nat
   reservations : List String
+  ids : IdNamespace
+  registryStatus : String
 
 private def validateManifest (j : Json) : Except String Manifest := do
   let c := "registry-manifest"
@@ -148,12 +176,13 @@ private def validateManifest (j : Json) : Except String Manifest := do
   requireNonempty c "default_curriculum_baseline_ref" (← strField c j "default_curriculum_baseline_ref")
   requireNonempty c "dependency_baseline_ref" (← strField c j "dependency_baseline_ref")
   requireNonempty c "lean_toolchain_ref" (← strField c j "lean_toolchain_ref")
-  requireNonempty c "registry_status" (← strField c j "registry_status")
+  let registryStatus ← strField c j "registry_status"
+  let ids ← namespaceForStatus c registryStatus
   let nextIds ← objField c j "next_ids"
   requireExactKeys "registry-manifest.next_ids" nextIds ["fart", "flink", "floc"]
-  let nextFart ← idNumber c "FART-P2-" (← strField c nextIds "fart")
-  let nextFloc ← idNumber c "FLOC-P2-" (← strField c nextIds "floc")
-  let nextFlink ← idNumber c "FLINK-P2-" (← strField c nextIds "flink")
+  let nextFart ← idNumber c ids.fartPrefix (← strField c nextIds "fart")
+  let nextFloc ← idNumber c ids.flocPrefix (← strField c nextIds "floc")
+  let nextFlink ← idNumber c ids.flinkPrefix (← strField c nextIds "flink")
   let counts ← objField c j "record_counts"
   requireExactKeys "registry-manifest.record_counts" counts ["fart", "flink", "floc"]
   let countFart ← natField c counts "fart"
@@ -167,9 +196,9 @@ private def validateManifest (j : Json) : Except String Manifest := do
     let state ← strField c value "state"
     requireEnum c "state" state ["reserved_unissued", "retired_identity"]
     requireNonempty c "reason" (← strField c value "reason")
-    if !(rid.startsWith "FART-P2-" || rid.startsWith "FLOC-P2-" || rid.startsWith "FLINK-P2-") then failE c s!"invalid-id:{rid}"
+    if !(rid.startsWith ids.fartPrefix || rid.startsWith ids.flocPrefix || rid.startsWith ids.flinkPrefix) then failE c s!"invalid-id:{rid}"
     reservations := rid :: reservations
-  return { nextFart, nextFloc, nextFlink, countFart, countFloc, countFlink, reservations := reservations.reverse }
+  return { nextFart, nextFloc, nextFlink, countFart, countFloc, countFlink, reservations := reservations.reverse, ids, registryStatus }
 
 private structure Fart where
   id : String
@@ -201,7 +230,7 @@ private def validateProvenance (j : Json) : Except String Unit := do
   let _ ← strField c j "statement_provenance_notes"
   let _ ← strField c j "proof_or_implementation_provenance_notes"
 
-private def validateFart (located : LocatedJson) : Except String Fart := do
+private def validateFart (ids : IdNamespace) (located : LocatedJson) : Except String Fart := do
   let j := located.value
   let c := "fart"
   let keys ← objKeys j
@@ -209,7 +238,7 @@ private def validateFart (located : LocatedJson) : Except String Fart := do
   requireExactKeys c j ["artifact_kind", "created_revision", "current_locator_refs", "curriculum_link_refs", "dependency_baseline_ref", "id", "lean_toolchain_ref", "quality_state", "record_status", "representation_state", "schema_version", "source_provenance", "superseded_by", "supersedes", "title_or_summary", "verification_state"]
   if (← natField c j "schema_version") != 1 then failE c "unsupported-schema-version"
   let id ← strField c j "id"
-  let number ← idNumber c "FART-P2-" id
+  let number ← idNumber c ids.fartPrefix id
   if located.path.fileName.getD "" != expectedShard number then failE c s!"wrong-shard:{id}"
   requireEnum c "artifact_kind" (← strField c j "artifact_kind") ["definition", "theorem", "theorem_family", "structure_api", "model", "encoding", "example", "exercise_solution", "infrastructure", "other"]
   requireEnum c "representation_state" (← strField c j "representation_state") ["unknown", "not_assessed", "planned", "partial", "represented"]
@@ -228,23 +257,23 @@ private def validateFart (located : LocatedJson) : Except String Fart := do
   requireSortedUnique c "curriculum_link_refs" links
   requireSortedUnique c "supersedes" supersedes
   requireSortedUnique c "superseded_by" supersededBy
-  for x in locs do let _ ← idNumber c "FLOC-P2-" x
-  for x in links do let _ ← idNumber c "FLINK-P2-" x
-  for x in supersedes do let _ ← idNumber c "FART-P2-" x
-  for x in supersededBy do let _ ← idNumber c "FART-P2-" x
+  for x in locs do let _ ← idNumber c ids.flocPrefix x
+  for x in links do let _ ← idNumber c ids.flinkPrefix x
+  for x in supersedes do let _ ← idNumber c ids.fartPrefix x
+  for x in supersededBy do let _ ← idNumber c ids.fartPrefix x
   validateProvenance (← objField c j "source_provenance")
   return { id, number, locs, links }
 
-private def validateFloc (located : LocatedJson) : Except String Floc := do
+private def validateFloc (ids : IdNamespace) (located : LocatedJson) : Except String Floc := do
   let j := located.value
   let c := "floc"
   requireExactKeys c j ["created_revision", "declaration_names", "dependency_baseline_ref", "file_path", "formal_artifact_ref", "id", "locator_status", "module_name", "observed_at", "record_status", "repository", "revision", "schema_version", "source_kind", "structural_anchors", "superseded_by_locator_refs", "supersedes_locator_refs"]
   if (← natField c j "schema_version") != 1 then failE c "unsupported-schema-version"
   let id ← strField c j "id"
-  let number ← idNumber c "FLOC-P2-" id
+  let number ← idNumber c ids.flocPrefix id
   if located.path.fileName.getD "" != expectedShard number then failE c s!"wrong-shard:{id}"
   let fart ← strField c j "formal_artifact_ref"
-  let _ ← idNumber c "FART-P2-" fart
+  let _ ← idNumber c ids.fartPrefix fart
   let sourceKind ← strField c j "source_kind"
   requireEnum c "source_kind" sourceKind ["project_repository", "dependency_repository"]
   let baseline ← strField c j "dependency_baseline_ref"
@@ -272,24 +301,27 @@ private def requireNotNull (context key : String) (j : Json) : Except String Uni
   | .null => failE context s!"null-{key}"
   | _ => pure ()
 
-private def validateFlink (located : LocatedJson) : Except String Flink := do
+private def validateFlink (ids : IdNamespace) (located : LocatedJson) : Except String Flink := do
   let j := located.value
   let c := "flink"
   requireExactKeys c j ["assumptions_or_formulation_notes", "candidate_lineage_resolution", "candidate_ref_as_recorded", "candidate_ref_current_resolved", "coverage_claim_scope", "created_revision", "curriculum_release_ref", "formal_artifact_ref", "id", "link_confidence", "link_status", "record_status", "representation_relation", "schema_version", "treatment_scope"]
   if (← natField c j "schema_version") != 1 then failE c "unsupported-schema-version"
   let id ← strField c j "id"
-  let number ← idNumber c "FLINK-P2-" id
+  let number ← idNumber c ids.flinkPrefix id
   if located.path.fileName.getD "" != expectedShard number then failE c s!"wrong-shard:{id}"
   let fart ← strField c j "formal_artifact_ref"
-  let _ ← idNumber c "FART-P2-" fart
+  let _ ← idNumber c ids.fartPrefix fart
   let candidate ← strField c j "candidate_ref_as_recorded"
-  requireNonempty c "candidate_ref_as_recorded" candidate
-  requireNonempty c "candidate_ref_current_resolved" (← strField c j "candidate_ref_current_resolved")
+  let _ ← idNumber c ids.candidatePrefix candidate
+  let currentCandidate ← strField c j "candidate_ref_current_resolved"
+  let _ ← idNumber c ids.candidatePrefix currentCandidate
   requireNonempty c "curriculum_release_ref" (← strField c j "curriculum_release_ref")
   let lineage ← objField c j "candidate_lineage_resolution"
   requireExactKeys "flink.candidate_lineage_resolution" lineage ["resolution_context", "resolution_path", "review_ref", "state"]
   let lineageState ← strField c lineage "state"
   requireEnum c "lineage_state" lineageState ["resolved_exact", "resolved_lineage", "needs_scope_review", "ambiguous", "stale", "unresolved"]
+  let resolutionPath ← strArrayField c lineage "resolution_path"
+  for candidateRef in resolutionPath do let _ ← idNumber c ids.candidatePrefix candidateRef
   requireNonempty c "resolution_context" (← strField c lineage "resolution_context")
   requireNonempty c "review_ref" (← strField c lineage "review_ref")
   requireNotNull c "treatment_scope" j
@@ -309,16 +341,22 @@ private structure Lock where
   count : Nat
   candidates : List String
 
-private def validateLock (root : FilePath) : IO Lock := do
+private def validateLock (root : FilePath) (ids : IdNamespace) : IO Lock := do
   let j ← readCanonicalJson (root / "metadata" / "curriculum-lock" / "manifest.json")
   let c := "curriculum-lock-manifest"
   let parsed ← IO.ofExcept <| do
     requireExactKeys c j ["authority", "curriculum_release_ref", "identity_count", "mirror_status", "schema_version", "source_refs", "verified_by_trace_record"]
     if (← natField c j "schema_version") != 1 then failE c "unsupported-schema-version"
-    if (← strField c j "authority") != "project1_external_authority" then failE c "invalid-authority"
+    let authority ← strField c j "authority"
+    let expectedAuthority := if ids.synthetic then "synthetic_fixture_authority" else "project1_external_authority"
+    if authority != expectedAuthority then failE c s!"invalid-authority:{authority}:{expectedAuthority}"
     let release ← strField c j "curriculum_release_ref"
     let status ← strField c j "mirror_status"
-    requireEnum c "mirror_status" status ["verified_snapshot", "provisional_snapshot", "stale_snapshot", "unresolved"]
+    if ids.synthetic then
+      if release != "SYNTHETIC-M2" then failE c s!"invalid-synthetic-release:{release}"
+      requireEnum c "mirror_status" status ["synthetic_fixture"]
+    else
+      requireEnum c "mirror_status" status ["verified_snapshot", "provisional_snapshot", "stale_snapshot", "unresolved"]
     requireSortedUnique c "source_refs" (← strArrayField c j "source_refs")
     return (release, status, (← natField c j "identity_count"))
   let identities ← readCanonicalJsonl (root / "metadata" / "curriculum-lock" / "linked-identities.jsonl")
@@ -330,7 +368,13 @@ private def validateLock (root : FilePath) : IO Lock := do
       if (← natField c item "schema_version") != 1 then failE c "unsupported-schema-version"
       requireEnum c "resolution_state" (← strField c item "resolution_state") ["resolved_exact", "resolved_lineage", "needs_scope_review", "ambiguous", "stale", "unresolved"]
       requireSortedUnique c "treatment_scopes" (← strArrayField c item "treatment_scopes")
-      return (← strField c item "candidate_ref_as_recorded")
+      let recorded ← strField c item "candidate_ref_as_recorded"
+      let current ← strField c item "candidate_ref_current_resolved"
+      let _ ← idNumber c ids.candidatePrefix recorded
+      let _ ← idNumber c ids.candidatePrefix current
+      let resolutionPath ← strArrayField c item "resolution_path"
+      for candidateRef in resolutionPath do let _ ← idNumber c ids.candidatePrefix candidateRef
+      return recorded
     candidates := candidate :: candidates
   if parsed.2.2 != candidates.length then failIO "traceability:error:curriculum-lock:identity-count-mismatch"
   return { release := parsed.1, status := parsed.2.1, count := parsed.2.2, candidates := candidates.reverse }
@@ -347,18 +391,20 @@ private def requireDense (context : String) (nextId : Nat) (issued : List Nat) :
 
 public def validateRegistryV1Root (root : FilePath := ".") : IO Unit := do
   let manifest ← IO.ofExcept <| validateManifest (← readCanonicalJson (root / "metadata" / "formal-artifacts" / "registry.json"))
+  if manifest.ids.synthetic && root.toString == "." then
+    failIO "traceability:error:registry:synthetic-fixture-forbidden-in-governed-root"
   let fartRaw ← readFamily root "fart"
   let flocRaw ← readFamily root "floc"
   let flinkRaw ← readFamily root "flink"
   let mut farts := []
   for item in fartRaw do
-    let x ← IO.ofExcept <| validateFart item
+    let x ← IO.ofExcept <| validateFart manifest.ids item
     if x.number >= manifest.nextFart then failIO s!"traceability:error:allocation:issued-id-not-below-next:{x.id}:next={manifest.nextFart}"
     farts := x :: farts
   farts := farts.reverse
   let mut flocs := []
   for item in flocRaw do
-    let x ← IO.ofExcept <| validateFloc item
+    let x ← IO.ofExcept <| validateFloc manifest.ids item
     if x.number >= manifest.nextFloc then failIO s!"traceability:error:allocation:issued-id-not-below-next:{x.id}:next={manifest.nextFloc}"
     if x.status == "current" && x.sourceKind == "project_repository" && !(← (root / x.filePath).pathExists) then
       failIO s!"traceability:error:floc:missing-current-project-file:{x.id}:{x.filePath}"
@@ -366,7 +412,7 @@ public def validateRegistryV1Root (root : FilePath := ".") : IO Unit := do
   flocs := flocs.reverse
   let mut links := []
   for item in flinkRaw do
-    let x ← IO.ofExcept <| validateFlink item
+    let x ← IO.ofExcept <| validateFlink manifest.ids item
     if x.number >= manifest.nextFlink then failIO s!"traceability:error:allocation:issued-id-not-below-next:{x.id}:next={manifest.nextFlink}"
     links := x :: links
   links := links.reverse
@@ -376,13 +422,13 @@ public def validateRegistryV1Root (root : FilePath := ".") : IO Unit := do
   if let some id := firstDuplicate (farts.map (·.id)) then failIO s!"traceability:error:registry:duplicate-id:{id}"
   if let some id := firstDuplicate (flocs.map (·.id)) then failIO s!"traceability:error:registry:duplicate-id:{id}"
   if let some id := firstDuplicate (links.map (·.id)) then failIO s!"traceability:error:registry:duplicate-id:{id}"
-  let rf ← IO.ofExcept <| numbersFor "FART-P2-" manifest.reservations
-  let rl ← IO.ofExcept <| numbersFor "FLOC-P2-" manifest.reservations
-  let rk ← IO.ofExcept <| numbersFor "FLINK-P2-" manifest.reservations
+  let rf ← IO.ofExcept <| numbersFor manifest.ids.fartPrefix manifest.reservations
+  let rl ← IO.ofExcept <| numbersFor manifest.ids.flocPrefix manifest.reservations
+  let rk ← IO.ofExcept <| numbersFor manifest.ids.flinkPrefix manifest.reservations
   IO.ofExcept <| requireDense "registry.fart" manifest.nextFart (farts.map (·.number) ++ rf)
   IO.ofExcept <| requireDense "registry.floc" manifest.nextFloc (flocs.map (·.number) ++ rl)
   IO.ofExcept <| requireDense "registry.flink" manifest.nextFlink (links.map (·.number) ++ rk)
-  let lock ← validateLock root
+  let lock ← validateLock root manifest.ids
   for loc in flocs do
     if !(farts.any (fun f => f.id == loc.fart)) then failIO s!"traceability:error:registry:dangling-floc-fart:{loc.id}:{loc.fart}"
   for link in links do
@@ -406,7 +452,7 @@ public def validateRegistryV1Root (root : FilePath := ".") : IO Unit := do
       match farts.find? (fun f => f.id == loc.fart) with
       | some fart => if !fart.locs.contains loc.id then failIO s!"traceability:error:registry:current-locator-missing-from-fart:{loc.id}:{fart.id}"
       | none => pure ()
-  IO.println s!"traceability:allocation:pass:next-fart={manifest.nextFart};next-floc={manifest.nextFloc};next-flink={manifest.nextFlink}"
+  IO.println s!"traceability:allocation:pass:next-fart={manifest.nextFart};next-floc={manifest.nextFloc};next-flink={manifest.nextFlink};registry-status={manifest.registryStatus}"
   IO.println s!"traceability:validate:pass:fart={farts.length};floc={flocs.length};flink={links.length};curriculum-identities={lock.count};curriculum-lock-status={lock.status};curriculum-release={lock.release}"
 
 end FormalMathTraceability

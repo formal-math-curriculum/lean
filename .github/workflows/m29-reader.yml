@@ -4,9 +4,15 @@ on:
   pull_request:
     paths:
       - 'Traceability/ReaderV2.lean'
+      - 'Traceability/NavigationV1.lean'
+      - 'Traceability/ProvenanceV2.lean'
+      - 'Traceability/Views.lean'
+      - 'Traceability/IntegrityV1.lean'
+      - 'Traceability/RegistryV1.lean'
       - 'Traceability/Main.lean'
       - 'Traceability.lean'
       - 'Quality/check-traceability-reader-v2.sh'
+      - 'Quality/check-traceability-provenance-v2.sh'
       - 'Benchmarks/run-reader-scaling.sh'
       - 'TRACEABILITY_READER_M2.9.md'
       - '.github/workflows/m29-reader.yml'

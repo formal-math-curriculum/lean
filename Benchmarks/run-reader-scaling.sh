@@ -32,15 +32,15 @@ def dump(x): return json.dumps(x,sort_keys=True,separators=(',',':'))
 def ident(p,i): return f'{p}{i:06d}'
 def write_json(p,x): open(p,'w').write(dump(x)+'\n')
 def write_jsonl(p,xs): open(p,'w').write(''.join(dump(x)+'\n' for x in xs))
-registry={'default_curriculum_baseline_ref':'P1-CURR-v1','dependency_baseline_ref':'P2-DEP-M2.2-v1',
+registry={'default_curriculum_baseline_ref':'SYNTHETIC-M2','dependency_baseline_ref':'P2-DEP-M2.2-v1',
  'format':'formal-artifacts-jsonl-v1','lean_toolchain_ref':'P2-ENV-M2.5-v1',
- 'next_ids':{'fart':ident('FART-P2-',n+1),'flink':ident('FLINK-P2-',n+1),'floc':ident('FLOC-P2-',n+1)},
+ 'next_ids':{'fart':ident('SFART-M2-',n+1),'flink':ident('SFLINK-M2-',n+1),'floc':ident('SFLOC-M2-',n+1)},
  'protocol_ref':'P2-TRACE-M2.8-PROTOCOL-v1','record_counts':{'fart':n,'flink':n,'floc':n},
- 'registry_semantics_ref':'P2-TRACE-M2.8-REGISTRY-v1','registry_status':'active','reservations':[],'schema_version':1,'shard_size':1000}
+ 'registry_semantics_ref':'P2-TRACE-M2.8-REGISTRY-v1','registry_status':'synthetic_fixture','reservations':[],'schema_version':1,'shard_size':1000}
 write_json(os.path.join(root,'metadata/formal-artifacts/registry.json'),registry)
 farts=[]; flocs=[]; flinks=[]; locks=[]
 for i in range(1,n+1):
-  fart=ident('FART-P2-',i); floc=ident('FLOC-P2-',i); flink=ident('FLINK-P2-',i); cand=ident('CAND-P1-',i)
+  fart=ident('SFART-M2-',i); floc=ident('SFLOC-M2-',i); flink=ident('SFLINK-M2-',i); cand=ident('SCAND-M2-',i)
   farts.append({'artifact_kind':'theorem','created_revision':'reader-scale','current_locator_refs':[floc],'curriculum_link_refs':[flink],
     'dependency_baseline_ref':'P2-DEP-M2.2-v1','id':fart,'lean_toolchain_ref':'P2-ENV-M2.5-v1','quality_state':'reviewed',
     'record_status':'active','representation_state':'represented','schema_version':1,'source_provenance':{
@@ -55,7 +55,7 @@ for i in range(1,n+1):
   flinks.append({'assumptions_or_formulation_notes':'synthetic reader scale link','candidate_lineage_resolution':{
       'resolution_context':'reader scale exact identity','resolution_path':[cand],'review_ref':'not_applicable','state':'resolved_exact'},
     'candidate_ref_as_recorded':cand,'candidate_ref_current_resolved':cand,'coverage_claim_scope':'synthetic_nonproduction',
-    'created_revision':'reader-scale','curriculum_release_ref':'P1-CURR-v1','formal_artifact_ref':fart,'id':flink,
+    'created_revision':'reader-scale','curriculum_release_ref':'SYNTHETIC-M2','formal_artifact_ref':fart,'id':flink,
     'link_confidence':'established','link_status':'current','record_status':'active','representation_relation':'represents',
     'schema_version':1,'treatment_scope':'core'})
   locks.append({'candidate_ref_as_recorded':cand,'candidate_ref_current_resolved':cand,'record_status':'current',
@@ -63,9 +63,9 @@ for i in range(1,n+1):
 write_jsonl(os.path.join(root,'metadata/formal-artifacts/fart/000001-001000.jsonl'),farts)
 write_jsonl(os.path.join(root,'metadata/formal-artifacts/floc/000001-001000.jsonl'),flocs)
 write_jsonl(os.path.join(root,'metadata/formal-artifacts/flink/000001-001000.jsonl'),flinks)
-write_json(os.path.join(root,'metadata/curriculum-lock/manifest.json'),{'authority':'project1_external_authority',
- 'curriculum_release_ref':'P1-CURR-v1','identity_count':n,'mirror_status':'verified_snapshot','schema_version':1,
- 'source_refs':['P1-CURR-v1','P1-P2-HANDOFF-v1'],'verified_by_trace_record':'TRVER-M2-reader-scale'})
+write_json(os.path.join(root,'metadata/curriculum-lock/manifest.json'),{'authority':'synthetic_fixture_authority',
+ 'curriculum_release_ref':'SYNTHETIC-M2','identity_count':n,'mirror_status':'synthetic_fixture','schema_version':1,
+ 'source_refs':['SYNTHETIC-M2'],'verified_by_trace_record':'SYNTHETIC-M2-reader-scale'})
 write_jsonl(os.path.join(root,'metadata/curriculum-lock/linked-identities.jsonl'),locks)
 PY
 }
@@ -92,14 +92,13 @@ PY
 
 for n in $SIZES; do
   [[ "$n" =~ ^[1-9][0-9]*$ ]] || { printf 'reader-benchmark:error:invalid-size:%s\n' "$n" >&2; exit 2; }
-  root="$WORK/records-$n"; make_fixture "$n" "$root"; cand="$(printf 'CAND-P1-%06d' "$n")"
-  # Untimed warmup uses the same strong-validation path.
+  root="$WORK/records-$n"; make_fixture "$n" "$root"; cand="$(printf 'SCAND-M2-%06d' "$n")"
   lake exe traceability inspect curriculum "$cand" --root "$root" >/dev/null
-  lake exe traceability inspect curriculum CAND-P1-999999 --root "$root" >/dev/null
+  lake exe traceability inspect curriculum SCAND-M2-999999 --root "$root" >/dev/null
   lake exe traceability inspect source Mathlib.Data.Complex.Basic --root "$root" >/dev/null
   for ((rep=1; rep<=REPETITIONS; rep++)); do
     measure "$n" inspect-one "$rep" 1 matches inspect curriculum "$cand" --root "$root"
-    measure "$n" inspect-zero "$rep" 0 zero_matches inspect curriculum CAND-P1-999999 --root "$root"
+    measure "$n" inspect-zero "$rep" 0 zero_matches inspect curriculum SCAND-M2-999999 --root "$root"
     measure "$n" inspect-source-multiple "$rep" "$n" multiple_matches inspect source Mathlib.Data.Complex.Basic --root "$root"
   done
 done
