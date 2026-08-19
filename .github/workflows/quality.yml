@@ -1,0 +1,180 @@
+name: quality
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  ELAN_VERSION: v4.2.3
+  ELAN_SHA256: df0b2b3a439961ffcbb3985214365ffe40f49bc871df04dff268c7d8e21ca8b2
+
+jobs:
+  build:
+    name: quality / build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout exact workflow revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install checksum-pinned Elan
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/elan-x86_64-unknown-linux-gnu.tar.gz"
+          curl --fail --location --retry 3 --output "$archive" \
+            "https://github.com/leanprover/elan/releases/download/${ELAN_VERSION}/elan-x86_64-unknown-linux-gnu.tar.gz"
+          echo "${ELAN_SHA256}  ${archive}" | sha256sum --check -
+          tar -xzf "$archive" -C "$RUNNER_TEMP"
+          "$RUNNER_TEMP/elan-init" -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Validate selected environment and warm cache
+        shell: bash
+        run: bash Quality/quality.sh env
+
+      - name: Run build quality dimension
+        shell: bash
+        run: bash Quality/quality.sh build
+
+      - name: Upload build quality evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: quality-build-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .lake/build/quality/
+          if-no-files-found: warn
+          include-hidden-files: true
+          retention-days: 30
+
+  proof:
+    name: quality / proof
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout exact workflow revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install checksum-pinned Elan
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/elan-x86_64-unknown-linux-gnu.tar.gz"
+          curl --fail --location --retry 3 --output "$archive" \
+            "https://github.com/leanprover/elan/releases/download/${ELAN_VERSION}/elan-x86_64-unknown-linux-gnu.tar.gz"
+          echo "${ELAN_SHA256}  ${archive}" | sha256sum --check -
+          tar -xzf "$archive" -C "$RUNNER_TEMP"
+          "$RUNNER_TEMP/elan-init" -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Validate selected environment and warm cache
+        shell: bash
+        run: bash Quality/quality.sh env
+
+      - name: Run proof quality dimension
+        shell: bash
+        run: bash Quality/quality.sh proof
+
+      - name: Upload proof quality evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: quality-proof-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .lake/build/quality/
+          if-no-files-found: warn
+          include-hidden-files: true
+          retention-days: 30
+
+  source:
+    name: quality / source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout exact workflow revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install checksum-pinned Elan
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/elan-x86_64-unknown-linux-gnu.tar.gz"
+          curl --fail --location --retry 3 --output "$archive" \
+            "https://github.com/leanprover/elan/releases/download/${ELAN_VERSION}/elan-x86_64-unknown-linux-gnu.tar.gz"
+          echo "${ELAN_SHA256}  ${archive}" | sha256sum --check -
+          tar -xzf "$archive" -C "$RUNNER_TEMP"
+          "$RUNNER_TEMP/elan-init" -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Validate selected environment and warm cache
+        shell: bash
+        run: bash Quality/quality.sh env
+
+      - name: Run source quality dimension
+        shell: bash
+        run: bash Quality/quality.sh source
+
+      - name: Upload source quality evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: quality-source-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .lake/build/quality/
+          if-no-files-found: warn
+          include-hidden-files: true
+          retention-days: 30
+
+  regression:
+    name: quality / regression
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout exact workflow revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install checksum-pinned Elan
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/elan-x86_64-unknown-linux-gnu.tar.gz"
+          curl --fail --location --retry 3 --output "$archive" \
+            "https://github.com/leanprover/elan/releases/download/${ELAN_VERSION}/elan-x86_64-unknown-linux-gnu.tar.gz"
+          echo "${ELAN_SHA256}  ${archive}" | sha256sum --check -
+          tar -xzf "$archive" -C "$RUNNER_TEMP"
+          "$RUNNER_TEMP/elan-init" -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Validate selected environment and warm cache
+        shell: bash
+        run: bash Quality/quality.sh env
+
+      - name: Run regression quality dimension
+        shell: bash
+        run: bash Quality/quality.sh regression
+
+      - name: Upload regression quality evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: quality-regression-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .lake/build/quality/
+          if-no-files-found: warn
+          include-hidden-files: true
+          retention-days: 30

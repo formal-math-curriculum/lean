@@ -14,7 +14,7 @@ Usage: bash Quality/quality.sh <command> [dimension]
 Commands:
   env         Validate the selected Lean/Lake/dependency environment; cache warmup is best-effort.
   build       Validate selected environment, then build complete FormalMath with warnings as failures.
-  proof       Validate selected environment, then run production proof/axiom assurance.
+  proof       Validate selected environment, build FormalMath proof-audit inputs, then run production proof/axiom assurance.
   source      Validate selected environment, then run source/import/API-boundary checks.
   regression  Validate selected environment, then run positive regressions and negative controls.
   all         Run env, then every quality dimension with independent results.
@@ -128,7 +128,7 @@ run_build() {
 
 run_proof() {
   run_recorded proof bash -c \
-    'bash Quality/check-environment.sh semantic && lake build --wfail +Quality.AxiomAudit && lake env lean -DwarningAsError=true Quality/RunAxiomAudit.lean && lake env lean -DwarningAsError=true Quality/Fixtures/StandardAxiom.lean'
+    'bash Quality/check-environment.sh semantic && lake build --wfail FormalMath && lake build --wfail +Quality.AxiomAudit && lake env lean -DwarningAsError=true Quality/RunAxiomAudit.lean && lake env lean -DwarningAsError=true Quality/Fixtures/StandardAxiom.lean'
 }
 
 run_source() {
