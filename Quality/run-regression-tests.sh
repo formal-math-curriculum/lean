@@ -91,6 +91,8 @@ run_pass positive-regression-and-contract-build lake build --wfail QualityTests
 run_pass traceability-validator-build lake build --wfail traceability
 run_pass production-source-quality bash Quality/check-source-quality.sh production
 run_pass production-traceability-registry lake exe traceability validate
+run_pass project-floc-revision-controls bash Quality/check-project-floc-revision-controls.sh
+run_pass m210-production-roundtrip-controls bash Quality/check-m210-roundtrip-controls.sh
 run_pass traceability-negative-controls bash Quality/check-traceability-controls.sh
 run_pass traceability-generated-controls bash Quality/check-traceability-generated-controls.sh
 run_pass traceability-remediation-controls bash Quality/check-traceability-remediation-controls.sh

@@ -11,9 +11,12 @@ public import Traceability.Views
 Exact current-target resolution for M2.8 FLOCs.
 
 A declaration is accepted only when it exists **and** Lean reports that its declaring module is the
-module named by the FLOC. Project file coordinates are coupled to the exact source used by the
-executing checkout, and dependency locators are tied to the selected `lake-manifest.json` revision.
-Historical locators remain metadata and are not required to import in the current checkout.
+module named by the FLOC. Current project locators preserve their qualified source revision as
+provenance and couple the executing checkout to that source content with an immutable `git-blob:`
+structural anchor. This remains valid in shallow PR checkouts and metadata-only descendant revisions
+while still failing closed on source drift. Dependency locators remain tied to the selected
+`lake-manifest.json` revision. Historical locators remain metadata and are not required to import in
+the current checkout.
 -/
 
 open Lean System
@@ -54,9 +57,6 @@ private def processOutput (cmd : String) (args : Array String) : IO String := do
 private def executionRepositoryRoot : IO FilePath :=
   return FilePath.mk (← processOutput "git" #["rev-parse", "--show-toplevel"])
 
-private def executionRevision : IO String :=
-  processOutput "git" #["rev-parse", "HEAD"]
-
 private def parseJsonFile (path : FilePath) : IO Lean.Json := do
   let text ← IO.FS.readFile path
   IO.ofExcept <| (Lean.Json.parse text).mapError fun e => s!"traceability:error:resolve:{path}:json-parse:{e}"
@@ -85,6 +85,24 @@ private def requireProjectSourceCoupling (root : FilePath) (filePath : String) :
   if targetText != executingText then
     failIO s!"traceability:error:resolve:alternate-root-source-mismatch:{filePath}"
 
+private def projectBlobDigest (id : String) (anchors : List String) : IO String := do
+  let blobAnchors := anchors.filter fun anchor => anchor.startsWith "git-blob:"
+  match blobAnchors with
+  | [anchor] =>
+      let digest := String.ofList ((anchor.toList).drop "git-blob:".length)
+      if digest.length != 40 then
+        failIO s!"traceability:error:resolve:invalid-project-git-blob-anchor:{id}:{anchor}"
+      return digest
+  | [] => failIO s!"traceability:error:resolve:missing-project-git-blob-anchor:{id}"
+  | _ => failIO s!"traceability:error:resolve:multiple-project-git-blob-anchors:{id}"
+
+private def requireProjectBlobCoupling (id filePath : String) (anchors : List String) : IO Unit := do
+  let expected ← projectBlobDigest id anchors
+  let repoRoot ← executionRepositoryRoot
+  let actual ← processOutput "git" #["hash-object", (repoRoot / filePath).toString]
+  if actual != expected then
+    failIO s!"traceability:error:resolve:project-source-drift:{id}:{expected}:{actual}:{filePath}"
+
 private def validateLocatorSubject (root : FilePath) (data : RegistryData) (floc : Lean.Json) : IO Unit := do
   let id ← IO.ofExcept <| stringField "floc" floc "id"
   let sourceKind ← IO.ofExcept <| stringField "floc" floc "source_kind"
@@ -92,6 +110,7 @@ private def validateLocatorSubject (root : FilePath) (data : RegistryData) (floc
   let revision ← IO.ofExcept <| stringField "floc" floc "revision"
   let moduleName ← IO.ofExcept <| stringField "floc" floc "module_name"
   let filePath ← IO.ofExcept <| stringField "floc" floc "file_path"
+  let anchors ← IO.ofExcept <| stringArrayField "floc" floc "structural_anchors"
   let canonicalFile ← canonicalFileForModule moduleName
   if filePath != canonicalFile then
     failIO s!"traceability:error:resolve:module-file-mismatch:{id}:{moduleName}:{filePath}:{canonicalFile}"
@@ -102,9 +121,7 @@ private def validateLocatorSubject (root : FilePath) (data : RegistryData) (floc
     let rootReal ← IO.FS.realPath root
     let repoRootReal ← IO.FS.realPath (← executionRepositoryRoot)
     if rootReal.normalize == repoRootReal.normalize then
-      let selectedRevision ← executionRevision
-      if revision != selectedRevision then
-        failIO s!"traceability:error:resolve:project-revision-mismatch:{id}:{revision}:{selectedRevision}"
+      requireProjectBlobCoupling id filePath anchors
   else if sourceKind == "dependency_repository" then
     let expectedBaseline ← IO.ofExcept <| stringField "registry-manifest" data.registryManifest "dependency_baseline_ref"
     let locatorBaseline ← IO.ofExcept <| stringField "floc" floc "dependency_baseline_ref"
