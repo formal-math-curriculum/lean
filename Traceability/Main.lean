@@ -7,12 +7,15 @@ module
 import Traceability.Order
 import Traceability.RegistryV1
 import Traceability.Reservations
+import Traceability.Resolve
+import Traceability.RoundTrip
+import Traceability.Views
 
 /-!
 Command-line entry point for governed M2.8 traceability tooling.
 
-MAT-195 implements `validate`. Generated views and round-trip/query commands are introduced by the
-next implementation issue rather than being stubbed as false capabilities here.
+Authored FART/FLOC/FLINK metadata remains authoritative. Generated views, queries and round-trip
+checks are derived assurance/navigation surfaces only.
 -/
 
 open System
@@ -22,16 +25,48 @@ namespace FormalMathTraceability
 private def parseRoot : List String → Except String FilePath
   | [] => pure "."
   | ["--root", root] => pure root
-  | _ => throw "usage: lake exe traceability validate [--root <repository-root>]"
+  | _ => throw "expected optional --root <repository-root>"
 
-public def main (args : List String) : IO Unit := do
+private def validateRoot (root : FilePath) : IO Unit := do
+  validateShardOrderRoot root
+  validateReservationBoundsRoot root
+  validateRegistryV1Root root
+
+private def usage : String :=
+  "usage: lake exe traceability <validate|generate|roundtrip|query curriculum <candidate-id>|query artifact <FART-id>|query declaration <module-file-or-declaration>> [--root <repository-root>]"
+
+public unsafe def main (args : List String) : IO Unit := do
   match args with
   | "validate" :: rest =>
       let root ← IO.ofExcept <| parseRoot rest
-      validateShardOrderRoot root
-      validateReservationBoundsRoot root
-      validateRegistryV1Root root
+      validateRoot root
+  | "generate" :: rest =>
+      let root ← IO.ofExcept <| parseRoot rest
+      validateRoot root
+      let data ← loadRegistryData root
+      resolveCurrentDeclarations data
+      let _ ← generateViews root
+      return
+  | "roundtrip" :: rest =>
+      let root ← IO.ofExcept <| parseRoot rest
+      validateRoot root
+      let data ← loadRegistryData root
+      verifyRoundTrip data
+  | "query" :: "curriculum" :: candidateId :: rest =>
+      let root ← IO.ofExcept <| parseRoot rest
+      validateRoot root
+      queryCurriculum (← loadRegistryData root) candidateId
+  | "query" :: "artifact" :: artifactId :: rest =>
+      let root ← IO.ofExcept <| parseRoot rest
+      validateRoot root
+      queryArtifact (← loadRegistryData root) artifactId
+  | "query" :: "declaration" :: needle :: rest =>
+      let root ← IO.ofExcept <| parseRoot rest
+      validateRoot root
+      let data ← loadRegistryData root
+      resolveCurrentDeclarations data
+      querySource data needle
   | _ =>
-      throw <| IO.userError "usage: lake exe traceability validate [--root <repository-root>]"
+      throw <| IO.userError usage
 
 end FormalMathTraceability

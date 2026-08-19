@@ -40,13 +40,7 @@ bash Quality/quality.sh env
 
 The semantic preflight is mandatory. After it passes, `env` attempts `lake exe cache get` as a best-effort acceleration step.
 
-Cache semantics:
-
-- cache success is reported;
-- cache failure is reported as `quality-env:cache:nonblocking-fail`;
-- cache failure does **not** change an otherwise valid selected environment into semantic failure;
-- builds may consequently take longer or build more dependencies from source;
-- cache availability is not proof/build/curriculum evidence.
+Cache success is reported. Cache failure is reported as `quality-env:cache:nonblocking-fail` and does not convert an otherwise valid selected environment into semantic failure. Cache availability is acceleration only, not proof/build/curriculum evidence.
 
 If the semantic preflight fails during `all`, environment-dependent dimensions are reported as **skipped** rather than executed under a knowingly invalid environment.
 
@@ -58,7 +52,7 @@ bash Quality/quality.sh build
 
 Runs the selected-environment preflight and then `lake build --wfail FormalMath`.
 
-A PASS means the complete supported target built under the selected environment at the recorded SHA with Lake warning-failure semantics. It does not imply curriculum or formalization completeness.
+A PASS means the complete supported mathematical library target built under the selected environment at the recorded SHA with Lake warning-failure semantics. It does not imply curriculum or formalization completeness.
 
 ## `proof` — production proof/axiom assurance
 
@@ -73,7 +67,7 @@ After the selected-environment preflight, this dimension:
 3. runs the production module-origin axiom audit under direct Lean `-DwarningAsError=true`;
 4. runs the standard mathematical axiom positive control.
 
-The auditor distinguishes standard mathematical Lean axioms, `sorryAx`, `Lean.trustCompiler`, and custom/unclassified axioms. Deliberate bad controls, including a `Lean.trustCompiler` fixture, live in the regression dimension.
+The auditor distinguishes standard mathematical Lean axioms, `sorryAx`, `Lean.trustCompiler`, and custom/unclassified axioms. Deliberate bad controls live in regression.
 
 ## `source` — source/API and authored traceability integrity
 
@@ -81,54 +75,101 @@ The auditor distinguishes standard mathematical Lean axioms, `sorryAx`, `Lean.tr
 bash Quality/quality.sh source
 ```
 
-After selected-environment validation, this dimension runs both:
+After selected-environment validation, this dimension runs:
 
 ```sh
 bash Quality/check-source-quality.sh production
 lake exe traceability validate
 ```
 
-Source profiles cover:
-
-- supported `FormalMath` source: governed header, module documentation, warning-suppression policy, production import rules;
-- permanent `QualityTests` source: governed header, module documentation, warning-suppression policy, test-appropriate import rules;
-- permanent `Quality` and `Traceability` Lean tooling: governed header, warning-suppression policy, and import checks.
+Source profiles cover supported `FormalMath`, permanent `QualityTests`, and permanent `Quality`/`Traceability` tooling for governed headers, module documentation where required, warning-suppression policy, and import/API rules.
 
 Selected hard checks include root-umbrella misuse in production, reviewed direct mathlib-transitive roots, explicit public `FormalMath.Internal.*` re-export, and unapproved local `set_option warningAsError false`.
 
-The traceability validator independently verifies the authored `metadata/formal-artifacts/` registry and minimal `metadata/curriculum-lock/` offline mirror: canonical JSON/JSONL, schema/enums, ID allocation/sharding, referential integrity, current locator backreferences, curriculum-lock references, and current project-file existence for current project locators.
+The traceability validator verifies the authored `metadata/formal-artifacts/` registry and minimal `metadata/curriculum-lock/` mirror: canonical JSON/JSONL, schema/enums, stable-ID allocation/sharding/reservation bounds, referential integrity, current locator backreferences, curriculum-lock references, and current project-file existence for current project locators.
+
+Because the executable imports the generated/query/round-trip modules, this dimension also ensures the complete M2.8 traceability CLI compiles before `validate` executes.
 
 The current production traceability registry is intentionally empty of FART/FLOC/FLINK records; this is a valid state, not evidence of absent curriculum mathematics. Production IDs are not allocated until real eligible formal artifacts exist.
 
 Warning suppression is prohibited by default in supported/permanent source. A bounded exception must appear in `Quality/warning-suppression-exceptions.tsv` with a governed `CEXC-M2-*` ID and rationale. No exception is currently adopted.
 
-Known semantic linter blind spots remain documented in the adopted quality baseline; this command does not claim complete semantic API verification.
-
-## `regression` — positive and intended-failure behavior
+## `regression` — positive, intended-failure, and traceability behavior
 
 ```sh
 bash Quality/quality.sh regression
 ```
 
-After selected-environment validation, runs the permanent regression harness. It includes:
+After selected-environment validation, the permanent regression harness includes:
 
 - strict production and reusable axiom-auditor builds;
 - non-default `QualityTests` positive regression/contract build;
-- non-default `traceability` executable build;
+- full non-default `traceability` executable build under `--wfail`;
 - production source and authored-registry validation;
-- traceability negative controls for duplicate IDs, dangling references, invalid path-like artifact identity, prohibited conflated `formalized` state, noncanonical JSONL, plus a positive historical→current FLOC move preserving one FART;
-- source positive checks;
+- authored traceability controls for duplicate IDs, dangling references, invalid path-like artifact identity, prohibited conflated `formalized` state, noncanonical JSONL, issued/reserved cursor bounds, shard order, plus a valid historical→current FLOC move preserving one FART;
+- **generated traceability controls** through `Quality/check-traceability-generated-controls.sh`;
+- source positive checks and source-policy negative controls;
 - direct `sorry`, transitive `sorryAx`, custom axiom, and `Lean.trustCompiler` controls;
-- source-policy controls including permanent-test provenance and warning-suppression rejection;
 - executable/noncomputable contract control;
-- selected-environment mismatch rejection through a standalone semantic dimension;
+- selected-environment mismatch rejection;
 - optional-cache failure nonblocking control;
 - parallel report-identity collision control;
 - the seven test-only FORMREQ-P1-000018 anti-conflation invariants.
 
 Expected-failure fixtures pass only when they return nonzero for the intended signature.
 
-The M2.8 traceability additions are a **gate-definition change** under `P2-GH-M2.7-v1`: green CI proves execution, but semantic equivalence/strengthening must also be reviewed explicitly. The intended change is monotonic with respect to prior source/regression behavior: every pre-existing subgate remains present, and new traceability checks add failure conditions rather than removing existing ones.
+### Generated traceability control
+
+The generated-control harness creates a **temporary non-production** registry; it does not allocate production FART/FLOC/FLINK IDs.
+
+Its representative dataset contains:
+
+- multiple formal artifacts linked to one curriculum candidate without deduplication;
+- an `example_of` artifact with `example_only` coverage scope;
+- a science-facing `model_for` artifact with explicit review/non-empirical semantics;
+- a historical-to-current project locator chain;
+- a direct mathlib locator pinned to the selected mathlib revision;
+- current project and mathlib declaration coordinates resolved through the Lean environment.
+
+The control verifies:
+
+1. authored fixture validation;
+2. `roundtrip` current-module/declaration resolution and set-valued forward/reverse containment;
+3. generated view inventory under `.lake/build/traceability/<subject-revision>/`;
+4. curriculum, artifact, and declaration queries;
+5. preservation of multiple representations and partial coverage semantics;
+6. historical-locator navigation and direct-dependency provenance;
+7. delete/rebuild semantic-fingerprint equivalence;
+8. recovery from manual generated-output mutation;
+9. semantic-fingerprint sensitivity to a relevant authored-input mutation;
+10. stale curriculum-lock visibility in the generated non-success view.
+
+The successful control emits `traceability-generated-control:summary:pass`. This marker is required evidence that the generated/query/round-trip/rebuild surface actually executed; a green job that omits this subgate is not MAT-196 acceptance evidence.
+
+## Traceability CLI assurance
+
+The non-default tooling CLI supports:
+
+```sh
+lake exe traceability validate
+lake exe traceability generate
+lake exe traceability query curriculum <candidate-id>
+lake exe traceability query artifact <FART-id>
+lake exe traceability query declaration <module-file-or-declaration>
+lake exe traceability roundtrip
+```
+
+Current FLOC modules/declarations are resolved against a real Lean environment for generation, reverse declaration query, and round-trip verification. Historical FLOCs remain historical metadata and are not required to import successfully in the current checkout.
+
+Generated output is derived and disposable. For the same governed input tuple, delete/rebuild must preserve the semantic fingerprint; manual generated mutation is overwritten by regeneration, while relevant authored-input changes must alter the semantic projection.
+
+## Gate-definition trust
+
+M2.8 additions are gate-definition changes under `P2-GH-M2.7-v1`. Green CI proves execution, but does not self-certify semantic equivalence or strengthening.
+
+The MAT-195 authored-registry change was separately reviewed under `TRVER-M2-000001`. The MAT-196 generated/query/round-trip change is separately reviewed under `TRVER-M2-000003`.
+
+The MAT-196 regression delta is monotonic: every pre-existing subgate remains present and a single additional `traceability-generated-controls` subgate adds failure conditions; permanent workflow/check names are unchanged.
 
 ## `all` — orchestration, not collapsed truth
 
@@ -152,19 +193,9 @@ The full SHA participates in the directory name, and the unique token prevents s
 
 `result.report` version 2 includes dimension/status, exit code, exact SHA/ref, selected-environment baseline identity, toolchain/Lake/mathlib/manifest provenance, platform, timestamps, exact command, and diagnostic log path.
 
-The report directory is under `.lake/` and remains local build output, not versioned semantic source of truth.
+The report directory is local build output, not versioned semantic source of truth.
 
-Show the newest report for the **current full SHA**:
-
-```sh
-bash Quality/quality.sh report
-```
-
-or for one dimension:
-
-```sh
-bash Quality/quality.sh report proof
-```
+Show the newest report for the current full SHA with `bash Quality/quality.sh report`, optionally followed by a dimension such as `proof`.
 
 ## Failure-report workflow
 
@@ -177,7 +208,8 @@ When a quality command fails:
 5. preserve failed milestone validation lineage in Linear;
 6. rerun the affected dimension at the corrected revision;
 7. rerun broader regression/all surfaces when appropriate;
-8. never inherit an earlier SHA's PASS merely because a new revision descends from it.
+8. never inherit an earlier SHA's PASS merely because a new revision descends from it;
+9. inspect required subgate markers when acceptance depends on newly added gate semantics.
 
 ## Permanent CI
 
@@ -188,4 +220,4 @@ M2.7 wires these commands into four permanent independently visible checks:
 - `quality / source`
 - `quality / regression`
 
-M2.8 does not rename or collapse these checks. Traceability integrity is added to the existing `source` and `regression` semantics. PR PASS remains scoped to the exact PR integration context; a later merged `main` SHA requires its own permanent CI before baseline promotion.
+M2.8 does not rename or collapse these checks. Traceability assurance is integrated into the existing `source` and `regression` semantics. PR PASS remains scoped to the exact PR integration context; a later merged `main` SHA requires its own permanent CI before baseline promotion.
