@@ -37,7 +37,10 @@ metadata/formal-artifacts/
   flink/<id-range>.jsonl
 ```
 
-The current bootstrap intentionally allocates **no production FART/FLOC/FLINK IDs**. The repository does not yet contain curriculum mathematics that would justify manufacturing coverage records merely to populate the registry. All three next-ID cursors therefore remain at `000001`.
+The current production registry contains six FARTs, seven FLOCs (six current and one historical), and
+six FLINKs. The next cursors are FART `000007`, FLOC `000008`, and FLINK `000007`. These records cover
+only their explicit bounded treatment scopes; their presence is not a whole-candidate completeness
+claim.
 
 A registry line is canonical only when parsing it with Lean's JSON parser and re-rendering it with `Lean.Json.compress` yields the exact same line. IDs are explicit, stable, monotonic, and never derived from source paths.
 
@@ -45,7 +48,9 @@ A registry line is canonical only when parsing it with Lean's JSON parser and re
 
 `metadata/curriculum-lock/` contains only release/lineage information needed by authored `FLINK` records. Project 1 remains the authority. If a required curriculum identity cannot be resolved from the governed lock, tooling surfaces an unresolved/stale state; it does not silently query Linear or another source and does not invent a resolution.
 
-The current production lock contains no linked identities because the production FLINK registry is empty.
+The current production lock contains exactly CAND-P1-000004, CAND-P1-000016, and
+CAND-P1-000017. It mirrors only the identities needed by current FLINKs and does not copy learner
+readiness or prerequisite authority into the repository.
 
 ## CLI
 

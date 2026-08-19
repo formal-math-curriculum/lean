@@ -38,12 +38,12 @@ copy_production_root() {
 
 printf 'm210-roundtrip:start:production-validation\n'
 lake exe traceability validate | tee "$WORK/validate.log"
-grep -Fq 'traceability:validate:pass:fart=3;floc=4;flink=3;curriculum-identities=2' "$WORK/validate.log"
-grep -Fq 'traceability:resolve:pass:current-modules=3;declarations=3' "$WORK/validate.log"
+grep -Fq 'traceability:validate:pass:fart=6;floc=7;flink=6;curriculum-identities=3' "$WORK/validate.log"
+grep -Fq 'traceability:resolve:pass:current-modules=6;declarations=8' "$WORK/validate.log"
 
 printf 'm210-roundtrip:start:production-roundtrip\n'
 lake exe traceability roundtrip | tee "$WORK/roundtrip.log"
-grep -Fq 'traceability:roundtrip:pass:links=3;locator-link-checks=4' "$WORK/roundtrip.log"
+grep -Fq 'traceability:roundtrip:pass:links=6;locator-link-checks=7' "$WORK/roundtrip.log"
 
 printf 'm210-roundtrip:start:production-generated-views\n'
 first_output="$(lake exe traceability generate)"
@@ -77,28 +77,46 @@ payload = "\n".join(json.dumps(record, sort_keys=True) for record in curriculum 
 required = {
     "CAND-P1-000016",
     "CAND-P1-000017",
+    "CAND-P1-000004",
     "FART-P2-000001",
     "FART-P2-000002",
     "FART-P2-000003",
+    "FART-P2-000004",
+    "FART-P2-000005",
+    "FART-P2-000006",
     "FLOC-P2-000001",
     "FLOC-P2-000002",
     "FLOC-P2-000003",
     "FLOC-P2-000004",
+    "FLOC-P2-000005",
+    "FLOC-P2-000006",
+    "FLOC-P2-000007",
     "FLINK-P2-000001",
     "FLINK-P2-000002",
     "FLINK-P2-000003",
+    "FLINK-P2-000004",
+    "FLINK-P2-000005",
+    "FLINK-P2-000006",
     "FormalMath/Algebra/FactoredEquation.lean",
     "FormalMath/Algebra/ZeroProduct.lean",
     "FormalMath/Algebra/Examples/FactoredEquation.lean",
     "FormalMath/Algebra/Examples/FactoredIntegerEquation.lean",
+    "Mathlib/Algebra/Group/Nat/Defs.lean",
+    "Mathlib/Algebra/Ring/Nat.lean",
+    "FormalMath/Arithmetic/Examples/NaturalNumberLaws.lean",
     "FormalMath.Algebra.factoredProduct",
     "FormalMath.Algebra.factoredProduct_eq_zero_iff",
     "FormalMath.Algebra.Examples.two_five_factored_equation",
+    "Nat.instAddCancelCommMonoid",
+    "Nat.instCommMonoid",
+    "Nat.instDistrib",
+    "FormalMath.Arithmetic.Examples.cancel_common_nine_addend",
+    "FormalMath.Arithmetic.Examples.seven_distributes_over_four_plus_three",
 }
 missing = sorted(item for item in required if item not in payload)
 assert not missing, missing
-assert len(artifacts) == 3, len(artifacts)
-assert len(sources) == 4, len(sources)
+assert len(artifacts) == 6, len(artifacts)
+assert len(sources) == 7, len(sources)
 
 artifact3 = next(record for record in artifacts if record["artifact_id"] == "FART-P2-000003")
 assert artifact3["artifact"]["current_locator_refs"] == ["FLOC-P2-000004"]
@@ -121,6 +139,11 @@ for id in FLINK-P2-000002 FLINK-P2-000003 FART-P2-000002 FART-P2-000003 FLOC-P2-
   grep -Fq "$id" "$WORK/cand17.jsonl"
 done
 
+lake exe traceability query curriculum CAND-P1-000004 | tee "$WORK/cand4.jsonl"
+for id in FLINK-P2-000004 FLINK-P2-000005 FLINK-P2-000006 FART-P2-000004 FART-P2-000005 FART-P2-000006 FLOC-P2-000005 FLOC-P2-000006 FLOC-P2-000007; do
+  grep -Fq "$id" "$WORK/cand4.jsonl"
+done
+
 while IFS='|' read -r declaration fart floc; do
   lake exe traceability query declaration "$declaration" | tee "$WORK/source-query.jsonl"
   grep -Fq "$fart" "$WORK/source-query.jsonl"
@@ -132,6 +155,18 @@ FormalMath.Algebra.Examples.two_five_factored_equation|FART-P2-000003|FLOC-P2-00
 EOF
 
 grep -Fq 'FLOC-P2-000003' "$WORK/source-query.jsonl"
+
+while IFS='|' read -r declaration fart floc; do
+  lake exe traceability query declaration "$declaration" | tee "$WORK/p4-source-query.jsonl"
+  grep -Fq "$fart" "$WORK/p4-source-query.jsonl"
+  grep -Fq "$floc" "$WORK/p4-source-query.jsonl"
+done <<'EOF'
+Nat.instAddCancelCommMonoid|FART-P2-000004|FLOC-P2-000005
+Nat.instCommMonoid|FART-P2-000004|FLOC-P2-000005
+Nat.instDistrib|FART-P2-000005|FLOC-P2-000006
+FormalMath.Arithmetic.Examples.cancel_common_nine_addend|FART-P2-000006|FLOC-P2-000007
+FormalMath.Arithmetic.Examples.seven_distributes_over_four_plus_three|FART-P2-000006|FLOC-P2-000007
+EOF
 
 printf 'm210-roundtrip:start:derived-rebuild\n'
 rm -rf "$generated"
@@ -171,7 +206,7 @@ floc_path.write_text("".join(json.dumps(record, sort_keys=True, separators=(",",
 
 registry_path = root / "metadata/formal-artifacts/registry.json"
 registry = json.loads(registry_path.read_text())
-registry["record_counts"]["floc"] = 3
+registry["record_counts"]["floc"] = 6
 registry_path.write_text(json.dumps(registry, sort_keys=True, separators=(",", ":")) + "\n")
 PY
 expect_failure stale-old-current-locator 'traceability:error:floc:missing-current-project-file:FLOC-P2-000003:FormalMath/Algebra/Examples/FactoredEquation.lean' \
@@ -274,10 +309,13 @@ records = []
 for path in root.glob("*/*.jsonl"):
     records.extend(json.loads(line) for line in path.read_text().splitlines() if line)
 payload = json.dumps(records, sort_keys=True)
-assert "leanprover-community/mathlib4" not in payload
+assert "leanprover-community/mathlib4" in payload
+assert "FLOC-P2-000005" in payload and "FLOC-P2-000006" in payload
 assert "READY" not in payload and "REQEXPR" not in payload
 PY
 printf 'm210-roundtrip:pass:external-dependency-not-project-or-curriculum-authority\n'
 lake env lean -DwarningAsError=true QualityTests/M210RootApi.lean
 printf 'm210-roundtrip:pass:formal-math-root-api\n'
+lake env lean -DwarningAsError=true QualityTests/P4NaturalNumberLawsRootApi.lean
+printf 'm210-roundtrip:pass:p4-natural-number-laws-root-api\n'
 printf 'm210-roundtrip:summary:pass\n'
