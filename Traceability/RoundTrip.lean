@@ -34,8 +34,8 @@ private def sourceViewHasLink (record : Lean.Json) (linkId : String) : IO Bool :
     if (← IO.ofExcept <| stringField "flink" link "id") == linkId then return true
   return false
 
-public unsafe def verifyRoundTrip (data : RegistryData) : IO Unit := do
-  resolveCurrentDeclarations data
+public unsafe def verifyRoundTrip (root : System.FilePath) (data : RegistryData) : IO Unit := do
+  resolveCurrentDeclarations root data
   let curriculum ← byCurriculum data
   let artifacts ← byArtifact data
   let sources ← bySource data

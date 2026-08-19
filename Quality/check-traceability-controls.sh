@@ -10,19 +10,19 @@ BASE_REGISTRY='{"default_curriculum_baseline_ref":"P1-CURR-v1","dependency_basel
 FART='{"artifact_kind":"theorem","created_revision":"fixture-r2","current_locator_refs":["FLOC-P2-000002"],"curriculum_link_refs":[],"dependency_baseline_ref":"P2-DEP-M2.2-v1","id":"FART-P2-000001","lean_toolchain_ref":"P2-ENV-M2.5-v1","quality_state":"draft","record_status":"active","representation_state":"represented","schema_version":1,"source_provenance":{"proof_or_implementation_provenance_notes":"fixture","provenance_kind":"original_project","source_refs":[],"statement_provenance_notes":"fixture"},"superseded_by":[],"supersedes":[],"title_or_summary":"Fixture theorem","verification_state":"kernel_checked"}'
 FART2='{"artifact_kind":"theorem","created_revision":"fixture-r2","current_locator_refs":[],"curriculum_link_refs":[],"dependency_baseline_ref":"P2-DEP-M2.2-v1","id":"FART-P2-000002","lean_toolchain_ref":"P2-ENV-M2.5-v1","quality_state":"draft","record_status":"active","representation_state":"represented","schema_version":1,"source_provenance":{"proof_or_implementation_provenance_notes":"fixture","provenance_kind":"original_project","source_refs":[],"statement_provenance_notes":"fixture"},"superseded_by":[],"supersedes":[],"title_or_summary":"Second fixture theorem","verification_state":"kernel_checked"}'
 FLOC1='{"created_revision":"fixture-registry","declaration_names":["Fixture.old"],"dependency_baseline_ref":"not_applicable","file_path":"Fixture/Old.lean","formal_artifact_ref":"FART-P2-000001","id":"FLOC-P2-000001","locator_status":"historical","module_name":"Fixture.Old","observed_at":"fixture-r1","record_status":"historical","repository":"formal-math-curriculum/lean","revision":"fixture-r1","schema_version":1,"source_kind":"project_repository","structural_anchors":[],"superseded_by_locator_refs":["FLOC-P2-000002"],"supersedes_locator_refs":[]}'
-FLOC2='{"created_revision":"fixture-registry","declaration_names":["Fixture.current"],"dependency_baseline_ref":"not_applicable","file_path":"Fixture/Current.lean","formal_artifact_ref":"FART-P2-000001","id":"FLOC-P2-000002","locator_status":"current","module_name":"Fixture.Current","observed_at":"fixture-r2","record_status":"active","repository":"formal-math-curriculum/lean","revision":"fixture-r2","schema_version":1,"source_kind":"project_repository","structural_anchors":[],"superseded_by_locator_refs":[],"supersedes_locator_refs":["FLOC-P2-000001"]}'
+FLOC2='{"created_revision":"fixture-registry","declaration_names":["QualityTests.TraceabilityFixture.fixtureTheorem"],"dependency_baseline_ref":"not_applicable","file_path":"QualityTests/TraceabilityFixture.lean","formal_artifact_ref":"FART-P2-000001","id":"FLOC-P2-000002","locator_status":"current","module_name":"QualityTests.TraceabilityFixture","observed_at":"fixture-r2","record_status":"active","repository":"formal-math-curriculum/lean","revision":"fixture-r2","schema_version":1,"source_kind":"project_repository","structural_anchors":[],"superseded_by_locator_refs":[],"supersedes_locator_refs":["FLOC-P2-000001"]}'
 LOCK='{"authority":"project1_external_authority","curriculum_release_ref":"P1-CURR-v1","identity_count":0,"mirror_status":"verified_snapshot","schema_version":1,"source_refs":["P1-CURR-v1","P1-P2-HANDOFF-v1"],"verified_by_trace_record":"TRVER-M2-000001"}'
 
 make_valid_root() {
   local root="$1"
   mkdir -p "$root/metadata/formal-artifacts/fart" "$root/metadata/formal-artifacts/floc" \
-    "$root/metadata/curriculum-lock" "$root/Fixture"
+    "$root/metadata/curriculum-lock" "$root/QualityTests"
   printf '%s\n' "$BASE_REGISTRY" > "$root/metadata/formal-artifacts/registry.json"
   printf '%s\n' "$FART" > "$root/metadata/formal-artifacts/fart/000001-001000.jsonl"
   printf '%s\n%s\n' "$FLOC1" "$FLOC2" > "$root/metadata/formal-artifacts/floc/000001-001000.jsonl"
   printf '%s\n' "$LOCK" > "$root/metadata/curriculum-lock/manifest.json"
   : > "$root/metadata/curriculum-lock/linked-identities.jsonl"
-  printf '/- fixture source target -/\n' > "$root/Fixture/Current.lean"
+  cp QualityTests/TraceabilityFixture.lean "$root/QualityTests/TraceabilityFixture.lean"
 }
 
 expect_pass() {
