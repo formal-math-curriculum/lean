@@ -1,0 +1,174 @@
+#!/usr/bin/env bash
+# License: see the repository LICENSE file.
+# Authors: Formal Mathematics Curriculum contributors
+set -euo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+WORK="$(mktemp -d)"
+trap 'rm -rf "$WORK"' EXIT
+
+# The alternate-root fixture carries a current project FLOC. Strong validation must resolve that
+# declaration through the selected Lean environment, so materialize the governed fixture module
+# explicitly before exercising the copied alternate-root source tree.
+lake build --wfail +QualityTests.TraceabilityFixture
+
+make_root() {
+  local root="$1"
+  mkdir -p "$root/metadata/formal-artifacts/fart" "$root/metadata/formal-artifacts/floc" \
+    "$root/metadata/formal-artifacts/flink" "$root/metadata/curriculum-lock" "$root/QualityTests"
+  cp "$ROOT/QualityTests/TraceabilityFixture.lean" "$root/QualityTests/TraceabilityFixture.lean"
+  cat > "$root/metadata/formal-artifacts/registry.json" <<'EOF'
+{"default_curriculum_baseline_ref":"P1-CURR-v1","dependency_baseline_ref":"P2-DEP-M2.2-v1","format":"formal-artifacts-jsonl-v1","lean_toolchain_ref":"P2-ENV-M2.5-v1","next_ids":{"fart":"FART-P2-000002","flink":"FLINK-P2-000001","floc":"FLOC-P2-000002"},"protocol_ref":"P2-TRACE-M2.8-PROTOCOL-v1","record_counts":{"fart":1,"flink":0,"floc":1},"registry_semantics_ref":"P2-TRACE-M2.8-REGISTRY-v1","registry_status":"active","reservations":[],"schema_version":1,"shard_size":1000}
+EOF
+  cat > "$root/metadata/formal-artifacts/fart/000001-001000.jsonl" <<'EOF'
+{"artifact_kind":"theorem","created_revision":"fixture-current","current_locator_refs":["FLOC-P2-000001"],"curriculum_link_refs":[],"dependency_baseline_ref":"P2-DEP-M2.2-v1","id":"FART-P2-000001","lean_toolchain_ref":"P2-ENV-M2.5-v1","quality_state":"reviewed","record_status":"active","representation_state":"represented","schema_version":1,"source_provenance":{"proof_or_implementation_provenance_notes":"provenance-v2 fixture","provenance_kind":"original_project","source_refs":[],"statement_provenance_notes":"provenance-v2 fixture"},"superseded_by":[],"supersedes":[],"title_or_summary":"Provenance v2 fixture theorem","verification_state":"regression_verified"}
+EOF
+  cat > "$root/metadata/formal-artifacts/floc/000001-001000.jsonl" <<'EOF'
+{"created_revision":"fixture-current","declaration_names":["QualityTests.TraceabilityFixture.fixtureTheorem"],"dependency_baseline_ref":"not_applicable","file_path":"QualityTests/TraceabilityFixture.lean","formal_artifact_ref":"FART-P2-000001","id":"FLOC-P2-000001","locator_status":"current","module_name":"QualityTests.TraceabilityFixture","observed_at":"fixture-current","record_status":"active","repository":"formal-math-curriculum/lean","revision":"fixture-current","schema_version":1,"source_kind":"project_repository","structural_anchors":[],"superseded_by_locator_refs":[],"supersedes_locator_refs":[]}
+EOF
+  : > "$root/metadata/formal-artifacts/flink/000001-001000.jsonl"
+  cat > "$root/metadata/curriculum-lock/manifest.json" <<'EOF'
+{"authority":"project1_external_authority","curriculum_release_ref":"P1-CURR-v1","identity_count":0,"mirror_status":"verified_snapshot","schema_version":1,"source_refs":["P1-CURR-v1","P1-P2-HANDOFF-v1"],"verified_by_trace_record":"TRVER-M2-provenance-v2"}
+EOF
+  : > "$root/metadata/curriculum-lock/linked-identities.jsonl"
+}
+
+root="$WORK/root"
+make_root "$root"
+
+printf 'traceability-provenance-v2:start:alternate-root-generate\n'
+lake exe traceability generate --root "$root" >/dev/null
+sha="$(git rev-parse HEAD)"
+out="$root/.lake/build/traceability/$sha"
+legacy="$out/manifest.json"
+provenance="$out/provenance-v2.json"
+[[ -f "$legacy" ]]
+[[ -f "$provenance" ]]
+# Legacy compatibility output must no longer overclaim the alternate root as the generator checkout.
+grep -Fq '"repository":"not_applicable"' "$legacy"
+grep -Fq '"subject_revision":"not_applicable"' "$legacy"
+grep -Fq '"subject_context":"alternate_root_content_snapshot"' "$legacy"
+grep -Fq '"deterministic_source_time":"not_applicable"' "$legacy"
+grep -Fq "\"generator_revision\":\"$sha\"" "$legacy"
+# V2 provides the explicit content+projection-bound successor contract.
+grep -Fq '"subject_kind":"alternate_root_content_snapshot"' "$provenance"
+grep -Fq '"subject_revision":"not_applicable"' "$provenance"
+grep -Fq '"freshness_contract":"content_and_projection_bound"' "$provenance"
+grep -Fq '"generated_output_fingerprint"' "$provenance"
+grep -Fq '"legacy_manifest_fingerprint"' "$provenance"
+grep -Fq '"legacy_generated_manifest":"manifest.json"' "$provenance"
+if grep -Fq "$WORK" "$provenance"; then
+  printf 'traceability-provenance-v2:fail:path-dependent-provenance\n' >&2
+  exit 1
+fi
+lake exe traceability freshness --root "$root" >/dev/null
+printf 'traceability-provenance-v2:pass:alternate-root-no-revision-overclaim\n'
+printf 'traceability-provenance-v2:pass:legacy-alternate-root-no-revision-overclaim\n'
+printf 'traceability-provenance-v2:pass:path-independent-manifest-reference\n'
+
+# The sidecar contract itself is validated, not merely its combined digest.
+python3 - "$provenance" <<'PY'
+import json, sys
+p=sys.argv[1]
+d=json.load(open(p))
+d["freshness_contract"]="timestamp_only"
+open(p,"w").write(json.dumps(d, sort_keys=True, separators=(",", ":"))+"\n")
+PY
+set +e
+contract_output="$(lake exe traceability freshness --root "$root" 2>&1)"
+contract_status=$?
+set -e
+[[ "$contract_status" -ne 0 ]] || {
+  printf 'traceability-provenance-v2:fail:tampered-sidecar-unexpected-pass\n' >&2
+  exit 1
+}
+grep -Fq 'traceability:freshness:error:freshness_contract-mismatch:timestamp_only:content_and_projection_bound' <<<"$contract_output"
+lake exe traceability generate --root "$root" >/dev/null
+lake exe traceability freshness --root "$root" >/dev/null
+printf 'traceability-provenance-v2:pass:tampered-sidecar-rejected\n'
+
+# Derived output mutation must be detected before regeneration.
+printf '\nmanual generated mutation\n' >> "$out/index.md"
+set +e
+generated_output="$(lake exe traceability freshness --root "$root" 2>&1)"
+generated_status=$?
+set -e
+[[ "$generated_status" -ne 0 ]] || {
+  printf 'traceability-provenance-v2:fail:generated-output-mutation-unexpected-pass\n' >&2
+  exit 1
+}
+grep -Fq 'traceability:freshness:error:generated-outputs-changed' <<<"$generated_output"
+lake exe traceability generate --root "$root" >/dev/null
+lake exe traceability freshness --root "$root" >/dev/null
+printf 'traceability-provenance-v2:pass:generated-output-mutation-rejected\n'
+
+# Legacy manifest mutation is also part of projection freshness.
+python3 - "$legacy" <<'PY'
+import json, sys
+p=sys.argv[1]
+d=json.load(open(p))
+d["result_state"]="tampered"
+open(p,"w").write(json.dumps(d, sort_keys=True, separators=(",", ":"))+"\n")
+PY
+set +e
+legacy_output="$(lake exe traceability freshness --root "$root" 2>&1)"
+legacy_status=$?
+set -e
+[[ "$legacy_status" -ne 0 ]] || {
+  printf 'traceability-provenance-v2:fail:legacy-manifest-mutation-unexpected-pass\n' >&2
+  exit 1
+}
+grep -Fq 'traceability:freshness:error:legacy-manifest-changed' <<<"$legacy_output"
+lake exe traceability generate --root "$root" >/dev/null
+lake exe traceability freshness --root "$root" >/dev/null
+printf 'traceability-provenance-v2:pass:legacy-manifest-mutation-rejected\n'
+
+first_digest="$(git hash-object "$provenance")"
+lake exe traceability generate --root "$root" >/dev/null
+second_digest="$(git hash-object "$provenance")"
+[[ "$first_digest" == "$second_digest" ]] || {
+  printf 'traceability-provenance-v2:fail:nondeterministic-provenance:%s:%s\n' "$first_digest" "$second_digest" >&2
+  exit 1
+}
+printf 'traceability-provenance-v2:pass:deterministic-regeneration:digest=%s\n' "$first_digest"
+
+# The authored shard filename is part of the canonical physical input surface. Renaming the shard
+# without changing its bytes must therefore make the generated provenance stale.
+fart_dir="$root/metadata/formal-artifacts/fart"
+mv "$fart_dir/000001-001000.jsonl" "$fart_dir/000101-001100.jsonl"
+set +e
+rename_output="$(lake exe traceability freshness --root "$root" 2>&1)"
+rename_status=$?
+set -e
+[[ "$rename_status" -ne 0 ]] || {
+  printf 'traceability-provenance-v2:fail:shard-rename-unexpected-pass\n' >&2
+  exit 1
+}
+grep -Fq 'traceability:freshness:error:registry-inputs-changed' <<<"$rename_output"
+mv "$fart_dir/000101-001100.jsonl" "$fart_dir/000001-001000.jsonl"
+lake exe traceability freshness --root "$root" >/dev/null
+printf 'traceability-provenance-v2:pass:shard-rename-rejected\n'
+
+sed -i 's/Provenance v2 fixture theorem/Provenance v2 fixture theorem changed/' \
+  "$root/metadata/formal-artifacts/fart/000001-001000.jsonl"
+set +e
+stale_output="$(lake exe traceability freshness --root "$root" 2>&1)"
+stale_status=$?
+set -e
+[[ "$stale_status" -ne 0 ]] || {
+  printf 'traceability-provenance-v2:fail:stale-input-unexpected-pass\n' >&2
+  exit 1
+}
+grep -Fq 'traceability:freshness:error:registry-inputs-changed' <<<"$stale_output"
+printf 'traceability-provenance-v2:pass:stale-authored-input-rejected\n'
+
+lake exe traceability generate --root "$root" >/dev/null
+lake exe traceability freshness --root "$root" >/dev/null
+third_digest="$(git hash-object "$provenance")"
+[[ "$third_digest" != "$first_digest" ]] || {
+  printf 'traceability-provenance-v2:fail:changed-input-digest-not-changed\n' >&2
+  exit 1
+}
+printf 'traceability-provenance-v2:pass:changed-input-new-fingerprint\n'
+
+printf 'traceability-provenance-v2:summary:pass\n'
