@@ -143,6 +143,7 @@ check_tooling_file() {
   files_checked=$((files_checked + 1))
   check_header "$file"
   check_warning_policy "$file"
+  check_imports "$file" tooling
 }
 
 check_path_as_math() {
@@ -186,6 +187,17 @@ case "$mode" in
       while IFS= read -r file; do
         check_tooling_file "$file"
       done < <(find Quality -type f -name '*.lean' ! -path 'Quality/Fixtures/*' -print | LC_ALL=C sort)
+    fi
+
+    for file in Traceability.lean TraceabilityCli.lean; do
+      if [[ -f "$file" ]]; then
+        check_tooling_file "$file"
+      fi
+    done
+    if [[ -d Traceability ]]; then
+      while IFS= read -r file; do
+        check_tooling_file "$file"
+      done < <(find Traceability -type f -name '*.lean' -print | LC_ALL=C sort)
     fi
 
     if [[ -f QualityTests.lean ]]; then

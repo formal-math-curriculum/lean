@@ -15,7 +15,7 @@ Commands:
   env         Validate the selected Lean/Lake/dependency environment; cache warmup is best-effort.
   build       Validate selected environment, then build complete FormalMath with warnings as failures.
   proof       Validate selected environment, build FormalMath proof-audit inputs, then run production proof/axiom assurance.
-  source      Validate selected environment, then run source/import/API-boundary checks.
+  source      Validate selected environment, then run source/import/API-boundary and authored traceability integrity checks.
   regression  Validate selected environment, then run positive regressions and negative controls.
   all         Run env, then every quality dimension with independent results.
   report      Print the latest compact report for the current full SHA (optionally one dimension).
@@ -133,7 +133,7 @@ run_proof() {
 
 run_source() {
   run_recorded source bash -c \
-    'bash Quality/check-environment.sh semantic && bash Quality/check-source-quality.sh production'
+    'bash Quality/check-environment.sh semantic && bash Quality/check-source-quality.sh production && lake exe traceability validate'
 }
 
 run_regression() {
