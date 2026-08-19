@@ -1,14 +1,24 @@
 # Local quality commands
 
-This document defines the supported local M2.6 quality-command surface for the Formal Mathematics Curriculum repository.
+This document defines the supported M2.6 local quality-command surface for the Formal Mathematics Curriculum repository.
 
-These commands report software/formalization quality dimensions only. They do **not** infer curriculum identity, taxonomy rank, learner readiness, Level, mathematical importance, or empirical truth.
+These commands report software/formalization quality dimensions only. They do **not** infer curriculum identity, taxonomy rank, learner readiness, Level, mathematical importance, empirical truth, or curriculum/formalization completeness.
 
-## Preconditions
+## Selected environment precondition
 
-Use authenticated access to the private repository and check out the exact branch/ref/SHA you intend to verify. The environment remains governed by `lean-toolchain`, `lakefile.toml`, and `lake-manifest.json`.
+The selected M2.6 environment is versioned in `Quality/environment-baseline.env` and currently fixes:
 
-The command surface is:
+- Lean toolchain `leanprover/lean4:v4.33.0`;
+- Lean 4.33.0 commit `d8b18978322de05a8f3dba51ef03cf5461676c17`;
+- Lake `5.0.0-src+d8b1897`;
+- mathlib input `v4.33.0` and resolved revision `db584cd6d46c92f209a44c0f1c829460d327499d`;
+- the governed `lake-manifest.json` blob for this baseline.
+
+Every independently runnable semantic quality dimension invokes `Quality/check-environment.sh semantic` before it can emit PASS. The preflight verifies effective Lean/Lake, performs `lake update`, rejects drift in `lean-toolchain`/`lakefile.toml`/`lake-manifest.json`, checks the selected manifest identity, and checks the resolved mathlib checkout revision.
+
+A feature branch does not silently select a new environment merely by committing a different toolchain or dependency revision. Changing the selected environment requires governed dependency/environment work and an update to the versioned baseline.
+
+## Command surface
 
 ```sh
 bash Quality/quality.sh env
@@ -22,21 +32,23 @@ bash Quality/quality.sh report [dimension]
 
 `all` is convenience orchestration only. It is **not** the sole canonical quality result: every executed dimension writes an independent revision-bound report and diagnostic log.
 
-## `env` — governed environment
+## `env` — selected environment + optional cache warmup
 
 ```sh
 bash Quality/quality.sh env
 ```
 
-Runs:
+The semantic preflight is mandatory. After it passes, `env` attempts `lake exe cache get` as a best-effort acceleration step.
 
-1. `lake update`;
-2. `git diff --exit-code -- lean-toolchain lakefile.toml lake-manifest.json`;
-3. `lake exe cache get`.
+Cache semantics:
 
-A pass means the dependency environment resolves and the three governed environment files remain unchanged after resolution. Cache availability accelerates builds but is not semantic evidence.
+- cache success is reported;
+- cache failure is reported as `quality-env:cache:nonblocking-fail`;
+- cache failure does **not** change an otherwise valid selected environment into semantic failure;
+- builds may consequently take longer or build more dependencies from source;
+- cache availability is not proof/build/curriculum evidence.
 
-If `env` fails during `all`, environment-dependent dimensions are reported as **skipped**, not silently attempted in an ungoverned environment.
+If the semantic preflight fails during `all`, environment-dependent dimensions are reported as **skipped** rather than executed under a knowingly invalid environment.
 
 ## `build` — complete production build / warning gate
 
@@ -44,9 +56,9 @@ If `env` fails during `all`, environment-dependent dimensions are reported as **
 bash Quality/quality.sh build
 ```
 
-Runs `lake build --wfail FormalMath`.
+Runs the selected-environment preflight and then `lake build --wfail FormalMath`.
 
-A pass means the complete supported `FormalMath` target builds at the recorded revision with Lake warning-failure semantics. It does not mean the curriculum or formalization program is complete.
+A PASS means the complete supported target built under the selected environment at the recorded SHA with Lake warning-failure semantics. It does not imply curriculum or formalization completeness.
 
 ## `proof` — production proof/axiom assurance
 
@@ -54,13 +66,13 @@ A pass means the complete supported `FormalMath` target builds at the recorded r
 bash Quality/quality.sh proof
 ```
 
-Runs, in order:
+After the selected-environment preflight, this dimension:
 
-1. `lake build --wfail +Quality.AxiomAudit`;
-2. the production module-origin axiom audit with Lean `-DwarningAsError=true`;
-3. the standard mathematical axiom positive control with the same direct-Lean warning semantics.
+1. builds reusable `Quality.AxiomAudit` under warning-failure mode;
+2. runs the production module-origin axiom audit under direct Lean `-DwarningAsError=true`;
+3. runs the standard mathematical axiom positive control.
 
-The production auditor distinguishes standard Lean mathematical axioms from `sorryAx`, custom/unclassified axioms, and trust-compiler dependence rather than treating all axioms as one category. Deliberate bad fixtures live in the regression dimension.
+The auditor distinguishes standard mathematical Lean axioms, `sorryAx`, `Lean.trustCompiler`, and custom/unclassified axioms. Deliberate bad controls, including a `Lean.trustCompiler` fixture, live in the regression dimension.
 
 ## `source` — source/import/API-boundary structural checks
 
@@ -68,11 +80,19 @@ The production auditor distinguishes standard Lean mathematical axioms from `sor
 bash Quality/quality.sh source
 ```
 
-Runs `Quality/check-source-quality.sh production`.
+After selected-environment validation, runs `Quality/check-source-quality.sh production`.
 
-Hard checks currently cover governed Lean source headers, supported-module documentation presence, root-umbrella import misuse, reviewed direct mathlib-transitive import roots, and explicit public `FormalMath.Internal.*` re-export. Broad exact `import Mathlib` is advisory.
+Profiles:
 
-Known blind spots remain documented in `P2-QA-M2.6-SOURCE-v1`; this command does not claim complete semantic API verification.
+- supported `FormalMath` source: governed header, module documentation, warning-suppression policy, production import rules;
+- permanent `QualityTests` source: governed header, module documentation, warning-suppression policy, test-appropriate import rules;
+- permanent `Quality` Lean tooling: governed header and warning-suppression policy.
+
+Selected hard checks include root-umbrella misuse in production, reviewed direct mathlib-transitive roots, explicit public `FormalMath.Internal.*` re-export, and unapproved local `set_option warningAsError false`.
+
+Warning suppression is prohibited by default in supported/permanent source. A bounded exception must appear in `Quality/warning-suppression-exceptions.tsv` with a governed `CEXC-M2-*` ID and rationale. No exception is currently adopted.
+
+Known semantic linter blind spots remain documented in `P2-QA-M2.6-SOURCE-v1`; this command does not claim complete semantic API verification.
 
 ## `regression` — positive and intended-failure behavior
 
@@ -80,15 +100,20 @@ Known blind spots remain documented in `P2-QA-M2.6-SOURCE-v1`; this command does
 bash Quality/quality.sh regression
 ```
 
-Runs the permanent MAT-178 regression harness. It includes:
+After selected-environment validation, runs the permanent MAT-178/MAT-182 regression harness. It includes:
 
-- strict production build and reusable axiom-auditor build;
+- strict production and reusable axiom-auditor builds;
 - non-default `QualityTests` positive regression/contract build;
-- source-quality positive checks;
-- direct `sorry`, transitive `sorryAx`, custom-axiom, source-policy, and computability negative controls;
+- source positive checks;
+- direct `sorry`, transitive `sorryAx`, custom axiom, and `Lean.trustCompiler` controls;
+- source-policy controls including permanent-test provenance and warning-suppression rejection;
+- executable/noncomputable contract control;
+- selected-environment mismatch rejection through a standalone semantic dimension;
+- optional-cache failure nonblocking control;
+- parallel report-identity collision control;
 - the seven test-only FORMREQ-P1-000018 anti-conflation invariants.
 
-Expected-failure fixtures pass the regression dimension only when they return nonzero for the intended signature.
+Expected-failure fixtures pass only when they return nonzero for the intended signature.
 
 ## `all` — orchestration, not collapsed truth
 
@@ -96,42 +121,44 @@ Expected-failure fixtures pass the regression dimension only when they return no
 bash Quality/quality.sh all
 ```
 
-Runs `env`, then `build`, `proof`, `source`, and `regression`. After a valid environment, it continues across failing dimensions so a single failure does not hide the others. The final aggregate status is nonzero if any dimension failed, but the per-dimension reports remain authoritative execution evidence.
+Runs `env`, then `build`, `proof`, `source`, and `regression`. Each semantic dimension independently revalidates the selected environment before its own gate. After an initially valid environment, `all` continues across failing dimensions so one failure does not hide the others. The final aggregate status is nonzero if any dimension failed, but per-dimension reports remain authoritative execution evidence.
 
-## Revision-bound reports
+## Collision-resistant revision-bound reports
 
-Every executed dimension creates two local files under:
+Every executed dimension receives a unique run directory created with `mktemp`:
 
 ```text
-.lake/build/quality/
+.lake/build/quality/<dimension>-<full-git-sha>-<unique-token>/
+  result.report
+  output.log
 ```
 
-- `<dimension>-<short-sha>-<timestamp>.report` — compact provenance/status record;
-- `<dimension>-<short-sha>-<timestamp>.log` — diagnostic command output.
+The full SHA participates in the directory name, and the unique token prevents same-dimension/same-SHA concurrent or rapid retries from overwriting one another.
 
-Reports include:
+`result.report` version 2 includes:
 
 - dimension and pass/fail/skipped status;
 - exit code;
-- exact Git SHA and current ref;
-- committed `lean-toolchain` value;
+- exact full Git SHA and ref;
+- selected environment baseline path and its Git blob identity;
+- committed `lean-toolchain`;
 - effective Lean and Lake versions;
-- resolved local mathlib revision when available;
-- Git blob identity of `lake-manifest.json`;
+- resolved mathlib revision;
+- `lake-manifest.json` Git blob;
 - platform;
 - start/end UTC timestamps;
-- exact shell command;
+- exact executed command;
 - diagnostic log path.
 
-The report directory is under `.lake/` and therefore remains local build output, not versioned source of truth.
+The report directory is under `.lake/` and remains local build output, not versioned semantic source of truth.
 
-Show the most recent current-SHA report:
+Show the newest report for the **current full SHA**:
 
 ```sh
 bash Quality/quality.sh report
 ```
 
-Or for one dimension:
+or for one dimension:
 
 ```sh
 bash Quality/quality.sh report proof
@@ -141,16 +168,25 @@ bash Quality/quality.sh report proof
 
 When a quality command fails:
 
-1. preserve the exact `.report` and referenced `.log` while diagnosing;
-2. confirm the recorded SHA/ref/toolchain/mathlib context before interpreting the failure;
-3. identify the failing dimension and underlying gate rather than treating aggregate `all` status as the root cause;
-4. if the failure is an expected negative fixture that unexpectedly passed, treat that as a gate failure;
-5. preserve failed validation lineage in the relevant Linear issue when the failure is part of an architecture milestone;
-6. rerun the affected dimension at the corrected revision, then rerun the broader regression/all surface when appropriate;
-7. never inherit a prior revision's PASS merely because the new revision is its descendant.
+1. preserve the exact run directory (`result.report` + `output.log`) while diagnosing;
+2. confirm selected-environment preflight output and recorded SHA/ref/toolchain/mathlib/manifest;
+3. identify the failing dimension/gate rather than using aggregate `all` as root cause;
+4. treat an expected negative fixture that unexpectedly succeeds as a gate failure;
+5. preserve failed milestone validation lineage in Linear;
+6. rerun the affected dimension at the corrected revision;
+7. rerun broader regression/all surfaces when appropriate;
+8. never inherit an earlier SHA's PASS merely because a new revision descends from it.
 
 ## CI handoff
 
-M2.7 may call these same commands from permanent CI. M2.6 does not select workflow topology, trigger policy, runner matrix, required-check names, merge policy, or artifact-retention policy.
+M2.7 may call these same commands from permanent CI. M2.6 does not select workflow topology, triggers, required check names, runner matrix, branch/merge policy, concurrency/cancellation, or artifact retention.
 
-A future CI aggregate may orchestrate `all`, but it must keep `build`, `proof`, `source`, and `regression` results independently diagnosable.
+M2.7 constraints inherited from M2.6:
+
+- each semantic CI dimension must retain the selected-environment preflight or an explicitly equivalent precondition in the same execution environment;
+- cache failure must remain operational/non-semantic and must not masquerade as theorem/build failure;
+- build, proof, source, and regression results must remain independently diagnosable;
+- report directories are per-execution and collision-resistant;
+- platform is recorded; M2.7 decides which platform matrix is required;
+- dependency/toolchain updates change the selected environment and therefore require governed baseline update plus full quality revalidation;
+- upstream/dependency changes must follow M2.2 dependency/reuse governance rather than being accepted because CI happens to pass.
