@@ -12,5 +12,7 @@ run_cmd
     (requiredDeclarations := #[
       `FormalMath.Algebra.factoredProduct,
       `FormalMath.Algebra.factoredProduct_eq_zero_iff,
-      `FormalMath.Algebra.Examples.two_five_factored_equation
+      `FormalMath.Algebra.Examples.two_five_factored_equation,
+      `FormalMath.Arithmetic.Examples.cancel_common_nine_addend,
+      `FormalMath.Arithmetic.Examples.seven_distributes_over_four_plus_three
     ])

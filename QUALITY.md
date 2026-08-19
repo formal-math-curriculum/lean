@@ -69,11 +69,14 @@ After the selected-environment preflight, this dimension:
 
 The auditor enumerates both imported and locally declared kernel constants, reports each declaration's
 origin module and complete transitive axiom dependency set, and rejects an empty match as a coverage
-failure. The production runner additionally requires the three governed declarations at this revision:
+failure. The production runner additionally requires the five governed project declarations at this
+revision:
 
 - `FormalMath.Algebra.factoredProduct`;
 - `FormalMath.Algebra.factoredProduct_eq_zero_iff`;
-- `FormalMath.Algebra.Examples.two_five_factored_equation`.
+- `FormalMath.Algebra.Examples.two_five_factored_equation`;
+- `FormalMath.Arithmetic.Examples.seven_distributes_over_four_plus_three`;
+- `FormalMath.Arithmetic.Examples.cancel_common_nine_addend`.
 
 Any missing governed declaration fails the coverage gate. Additional implementation-internal kernel
 declarations remain named and audited, but do not thereby become governed FLOC records. The auditor
@@ -105,7 +108,8 @@ The traceability validator verifies the authored `metadata/formal-artifacts/` re
 
 Because the executable imports the generated/query/round-trip modules, this dimension also ensures the complete M2.8 traceability CLI compiles before `validate` executes.
 
-The current production traceability registry is intentionally empty of FART/FLOC/FLINK records; this is a valid state, not evidence of absent curriculum mathematics. Production IDs are not allocated until real eligible formal artifacts exist.
+The current production registry contains reviewed FART/FLOC/FLINK records for bounded treatments.
+Those records are scoped representations, not a claim that an entire curriculum topic is formalized.
 
 Warning suppression is prohibited by default in supported/permanent source. A bounded exception must appear in `Quality/warning-suppression-exceptions.tsv` with a governed `CEXC-M2-*` ID and rationale. No exception is currently adopted.
 

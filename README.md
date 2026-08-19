@@ -59,6 +59,11 @@ lake exe traceability validate
 
 The traceability registry does not define curriculum taxonomy, learner prerequisites, Levels, readiness, or mathematical coverage. It links governed Project-1 curriculum identities/treatments to stable Project-2 formal-artifact identities and versioned code/dependency locations.
 
+The supported mathematical root currently exposes the bounded M2.10 factored-integer-equation slice
+and two concrete natural-number operation-law examples for the first Project-4 slice. The canonical
+natural-number laws are reused directly from Lean/mathlib; the local examples do not claim full
+arithmetic-operations coverage.
+
 ## Source layout
 
 - `FormalMath.lean` — convenience root for the supported library API.
