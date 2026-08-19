@@ -21,3 +21,10 @@ roots = ["Quality"]
 globs = ["Quality.AxiomAudit"]
 requiresModuleSystem = true
 allowNonModules = false
+
+[[lean_lib]]
+name = "QualityTests"
+roots = ["QualityTests"]
+globs = ["QualityTests.*"]
+requiresModuleSystem = true
+allowNonModules = false
