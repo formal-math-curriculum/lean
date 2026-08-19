@@ -5,6 +5,8 @@ set -euo pipefail
 
 CONTROL_REPORT_DIR="$(mktemp -d)"
 trap 'rm -rf "$CONTROL_REPORT_DIR"' EXIT
+IMPORTED_AXIOM_BUILD_DIR=".lake/build/lib/lean"
+mkdir -p "$IMPORTED_AXIOM_BUILD_DIR/Quality/Fixtures"
 
 run_pass() {
   local label="$1"
@@ -87,6 +89,18 @@ expect_fail_regex() {
 
 run_pass strict-production-build lake build --wfail FormalMath
 run_pass reusable-axiom-auditor-build lake build --wfail +Quality.AxiomAudit
+run_pass imported-safe-module-build lake env lean -DwarningAsError=true \
+  -o "$IMPORTED_AXIOM_BUILD_DIR/Quality/Fixtures/ImportedSafe.olean" \
+  Quality/Fixtures/ImportedSafe.lean
+run_pass imported-custom-axiom-module-build lake env lean -DwarningAsError=true \
+  -o "$IMPORTED_AXIOM_BUILD_DIR/Quality/Fixtures/ImportedCustomAxiom.olean" \
+  Quality/Fixtures/ImportedCustomAxiom.lean
+run_pass_contains production-imported-axiom-coverage \
+  "required=[FormalMath.Algebra.factoredProduct, FormalMath.Algebra.factoredProduct_eq_zero_iff, FormalMath.Algebra.Examples.two_five_factored_equation]; missing-required=[]" \
+  lake env lean -DwarningAsError=true Quality/RunAxiomAudit.lean
+run_pass_contains imported-module-axiom-coverage \
+  "declaration=FormalMathQuality.Fixtures.ImportedSafe.importedTruth; origin=Quality.Fixtures.ImportedSafe; axioms=[]" \
+  lake env lean -DwarningAsError=true Quality/Fixtures/ImportedSafeAudit.lean
 run_pass positive-regression-and-contract-build lake build --wfail QualityTests
 run_pass traceability-validator-build lake build --wfail traceability
 run_pass production-source-quality bash Quality/check-source-quality.sh production
@@ -111,6 +125,10 @@ expect_fail_contains custom-axiom "custom-or-unclassified" \
   lake env lean Quality/Fixtures/CustomAxiom.lean
 expect_fail_contains trust-compiler "trust-review=[Lean.trustCompiler]" \
   lake env lean Quality/Fixtures/TrustCompiler.lean
+expect_fail_contains imported-custom-axiom "custom-or-unclassified=[FormalMathQuality.Fixtures.ImportedCustomAxiom.importedFixtureCustomAxiom]" \
+  lake env lean -DwarningAsError=true Quality/Fixtures/ImportedCustomAxiomAudit.lean
+expect_fail_contains vacuous-imported-coverage "coverage-empty" \
+  lake env lean -DwarningAsError=true Quality/Fixtures/VacuousImportedAudit.lean
 
 expect_fail_contains root-umbrella-import "root-umbrella-import" \
   bash Quality/check-source-quality.sh fixture Quality/Fixtures/SourceQuality/UmbrellaImport.lean
