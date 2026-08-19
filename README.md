@@ -33,6 +33,20 @@ The committed `lake-manifest.json` records the resolved dependency revisions. `l
 
 For exact revision selection, fresh setup, cold reproduction, toolchain-drift recovery, and environment diagnostics, see [`DEVELOPMENT.md`](DEVELOPMENT.md).
 
+## Quality checks
+
+The supported local quality surface is documented in [`QUALITY.md`](QUALITY.md). Each dimension is independently runnable and revision-bound:
+
+```sh
+bash Quality/quality.sh env
+bash Quality/quality.sh build
+bash Quality/quality.sh proof
+bash Quality/quality.sh source
+bash Quality/quality.sh regression
+```
+
+`bash Quality/quality.sh all` is convenience orchestration only; it does not collapse the underlying gate dimensions into one canonical truth.
+
 ## Source layout
 
 - `FormalMath.lean` — convenience root for the supported library API.
