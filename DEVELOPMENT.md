@@ -27,16 +27,9 @@ git status --short --branch
 
 When reproducing a reported failure, `TARGET_REF` should be the exact reported commit SHA whenever possible.
 
-### Current pre-merge bootstrap state
+### Current versioned baseline
 
-At the time this guide was written, bootstrap PR #2 is still unmerged and the default `main` branch does **not** contain the Lean/Lake environment. To inspect the current draft implementation, select the PR branch explicitly, for example:
-
-```sh
-git fetch origin agent/bootstrap-lean-environment
-git checkout agent/bootstrap-lean-environment
-```
-
-Alternatively, check out the exact revision recorded by the current M2.5 baseline/PR evidence. After PR #2 is merged, do not automatically transfer branch verification to the new `main` SHA: first record the merged SHA and either establish implementation-file equivalence to the verified subject or rerun the applicable environment checks.
+The selected Lean/Lake environment is versioned on `main`. Evidence remains revision-bound: do not transfer verification from a reported commit or pull-request head to a later `main` SHA without establishing implementation-file equivalence or rerunning the applicable environment checks.
 
 ## Fresh setup from the selected revision
 
@@ -58,11 +51,13 @@ The diff assertion is part of the reproducibility check. If `lean-toolchain`, `l
 
 `lake update` may use mathlib's precompiled cache when the toolchain matches. This is an acceleration path, not a source of semantic truth.
 
-Optional cache retrieval:
+Supported optional cache retrieval:
 
 ```sh
-lake exe cache get
+bash Quality/quality.sh env
 ```
+
+The semantic preflight runs first. Cache retrieval then has a 300-second default budget; override it with a positive integer such as `QUALITY_CACHE_TIMEOUT_SECONDS=60`. GNU/coreutils `timeout` sends `TERM` at expiry and forces `KILL` after a five-second grace. Cache success, failure, expiry, invalid override, or an unavailable compatible timeout mechanism is recorded explicitly, but remains nonblocking after semantic PASS because cache contents are not proof, build, or curriculum evidence. Invalid values and unavailable-timeout cases skip the optional fetch.
 
 ## Cold reproduction without project cache
 

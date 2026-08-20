@@ -38,9 +38,17 @@ bash Quality/quality.sh report [dimension]
 bash Quality/quality.sh env
 ```
 
-The semantic preflight is mandatory. After it passes, `env` attempts `lake exe cache get` as a best-effort acceleration step.
+The semantic preflight is mandatory and always runs first. After it passes, `env` attempts `lake exe cache get` as a best-effort acceleration step with a 300-second default budget. Set `QUALITY_CACHE_TIMEOUT_SECONDS` to a positive integer to select another budget. The wrapper requires GNU/coreutils `timeout`, runs the fetch in foreground mode, sends `TERM` at expiry, and forces `KILL` after a five-second grace.
 
-Cache success is reported. Cache failure is reported as `quality-env:cache:nonblocking-fail` and does not convert an otherwise valid selected environment into semantic failure. Cache availability is acceleration only, not proof/build/curriculum evidence.
+Cache outcomes are explicit and nonblocking after semantic PASS:
+
+- success: `quality-env:cache:pass`;
+- ordinary fetch failure: `quality-env:cache:nonblocking-fail:exit=<code>`;
+- expiry: `quality-env:cache:nonblocking-timeout:seconds=<n>;exit=124`;
+- invalid non-positive or non-integer override: `quality-env:cache:nonblocking-invalid-timeout:value=<value>;exit=64`;
+- unavailable compatible timeout mechanism: `quality-env:cache:nonblocking-timeout-unavailable:exit=69`.
+
+Invalid configuration and unavailable-timeout outcomes skip the cache fetch. Every outcome above still emits a revision-bound PASS report because cache availability is acceleration only, not proof/build/curriculum evidence. A semantic-preflight failure remains blocking and prevents the cache attempt.
 
 If the semantic preflight fails during `all`, environment-dependent dimensions are reported as **skipped** rather than executed under a knowingly invalid environment.
 
@@ -138,7 +146,7 @@ After selected-environment validation, the permanent regression harness includes
 - a deliberately vacuous imported-surface prefix, proving zero matches fail as a coverage error;
 - executable/noncomputable contract control;
 - selected-environment mismatch rejection;
-- optional-cache failure nonblocking control;
+- optional-cache immediate-failure, bounded slow-timeout, invalid-timeout, and timeout-unavailable nonblocking controls;
 - parallel report-identity collision control;
 - the seven test-only FORMREQ-P1-000018 anti-conflation invariants.
 

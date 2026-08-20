@@ -97,17 +97,40 @@ semantic_check() {
     "$QUALITY_ENV_BASELINE_VERSION" "$QUALITY_LEAN_VERSION" "$actual_mathlib" "$manifest_blob"
 }
 
-cache_check() {
+cache_fetch() {
   if [[ "${QUALITY_CACHE_FAIL_FIXTURE:-0}" == "1" ]]; then
     printf 'quality-env:cache:simulated-failure\n' >&2
     return 73
   fi
-  lake exe cache get
+  if [[ "${QUALITY_CACHE_TIMEOUT_FIXTURE:-0}" == "1" ]]; then
+    printf 'quality-env:cache:simulated-slow-fetch\n' >&2
+    exec sleep 10
+  fi
+  exec lake exe cache get
+}
+
+cache_check() {
+  local timeout_seconds="${QUALITY_CACHE_TIMEOUT_SECONDS:-300}"
+  if [[ ! "$timeout_seconds" =~ ^[1-9][0-9]*$ ]]; then
+    printf 'quality-env:cache:invalid-timeout:value=%s\n' "$timeout_seconds" >&2
+    return 64
+  fi
+
+  if [[ "${QUALITY_CACHE_TIMEOUT_UNAVAILABLE_FIXTURE:-0}" == "1" ]] ||
+     ! command -v timeout >/dev/null 2>&1 ||
+     ! timeout --version 2>/dev/null | grep -Fq 'GNU coreutils'; then
+    printf 'quality-env:cache:timeout-unavailable\n' >&2
+    return 69
+  fi
+
+  timeout --foreground --signal=TERM --kill-after=5s "${timeout_seconds}s" \
+    bash "$0" cache-fetch
 }
 
 case "${1:-semantic}" in
   semantic) semantic_check ;;
   cache) cache_check ;;
+  cache-fetch) cache_fetch ;;
   *)
     printf 'usage: %s [semantic|cache]\n' "$0" >&2
     exit 2

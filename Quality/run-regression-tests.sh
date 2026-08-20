@@ -158,4 +158,19 @@ run_pass_contains optional-cache-failure-nonblocking "quality-env:cache:nonblock
   env QUALITY_REPORT_DIR="$CONTROL_REPORT_DIR" QUALITY_CACHE_FAIL_FIXTURE=1 \
   bash Quality/quality.sh env
 
+run_pass_contains optional-cache-timeout-nonblocking \
+  "quality-env:cache:nonblocking-timeout:seconds=1;exit=124" \
+  env QUALITY_REPORT_DIR="$CONTROL_REPORT_DIR" QUALITY_CACHE_TIMEOUT_SECONDS=1 \
+  QUALITY_CACHE_TIMEOUT_FIXTURE=1 bash Quality/quality.sh env
+
+run_pass_contains optional-cache-invalid-timeout-nonblocking \
+  "quality-env:cache:nonblocking-invalid-timeout:value=invalid;exit=64" \
+  env QUALITY_REPORT_DIR="$CONTROL_REPORT_DIR" QUALITY_CACHE_TIMEOUT_SECONDS=invalid \
+  bash Quality/quality.sh env
+
+run_pass_contains optional-cache-timeout-unavailable-nonblocking \
+  "quality-env:cache:nonblocking-timeout-unavailable:exit=69" \
+  env QUALITY_REPORT_DIR="$CONTROL_REPORT_DIR" QUALITY_CACHE_TIMEOUT_UNAVAILABLE_FIXTURE=1 \
+  bash Quality/quality.sh env
+
 printf 'quality-regression:summary:pass\n'
