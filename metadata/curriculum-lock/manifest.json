@@ -1,1 +1,1 @@
-{"authority":"project1_external_authority","curriculum_release_ref":"P1-CURR-v1","identity_count":3,"mirror_status":"verified_snapshot","schema_version":1,"source_refs":["P1-CURR-v1","P1-P2-HANDOFF-v1"],"verified_by_trace_record":"P4-M4.2-CAND4-RESEARCH-v1"}
+{"authority":"project1_external_authority","curriculum_release_ref":"P1-CURR-v1","identity_count":4,"mirror_status":"verified_snapshot","schema_version":1,"source_refs":["P1-CURR-v1","P1-P2-HANDOFF-v1"],"verified_by_trace_record":"P4-M4.4-ADJACENT-SLICE-DECISION-v1"}

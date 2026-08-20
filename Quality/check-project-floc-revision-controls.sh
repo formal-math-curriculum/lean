@@ -13,7 +13,7 @@ current_anchor="$(git hash-object "$source_file")"
 [[ -n "$recorded_revision" && -n "$recorded_anchor" ]]
 [[ "$recorded_revision" != "$current_revision" ]]
 [[ "$recorded_anchor" == "$current_anchor" ]]
-lake exe traceability validate | grep -Fq 'traceability:resolve:pass:current-modules=6;declarations=8'
+lake exe traceability validate | grep -Fq 'traceability:resolve:pass:current-modules=9;declarations=12'
 printf 'project-floc-revision-control:pass:metadata-descendant\n'
 
 backup="$(mktemp)"
@@ -36,5 +36,5 @@ grep -Fq 'traceability:error:resolve:project-source-drift:FLOC-P2-000001' <<<"$o
 printf 'project-floc-revision-control:pass:source-drift-rejected\n'
 restore
 trap - EXIT
-lake exe traceability validate | grep -Fq 'traceability:resolve:pass:current-modules=6;declarations=8'
+lake exe traceability validate | grep -Fq 'traceability:resolve:pass:current-modules=9;declarations=12'
 printf 'project-floc-revision-control:summary:pass\n'
