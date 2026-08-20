@@ -69,14 +69,16 @@ After the selected-environment preflight, this dimension:
 
 The auditor enumerates both imported and locally declared kernel constants, reports each declaration's
 origin module and complete transitive axiom dependency set, and rejects an empty match as a coverage
-failure. The production runner additionally requires the five governed project declarations at this
+failure. The production runner additionally requires the seven governed project declarations at this
 revision:
 
 - `FormalMath.Algebra.factoredProduct`;
 - `FormalMath.Algebra.factoredProduct_eq_zero_iff`;
 - `FormalMath.Algebra.Examples.two_five_factored_equation`;
+- `FormalMath.Arithmetic.Examples.cancel_common_nine_addend`;
+- `FormalMath.Arithmetic.Examples.neg_seven_mul_neg_four`;
 - `FormalMath.Arithmetic.Examples.seven_distributes_over_four_plus_three`;
-- `FormalMath.Arithmetic.Examples.cancel_common_nine_addend`.
+- `FormalMath.Arithmetic.Examples.seven_sub_neg_three`.
 
 Any missing governed declaration fails the coverage gate. Additional implementation-internal kernel
 declarations remain named and audited, but do not thereby become governed FLOC records. The auditor
