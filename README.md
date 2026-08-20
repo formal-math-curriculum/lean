@@ -13,7 +13,9 @@ The repository uses a single root Lake package with the primary Lean library `Fo
 
 ## Build
 
-Use authenticated access to this private repository, clone it, and **check out the branch/ref/SHA you intend to reproduce before running environment commands**. Do not assume the default branch already contains an unmerged environment change.
+Clone the public repository (authentication is required only for authorized writes), and **check out
+the branch/ref/SHA you intend to reproduce before running environment commands**. Do not assume the
+default branch already contains an unmerged environment change.
 
 Verify the effective toolchain:
 

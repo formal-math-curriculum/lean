@@ -102,6 +102,19 @@ cache_fetch() {
     printf 'quality-env:cache:simulated-failure\n' >&2
     return 73
   fi
+  if [[ "${QUALITY_CACHE_DESCENDANT_FIXTURE:-0}" == "1" ]]; then
+    if [[ -z "${QUALITY_CACHE_DESCENDANT_PID_FILE:-}" ]]; then
+      printf 'quality-env:cache:descendant-fixture-pid-file-missing\n' >&2
+      return 64
+    fi
+    printf 'quality-env:cache:simulated-term-resistant-descendant-fetch\n' >&2
+    (
+      trap '' TERM
+      printf '%s\n' "$BASHPID" > "$QUALITY_CACHE_DESCENDANT_PID_FILE"
+      exec sleep 10
+    ) &
+    wait
+  fi
   if [[ "${QUALITY_CACHE_FORCE_KILL_FIXTURE:-0}" == "1" ]]; then
     printf 'quality-env:cache:simulated-term-resistant-fetch\n' >&2
     trap '' TERM
@@ -114,6 +127,23 @@ cache_fetch() {
   exec lake exe cache get
 }
 
+cache_supervise() {
+  local fetch_pid
+  bash "$0" cache-fetch &
+  fetch_pid=$!
+
+  terminate_cache_group() {
+    trap '' TERM
+    kill -TERM -- "-$$" 2>/dev/null || true
+    sleep 5
+    kill -KILL -- "-$$" 2>/dev/null || true
+    exit 124
+  }
+
+  trap terminate_cache_group TERM
+  wait "$fetch_pid"
+}
+
 cache_check() {
   local timeout_seconds="${QUALITY_CACHE_TIMEOUT_SECONDS:-300}"
   if [[ ! "$timeout_seconds" =~ ^[1-9][0-9]*$ ]]; then
@@ -123,14 +153,15 @@ cache_check() {
 
   if [[ "${QUALITY_CACHE_TIMEOUT_UNAVAILABLE_FIXTURE:-0}" == "1" ]] ||
      ! command -v timeout >/dev/null 2>&1 ||
-     ! timeout --version 2>/dev/null | grep -Fq 'GNU coreutils'; then
+     ! timeout --version 2>/dev/null | grep -Fq 'GNU coreutils' ||
+     ! command -v setsid >/dev/null 2>&1; then
     printf 'quality-env:cache:timeout-unavailable\n' >&2
     return 69
   fi
 
   local status
-  timeout --foreground --signal=TERM --kill-after=5s "${timeout_seconds}s" \
-    bash "$0" cache-fetch
+  timeout --foreground --signal=TERM --kill-after=6s "${timeout_seconds}s" \
+    setsid bash "$0" cache-supervise
   status=$?
   if [[ "$status" -eq 137 ]]; then
     return 124
@@ -142,6 +173,7 @@ case "${1:-semantic}" in
   semantic) semantic_check ;;
   cache) cache_check ;;
   cache-fetch) cache_fetch ;;
+  cache-supervise) cache_supervise ;;
   *)
     printf 'usage: %s [semantic|cache]\n' "$0" >&2
     exit 2

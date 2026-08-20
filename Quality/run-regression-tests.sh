@@ -168,6 +168,96 @@ run_pass_contains optional-cache-forced-kill-timeout-nonblocking \
   env QUALITY_REPORT_DIR="$CONTROL_REPORT_DIR" QUALITY_CACHE_TIMEOUT_SECONDS=1 \
   QUALITY_CACHE_FORCE_KILL_FIXTURE=1 bash Quality/quality.sh env
 
+printf 'quality-regression:start:optional-cache-descendant-timeout-no-survivor\n'
+descendant_report_dir="$CONTROL_REPORT_DIR/cache-descendant"
+descendant_direct_pid_file="$descendant_report_dir/direct-child.pid"
+descendant_direct_output_file="$descendant_report_dir/direct-output.log"
+descendant_env_pid_file="$descendant_report_dir/env-child.pid"
+descendant_env_output_file="$descendant_report_dir/env-output.log"
+mkdir -p "$descendant_report_dir"
+SECONDS=0
+set +e
+env QUALITY_CACHE_TIMEOUT_SECONDS=1 QUALITY_CACHE_DESCENDANT_FIXTURE=1 \
+  QUALITY_CACHE_DESCENDANT_PID_FILE="$descendant_direct_pid_file" \
+  bash Quality/check-environment.sh cache >"$descendant_direct_output_file" 2>&1
+descendant_direct_status=$?
+set -e
+descendant_direct_elapsed=$SECONDS
+descendant_direct_output="$(<"$descendant_direct_output_file")"
+printf '%s\n' "$descendant_direct_output"
+if [[ "$descendant_direct_status" -ne 124 ]] || (( descendant_direct_elapsed > 8 )); then
+  printf 'quality-regression:fail:optional-cache-descendant-timeout-no-survivor:direct:exit=%d;elapsed=%d\n' \
+    "$descendant_direct_status" "$descendant_direct_elapsed" >&2
+  exit 1
+fi
+if [[ ! -s "$descendant_direct_pid_file" ]]; then
+  printf 'quality-regression:fail:optional-cache-descendant-timeout-no-survivor:direct:missing-pid\n' >&2
+  exit 1
+fi
+descendant_direct_pid="$(<"$descendant_direct_pid_file")"
+if kill -0 "$descendant_direct_pid" 2>/dev/null; then
+  kill -KILL "$descendant_direct_pid" 2>/dev/null || true
+  printf 'quality-regression:fail:optional-cache-descendant-timeout-no-survivor:direct:pid=%s\n' \
+    "$descendant_direct_pid" >&2
+  exit 1
+fi
+
+set +e
+env QUALITY_REPORT_DIR="$descendant_report_dir" \
+  QUALITY_CACHE_TIMEOUT_SECONDS=1 QUALITY_CACHE_DESCENDANT_FIXTURE=1 \
+  QUALITY_CACHE_DESCENDANT_PID_FILE="$descendant_env_pid_file" \
+  bash Quality/quality.sh env >"$descendant_env_output_file" 2>&1
+descendant_status=$?
+set -e
+descendant_output="$(<"$descendant_env_output_file")"
+printf '%s\n' "$descendant_output"
+if [[ "$descendant_status" -ne 0 ]] ||
+   ! grep -Fq "quality-env:cache:nonblocking-timeout:seconds=1;exit=124" \
+     <<<"$descendant_output"; then
+  printf 'quality-regression:fail:optional-cache-descendant-timeout-no-survivor:cache-outcome\n' >&2
+  exit 1
+fi
+if [[ ! -s "$descendant_env_pid_file" ]]; then
+  printf 'quality-regression:fail:optional-cache-descendant-timeout-no-survivor:missing-pid\n' >&2
+  exit 1
+fi
+descendant_pid="$(<"$descendant_env_pid_file")"
+if kill -0 "$descendant_pid" 2>/dev/null; then
+  kill -KILL "$descendant_pid" 2>/dev/null || true
+  printf 'quality-regression:fail:optional-cache-descendant-timeout-no-survivor:pid=%s\n' \
+    "$descendant_pid" >&2
+  exit 1
+fi
+shopt -s nullglob
+descendant_reports=("$descendant_report_dir"/env-*/result.report)
+shopt -u nullglob
+if (( ${#descendant_reports[@]} != 1 )) ||
+   ! grep -Fxq 'status=pass' "${descendant_reports[0]}" ||
+   ! grep -Fxq 'exit_code=0' "${descendant_reports[0]}"; then
+  printf 'quality-regression:fail:optional-cache-descendant-timeout-no-survivor:report\n' >&2
+  exit 1
+fi
+printf 'quality-regression:pass:optional-cache-descendant-timeout-no-survivor\n'
+
+type_drift_dir="$CONTROL_REPORT_DIR/p4-integer-sign-laws-type-drift"
+mkdir -p "$type_drift_dir"
+cat > "$type_drift_dir/P4IntegerSignLawsRootApiTypeDrift.lean" <<'EOF'
+module
+
+import FormalMath
+
+namespace QualityTests.P4IntegerSignLawsRootApiTypeDrift
+
+example :
+    Int.sub (Int.ofNat 7) (Int.neg (Int.ofNat 3)) = Int.ofNat 11 :=
+  FormalMath.Arithmetic.Examples.seven_sub_neg_three
+
+end QualityTests.P4IntegerSignLawsRootApiTypeDrift
+EOF
+expect_fail_contains p4-integer-sign-laws-root-api-type-drift "Type mismatch" \
+  lake env lean -DwarningAsError=true \
+  "$type_drift_dir/P4IntegerSignLawsRootApiTypeDrift.lean"
+
 run_pass_contains optional-cache-invalid-timeout-nonblocking \
   "quality-env:cache:nonblocking-invalid-timeout:value=invalid;exit=64" \
   env QUALITY_REPORT_DIR="$CONTROL_REPORT_DIR" QUALITY_CACHE_TIMEOUT_SECONDS=invalid \

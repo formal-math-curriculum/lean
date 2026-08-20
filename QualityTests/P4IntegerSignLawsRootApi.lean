@@ -16,8 +16,14 @@ convert library/proof dependencies into learner prerequisites.
 
 namespace QualityTests.P4IntegerSignLawsRootApi
 
--- The root exposes both exact declarations without re-exporting their upstream structure instances.
-#check FormalMath.Arithmetic.Examples.seven_sub_neg_three
-#check FormalMath.Arithmetic.Examples.neg_seven_mul_neg_four
+-- The root exposes both declarations at their exact governed theorem types without re-exporting
+-- their upstream structure instances.
+example :
+    Int.sub (Int.ofNat 7) (Int.neg (Int.ofNat 3)) = Int.ofNat 10 :=
+  FormalMath.Arithmetic.Examples.seven_sub_neg_three
+
+example :
+    Int.mul (Int.neg (Int.ofNat 7)) (Int.neg (Int.ofNat 4)) = Int.ofNat 28 :=
+  FormalMath.Arithmetic.Examples.neg_seven_mul_neg_four
 
 end QualityTests.P4IntegerSignLawsRootApi
