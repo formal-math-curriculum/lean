@@ -37,10 +37,10 @@ metadata/formal-artifacts/
   flink/<id-range>.jsonl
 ```
 
-The current production registry contains nine FARTs, ten FLOCs (nine current and one historical), and
-nine FLINKs. The next cursors are FART `000010`, FLOC `000011`, and FLINK `000010`. These records cover
-only their explicit bounded treatment scopes; their presence is not a whole-candidate completeness
-claim.
+The current production registry contains ten FARTs, eleven FLOCs (ten current and one historical), and
+ten FLINKs. The next cursors are FART `000011`, FLOC `000012`, and FLINK `000011`. These records cover
+only their explicit bounded treatment scopes, including one CAND4 guided exercise and diagnostic;
+their presence is not a whole-candidate completeness or learner-readiness claim.
 
 A registry line is canonical only when parsing it with Lean's JSON parser and re-rendering it with `Lean.Json.compress` yields the exact same line. IDs are explicit, stable, monotonic, and never derived from source paths.
 

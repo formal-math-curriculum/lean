@@ -16,5 +16,7 @@ run_cmd
       `FormalMath.Arithmetic.Examples.cancel_common_nine_addend,
       `FormalMath.Arithmetic.Examples.neg_seven_mul_neg_four,
       `FormalMath.Arithmetic.Examples.seven_distributes_over_four_plus_three,
-      `FormalMath.Arithmetic.Examples.seven_sub_neg_three
+      `FormalMath.Arithmetic.Examples.seven_sub_neg_three,
+      `FormalMath.Arithmetic.Exercises.distribute_first_addend_only_is_wrong,
+      `FormalMath.Arithmetic.Exercises.distribute_then_cancel_solution
     ])
