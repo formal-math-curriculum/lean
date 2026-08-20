@@ -168,6 +168,46 @@ run_pass_contains optional-cache-forced-kill-timeout-nonblocking \
   env QUALITY_REPORT_DIR="$CONTROL_REPORT_DIR" QUALITY_CACHE_TIMEOUT_SECONDS=1 \
   QUALITY_CACHE_FORCE_KILL_FIXTURE=1 bash Quality/quality.sh env
 
+printf 'quality-regression:start:optional-cache-descendant-timeout-no-survivor\n'
+descendant_report_dir="$CONTROL_REPORT_DIR/cache-descendant"
+descendant_pid_file="$descendant_report_dir/child.pid"
+mkdir -p "$descendant_report_dir"
+set +e
+descendant_output=$(env QUALITY_REPORT_DIR="$descendant_report_dir" \
+  QUALITY_CACHE_TIMEOUT_SECONDS=1 QUALITY_CACHE_DESCENDANT_FIXTURE=1 \
+  QUALITY_CACHE_DESCENDANT_PID_FILE="$descendant_pid_file" \
+  bash Quality/quality.sh env 2>&1)
+descendant_status=$?
+set -e
+printf '%s\n' "$descendant_output"
+if [[ "$descendant_status" -ne 0 ]] ||
+   ! grep -Fq "quality-env:cache:nonblocking-timeout:seconds=1;exit=124" \
+     <<<"$descendant_output"; then
+  printf 'quality-regression:fail:optional-cache-descendant-timeout-no-survivor:cache-outcome\n' >&2
+  exit 1
+fi
+if [[ ! -s "$descendant_pid_file" ]]; then
+  printf 'quality-regression:fail:optional-cache-descendant-timeout-no-survivor:missing-pid\n' >&2
+  exit 1
+fi
+descendant_pid="$(<"$descendant_pid_file")"
+if kill -0 "$descendant_pid" 2>/dev/null; then
+  kill -KILL "$descendant_pid" 2>/dev/null || true
+  printf 'quality-regression:fail:optional-cache-descendant-timeout-no-survivor:pid=%s\n' \
+    "$descendant_pid" >&2
+  exit 1
+fi
+shopt -s nullglob
+descendant_reports=("$descendant_report_dir"/env-*/result.report)
+shopt -u nullglob
+if (( ${#descendant_reports[@]} != 1 )) ||
+   ! grep -Fxq 'status=pass' "${descendant_reports[0]}" ||
+   ! grep -Fxq 'exit_code=0' "${descendant_reports[0]}"; then
+  printf 'quality-regression:fail:optional-cache-descendant-timeout-no-survivor:report\n' >&2
+  exit 1
+fi
+printf 'quality-regression:pass:optional-cache-descendant-timeout-no-survivor\n'
+
 run_pass_contains optional-cache-invalid-timeout-nonblocking \
   "quality-env:cache:nonblocking-invalid-timeout:value=invalid;exit=64" \
   env QUALITY_REPORT_DIR="$CONTROL_REPORT_DIR" QUALITY_CACHE_TIMEOUT_SECONDS=invalid \

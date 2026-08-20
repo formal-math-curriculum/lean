@@ -38,7 +38,7 @@ bash Quality/quality.sh report [dimension]
 bash Quality/quality.sh env
 ```
 
-The semantic preflight is mandatory and always runs first. After it passes, `env` attempts `lake exe cache get` as a best-effort acceleration step with a 300-second default budget. Set `QUALITY_CACHE_TIMEOUT_SECONDS` to a positive integer to select another budget. The wrapper requires GNU/coreutils `timeout`, runs the fetch in foreground mode, sends `TERM` at expiry, and forces `KILL` after a five-second grace. A forced-KILL status of 137 is normalized to the governed expiry outcome 124.
+The semantic preflight is mandatory and always runs first. After it passes, `env` attempts `lake exe cache get` as a best-effort acceleration step with a 300-second default budget. Set `QUALITY_CACHE_TIMEOUT_SECONDS` to a positive integer to select another budget. The wrapper requires GNU/coreutils `timeout`, isolates the fetch in a process group, sends `TERM` to the group at expiry, and forces `KILL` on that group after a five-second grace so descendant processes cannot outlive the governed attempt. A forced-KILL status of 137 is normalized to the governed expiry outcome 124.
 
 Cache outcomes are explicit and nonblocking after semantic PASS:
 
@@ -146,7 +146,7 @@ After selected-environment validation, the permanent regression harness includes
 - a deliberately vacuous imported-surface prefix, proving zero matches fail as a coverage error;
 - executable/noncomputable contract control;
 - selected-environment mismatch rejection;
-- optional-cache immediate-failure, bounded TERM-responsive timeout, forced-KILL timeout, invalid-timeout, and timeout-unavailable nonblocking controls;
+- optional-cache immediate-failure, bounded TERM-responsive timeout, forced-KILL timeout, TERM-resistant descendant cleanup with an explicit PASS report, invalid-timeout, and timeout-unavailable nonblocking controls;
 - parallel report-identity collision control;
 - the seven test-only FORMREQ-P1-000018 anti-conflation invariants.
 

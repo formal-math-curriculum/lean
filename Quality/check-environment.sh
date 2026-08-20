@@ -102,6 +102,19 @@ cache_fetch() {
     printf 'quality-env:cache:simulated-failure\n' >&2
     return 73
   fi
+  if [[ "${QUALITY_CACHE_DESCENDANT_FIXTURE:-0}" == "1" ]]; then
+    if [[ -z "${QUALITY_CACHE_DESCENDANT_PID_FILE:-}" ]]; then
+      printf 'quality-env:cache:descendant-fixture-pid-file-missing\n' >&2
+      return 64
+    fi
+    printf 'quality-env:cache:simulated-term-resistant-descendant-fetch\n' >&2
+    (
+      trap '' TERM
+      printf '%s\n' "$BASHPID" > "$QUALITY_CACHE_DESCENDANT_PID_FILE"
+      exec sleep 10
+    ) &
+    wait
+  fi
   if [[ "${QUALITY_CACHE_FORCE_KILL_FIXTURE:-0}" == "1" ]]; then
     printf 'quality-env:cache:simulated-term-resistant-fetch\n' >&2
     trap '' TERM
@@ -129,7 +142,7 @@ cache_check() {
   fi
 
   local status
-  timeout --foreground --signal=TERM --kill-after=5s "${timeout_seconds}s" \
+  timeout --signal=TERM --kill-after=5s "${timeout_seconds}s" \
     bash "$0" cache-fetch
   status=$?
   if [[ "$status" -eq 137 ]]; then
