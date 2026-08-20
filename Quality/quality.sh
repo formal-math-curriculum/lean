@@ -115,7 +115,22 @@ run_env() {
       printf "quality-env:cache:pass\n"
     else
       status=$?
-      printf "quality-env:cache:nonblocking-fail:exit=%d\n" "$status"
+      case "$status" in
+        124)
+          printf "quality-env:cache:nonblocking-timeout:seconds=%s;exit=%d\n" \
+            "${QUALITY_CACHE_TIMEOUT_SECONDS:-300}" "$status"
+          ;;
+        64)
+          printf "quality-env:cache:nonblocking-invalid-timeout:value=%s;exit=%d\n" \
+            "${QUALITY_CACHE_TIMEOUT_SECONDS:-300}" "$status"
+          ;;
+        69)
+          printf "quality-env:cache:nonblocking-timeout-unavailable:exit=%d\n" "$status"
+          ;;
+        *)
+          printf "quality-env:cache:nonblocking-fail:exit=%d\n" "$status"
+          ;;
+      esac
     fi
     exit 0
   '
