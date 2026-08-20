@@ -163,6 +163,11 @@ run_pass_contains optional-cache-timeout-nonblocking \
   env QUALITY_REPORT_DIR="$CONTROL_REPORT_DIR" QUALITY_CACHE_TIMEOUT_SECONDS=1 \
   QUALITY_CACHE_TIMEOUT_FIXTURE=1 bash Quality/quality.sh env
 
+run_pass_contains optional-cache-forced-kill-timeout-nonblocking \
+  "quality-env:cache:nonblocking-timeout:seconds=1;exit=124" \
+  env QUALITY_REPORT_DIR="$CONTROL_REPORT_DIR" QUALITY_CACHE_TIMEOUT_SECONDS=1 \
+  QUALITY_CACHE_FORCE_KILL_FIXTURE=1 bash Quality/quality.sh env
+
 run_pass_contains optional-cache-invalid-timeout-nonblocking \
   "quality-env:cache:nonblocking-invalid-timeout:value=invalid;exit=64" \
   env QUALITY_REPORT_DIR="$CONTROL_REPORT_DIR" QUALITY_CACHE_TIMEOUT_SECONDS=invalid \

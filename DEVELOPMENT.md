@@ -57,7 +57,7 @@ Supported optional cache retrieval:
 bash Quality/quality.sh env
 ```
 
-The semantic preflight runs first. Cache retrieval then has a 300-second default budget; override it with a positive integer such as `QUALITY_CACHE_TIMEOUT_SECONDS=60`. GNU/coreutils `timeout` sends `TERM` at expiry and forces `KILL` after a five-second grace. Cache success, failure, expiry, invalid override, or an unavailable compatible timeout mechanism is recorded explicitly, but remains nonblocking after semantic PASS because cache contents are not proof, build, or curriculum evidence. Invalid values and unavailable-timeout cases skip the optional fetch.
+The semantic preflight runs first. Cache retrieval then has a 300-second default budget; override it with a positive integer such as `QUALITY_CACHE_TIMEOUT_SECONDS=60`. GNU/coreutils `timeout` sends `TERM` at expiry and forces `KILL` after a five-second grace; forced-KILL status 137 is normalized to the governed expiry status 124. Cache success, failure, expiry, invalid override, or an unavailable compatible timeout mechanism is recorded explicitly, but remains nonblocking after semantic PASS because cache contents are not proof, build, or curriculum evidence. Invalid values and unavailable-timeout cases skip the optional fetch.
 
 ## Cold reproduction without project cache
 

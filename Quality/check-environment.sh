@@ -102,6 +102,11 @@ cache_fetch() {
     printf 'quality-env:cache:simulated-failure\n' >&2
     return 73
   fi
+  if [[ "${QUALITY_CACHE_FORCE_KILL_FIXTURE:-0}" == "1" ]]; then
+    printf 'quality-env:cache:simulated-term-resistant-fetch\n' >&2
+    trap '' TERM
+    exec sleep 10
+  fi
   if [[ "${QUALITY_CACHE_TIMEOUT_FIXTURE:-0}" == "1" ]]; then
     printf 'quality-env:cache:simulated-slow-fetch\n' >&2
     exec sleep 10
@@ -123,8 +128,14 @@ cache_check() {
     return 69
   fi
 
+  local status
   timeout --foreground --signal=TERM --kill-after=5s "${timeout_seconds}s" \
     bash "$0" cache-fetch
+  status=$?
+  if [[ "$status" -eq 137 ]]; then
+    return 124
+  fi
+  return "$status"
 }
 
 case "${1:-semantic}" in
