@@ -61,8 +61,10 @@ The traceability registry does not define curriculum taxonomy, learner prerequis
 
 The supported mathematical root currently exposes the bounded M2.10 factored-integer-equation slice,
 two concrete natural-number operation-law examples, and two concrete integer sign-law examples. The
-canonical laws are reused directly from Lean/mathlib; the local examples do not claim full
-arithmetic-operations or integer-topic coverage.
+root also exposes one bounded guided natural-number exercise that makes cancellation, distributivity,
+and the final answer explicit, together with one diagnostic counterexample. Canonical laws are reused
+directly from Lean/mathlib; the local examples and exercise do not claim full arithmetic-operations,
+integer-topic, grade-order, learner-readiness, or full-candidate coverage.
 
 ## Source layout
 
