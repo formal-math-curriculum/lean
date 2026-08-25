@@ -10,6 +10,7 @@ import QualityTests.AntiConflation
 import QualityTests.P6CoreApi
 import QualityTests.P6FundamentalResults
 import QualityTests.P6AdjacentFunctions
+import QualityTests.P6Pedagogy
 
 /-!
 # QualityTests

@@ -11,11 +11,15 @@ public import FormalMath.Arithmetic.Exercises.NaturalNumberLaws
 public import FormalMath.Basic
 public import FormalMath.Geometry.Symmetry
 public import FormalMath.Geometry.SymmetryResults
+public import FormalMath.Geometry.Examples.Symmetry
 public import FormalMath.Measurement.Mensuration
 public import FormalMath.Measurement.MensurationResults
+public import FormalMath.Measurement.Examples.Mensuration
+public import FormalMath.Measurement.Exercises.Mensuration
 public import FormalMath.Relations.Graph
 public import FormalMath.Relations.GraphResults
 public import FormalMath.Relations.CompositionResults
+public import FormalMath.Relations.Examples.Composition
 
 /-!
 # FormalMath
@@ -27,6 +31,7 @@ their semantic dependencies directly rather than importing this root umbrella. T
 surface includes the bounded M2.10 factored-integer-equation slice, bounded Project-4 natural-number
 operation-law and integer sign-law examples, one bounded natural-number exercise solution and
 diagnostic, three bounded Project-6 core-definition surfaces, their five bounded M6.4 interface
-results, one bounded M6.5 function-composition graph result, and supporting infrastructure. It does not claim curriculum coverage or formalization
+results, one bounded M6.5 function-composition graph result, five bounded M6.6 pedagogical
+artifacts, and supporting infrastructure. It does not claim curriculum coverage or formalization
 completeness.
 -/
