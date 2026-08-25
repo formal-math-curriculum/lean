@@ -18,14 +18,17 @@ milestones and must not be inferred from these names alone.
 namespace FormalMath.Measurement
 
 /-- Perimeter expression for a rectangle with displayed length and width. -/
+@[expose]
 public def rectanglePerimeter (length width : ℝ) : ℝ :=
   2 * (length + width)
 
 /-- Area expression for a rectangle with displayed length and width. -/
+@[expose]
 public def rectangleArea (length width : ℝ) : ℝ :=
   length * width
 
 /-- Volume expression for a rectangular prism with displayed length, width, and height. -/
+@[expose]
 public def rectangularPrismVolume (length width height : ℝ) : ℝ :=
   length * width * height
 

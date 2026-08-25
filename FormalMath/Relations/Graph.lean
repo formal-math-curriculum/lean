@@ -17,6 +17,7 @@ sets, products, or coordinate geometry, and without asserting whole-topic covera
 namespace FormalMath.Relations
 
 /-- The set of ordered pairs whose second coordinate is the value of `f` at the first. -/
+@[expose]
 public def graphOf {α β : Type*} (f : α → β) : Set (α × β) :=
   { point | point.2 = f point.1 }
 

@@ -17,6 +17,7 @@ group-action hierarchy, or crystallographic claim.
 namespace FormalMath.Geometry
 
 /-- A figure is invariant under a transformation when its image is exactly the original set. -/
+@[expose]
 public def IsInvariantUnder {α : Type*} (transform : α → α) (figure : Set α) : Prop :=
   Set.image transform figure = figure
 
