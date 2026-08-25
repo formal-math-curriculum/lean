@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import re
 from pathlib import Path
 
@@ -104,6 +105,16 @@ EXPECTED_REUSE = {
     "Int.instCommRing",
 }
 
+EXPECTED_PACKET_PATHS = {
+    "publication/p6-v1/generate.py",
+    "publication/p6-v1/source/scope.json",
+    "publication/p6-v1/generated/release-scope.json",
+    "publication/p6-v1/generated/formal-authority.json",
+    "publication/p6-v1/generated/formal-dependencies.json",
+    "publication/p6-v1/generated/representation-bindings.json",
+    "publication/p6-v1/generated/external-alignment-coverage.json",
+}
+
 FORBIDDEN_FIELD = re.compile(
     r"(?:^|[^A-Za-z0-9])(?:TBD|TODO|PLACEHOLDER|PENDING|PROVISIONAL)"
     r"(?:$|[^A-Za-z0-9])|0{40}|f{40}",
@@ -131,6 +142,10 @@ def load_jsonl(relative: str) -> list[dict]:
         for line in (ROOT / relative).read_text(encoding="utf-8").splitlines()
         if line
     ]
+
+def git_blob_sha(data: bytes) -> str:
+    header = f"blob {len(data)}\0".encode()
+    return hashlib.sha1(header + data).hexdigest()
 
 
 def validate_repository() -> None:
@@ -254,6 +269,7 @@ def validate_manifest(text: str) -> None:
         "external": "external alignment coverage: 156; all needs_review; all external IDs null",
         "maturity": "maturity: `reviewed_active`, revision-scoped",
         "verification": "verification: four-component verification vector",
+        "formal-subject": "formal packet subject: `5b592af5807467d600184d376f1a1d5920ddddbd`",
         "fingerprint": "cc71d82820de2fe29f30364067996dececb6cae2458e67d83f73cc74548116ab",
         "generator": "318b48b3e02bf2a37e320879a58e58ffde5a9269f7f86e6dddb97d6c7131c6f9",
         "peeled": "The released Git subject is the commit peeled from the annotated tag",
@@ -277,6 +293,31 @@ def validate_manifest(text: str) -> None:
         or set(manifest_candidates) != EXPECTED_REPRESENTED | EXPECTED_ABSENT
     ):
         fail("candidate-vector")
+    publication = load_json("publication/p6-v1/generated/publication-manifest.json")
+    packet_entries = {
+        row["path"]: row
+        for row in publication["inputs"] + publication["outputs"]
+        if row["path"] in EXPECTED_PACKET_PATHS
+    }
+    if set(packet_entries) != EXPECTED_PACKET_PATHS:
+        fail("packet-source-vector")
+    for path in sorted(EXPECTED_PACKET_PATHS):
+        row = packet_entries[path]
+        require(
+            text,
+            f"| `{path}` | `{row['git_blob']}` | `{row['sha256']}` |",
+            "packet-row",
+        )
+    publication_manifest_bytes = (
+        ROOT / "publication/p6-v1/generated/publication-manifest.json"
+    ).read_bytes()
+    require(
+        text,
+        "| `publication/p6-v1/generated/publication-manifest.json`"
+        f" | `{git_blob_sha(publication_manifest_bytes)}`"
+        f" | `{hashlib.sha256(publication_manifest_bytes).hexdigest()}` |",
+        "packet-row",
+    )
     for candidate in EXPECTED_REPRESENTED:
         require(text, candidate, "represented-identity")
     for declaration in EXPECTED_DECLARATIONS:
@@ -344,6 +385,33 @@ def main() -> int:
         ),
     )
     expect_failure(
+        "formal-subject",
+        "p6-release:error:formal-subject",
+        text.replace(
+            "formal packet subject: `5b592af5807467d600184d376f1a1d5920ddddbd`",
+            "formal packet subject: `1111111111111111111111111111111111111111`",
+            1,
+        ),
+    )
+    expect_failure(
+        "packet-blob",
+        "p6-release:error:packet-row",
+        text.replace(
+            "0ec3ecb795599569f9557226ff5ef6bb3c8a10a5",
+            "1111111111111111111111111111111111111111",
+            1,
+        ),
+    )
+    expect_failure(
+        "packet-checksum",
+        "p6-release:error:packet-row",
+        text.replace(
+            "55671c424178740b946fb5815289008487d020cbeeb7808656c2a5faf4349d6a",
+            "1" * 64,
+            1,
+        ),
+    )
+    expect_failure(
         "semantic-fingerprint",
         "p6-release:error:fingerprint",
         text.replace(
@@ -374,6 +442,11 @@ def main() -> int:
         "verification-overclaim",
         "p6-release:error:verification",
         text.replace("verification: four-component verification vector", "verification: verified forever", 1),
+    )
+    expect_failure(
+        "nonclaim",
+        "p6-release:error:nonclaim",
+        text.replace("It does not claim that the whole", "It claims that the whole", 1),
     )
     print(
         "p6-release-control:summary:pass:"

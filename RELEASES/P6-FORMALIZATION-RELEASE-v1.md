@@ -91,7 +91,7 @@ proof dependencies, Lean imports, repository build dependencies and Course order
 | `publication/p6-v1/generated/formal-dependencies.json` | `6b13fef287afa0530158a8d27888b0b711d99eb2` | `7d3defcb6646f1a036950124600abcf361eaaa0adbb5eb73867b431f08f42ffd` |
 | `publication/p6-v1/generated/representation-bindings.json` | `7b65fca119f9ff786829917a9978df575aedec31` | `8d4b4390d892c6418228742650ec989415ec80d3904fc6e24ee3462833e9b9a4` |
 | `publication/p6-v1/generated/external-alignment-coverage.json` | `8a11310156c9f3bf6b286371531edbcadc23125e` | `e23701dfa9a1a32c0f2e1bea69b71da8cb7e5e458261b94c961ba6ebf8fb2293` |
-| `publication/p6-v1/generated/publication-manifest.json` | `e3bec0486691359b137dfb1547edad2ef574727e` | semantic identity above |
+| `publication/p6-v1/generated/publication-manifest.json` | `e3bec0486691359b137dfb1547edad2ef574727e` | `5485434cea4dabfb8f1d06da2eb045a7ace520031275e972eb0b791f537e9b45` |
 
 ## Governed project declarations
 
