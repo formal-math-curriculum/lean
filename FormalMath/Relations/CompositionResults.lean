@@ -11,7 +11,7 @@ public import FormalMath.Relations.GraphResults
 
 The single dependency-adjacent result admitted by the M6.5 freeze for CAND-P1-000018. It connects
 the adopted `graphOf` API to ordinary function composition without introducing a new function,
-relation, graph representation, notation, or whole-row coverage claim.
+relation, graph representation, syntax, or whole-row coverage claim.
 -/
 
 namespace FormalMath.Relations
