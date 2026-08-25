@@ -43,7 +43,7 @@ grep -Fq 'traceability:resolve:pass:current-modules=21;declarations=30' "$WORK/v
 
 printf 'm210-roundtrip:start:production-roundtrip\n'
 lake exe traceability roundtrip | tee "$WORK/roundtrip.log"
-grep -Fq 'traceability:roundtrip:pass:links=22;locator-link-checks=22' "$WORK/roundtrip.log"
+grep -Fq 'traceability:roundtrip:pass:links=22;locator-link-checks=23' "$WORK/roundtrip.log"
 
 printf 'm210-roundtrip:start:production-generated-views\n'
 first_output="$(lake exe traceability generate)"
