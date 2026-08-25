@@ -293,4 +293,5 @@ run_pass_contains optional-cache-timeout-unavailable-nonblocking \
   env QUALITY_REPORT_DIR="$CONTROL_REPORT_DIR" QUALITY_CACHE_TIMEOUT_UNAVAILABLE_FIXTURE=1 \
   bash Quality/quality.sh env
 
+run_pass p6-integration-controls bash Quality/check-p6-integration-controls.sh
 printf 'quality-regression:summary:pass\n'
