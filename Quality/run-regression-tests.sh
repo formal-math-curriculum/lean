@@ -106,6 +106,7 @@ run_pass traceability-validator-build lake build --wfail traceability
 run_pass production-source-quality bash Quality/check-source-quality.sh production
 run_pass p6-core-api-policy bash Quality/check-p6-core-api.sh
 run_pass p6-fundamental-results-policy bash Quality/check-p6-fundamental-results.sh
+run_pass p6-adjacent-functions-policy bash Quality/check-p6-adjacent-functions.sh
 run_pass production-traceability-registry lake exe traceability validate
 run_pass project-floc-revision-controls bash Quality/check-project-floc-revision-controls.sh
 run_pass m210-production-roundtrip-controls bash Quality/check-m210-roundtrip-controls.sh
@@ -141,6 +142,11 @@ expect_fail_contains p6-results-unplanned-public-surface "p6-results:error:unpla
   env P6_RESULTS_EXTRA_DECLARATION_FIXTURE=1 bash Quality/check-p6-fundamental-results.sh
 expect_fail_contains p6-results-missing-root-export "p6-results:error:missing-root-export" \
   env P6_RESULTS_MISSING_EXPORT_FIXTURE=1 bash Quality/check-p6-fundamental-results.sh
+
+expect_fail_contains p6-adjacent-unplanned-public-surface "p6-adjacent:error:unplanned-public-surface" \
+  env P6_ADJACENT_EXTRA_DECLARATION_FIXTURE=1 bash Quality/check-p6-adjacent-functions.sh
+expect_fail_contains p6-adjacent-missing-root-export "p6-adjacent:error:missing-root-export" \
+  env P6_ADJACENT_MISSING_EXPORT_FIXTURE=1 bash Quality/check-p6-adjacent-functions.sh
 
 expect_fail_contains root-umbrella-import "root-umbrella-import" \
   bash Quality/check-source-quality.sh fixture Quality/Fixtures/SourceQuality/UmbrellaImport.lean

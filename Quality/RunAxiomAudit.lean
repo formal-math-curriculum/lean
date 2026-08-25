@@ -28,5 +28,6 @@ run_cmd
       `FormalMath.Measurement.rectangularPrismVolume,
       `FormalMath.Measurement.rectangularPrismVolume_swap_length_width,
       `FormalMath.Relations.graphOf,
+      `FormalMath.Relations.mem_graphOf_comp_iff,
       `FormalMath.Relations.mem_graphOf_iff
     ])
