@@ -38,12 +38,12 @@ copy_production_root() {
 
 printf 'm210-roundtrip:start:production-validation\n'
 lake exe traceability validate | tee "$WORK/validate.log"
-grep -Fq 'traceability:validate:pass:fart=16;floc=17;flink=16;curriculum-identities=7' "$WORK/validate.log"
-grep -Fq 'traceability:resolve:pass:current-modules=16;declarations=24' "$WORK/validate.log"
+grep -Fq 'traceability:validate:pass:fart=17;floc=18;flink=17;curriculum-identities=8' "$WORK/validate.log"
+grep -Fq 'traceability:resolve:pass:current-modules=17;declarations=25' "$WORK/validate.log"
 
 printf 'm210-roundtrip:start:production-roundtrip\n'
 lake exe traceability roundtrip | tee "$WORK/roundtrip.log"
-grep -Fq 'traceability:roundtrip:pass:links=16;locator-link-checks=17' "$WORK/roundtrip.log"
+grep -Fq 'traceability:roundtrip:pass:links=17;locator-link-checks=18' "$WORK/roundtrip.log"
 
 printf 'm210-roundtrip:start:production-generated-views\n'
 first_output="$(lake exe traceability generate)"
@@ -77,6 +77,7 @@ payload = "\n".join(json.dumps(record, sort_keys=True) for record in curriculum 
 required = {
     "CAND-P1-000016",
     "CAND-P1-000017",
+    "CAND-P1-000018",
     "CAND-P1-000004",
     "CAND-P1-000009",
     "CAND-P1-000019",
@@ -98,6 +99,7 @@ required = {
     "FART-P2-000014",
     "FART-P2-000015",
     "FART-P2-000016",
+    "FART-P2-000017",
     "FLOC-P2-000001",
     "FLOC-P2-000002",
     "FLOC-P2-000003",
@@ -115,6 +117,7 @@ required = {
     "FLOC-P2-000015",
     "FLOC-P2-000016",
     "FLOC-P2-000017",
+    "FLOC-P2-000018",
     "FLINK-P2-000001",
     "FLINK-P2-000002",
     "FLINK-P2-000003",
@@ -131,6 +134,7 @@ required = {
     "FLINK-P2-000014",
     "FLINK-P2-000015",
     "FLINK-P2-000016",
+    "FLINK-P2-000017",
     "FormalMath/Algebra/FactoredEquation.lean",
     "FormalMath/Algebra/ZeroProduct.lean",
     "FormalMath/Algebra/Examples/FactoredEquation.lean",
@@ -146,6 +150,7 @@ required = {
     "FormalMath/Geometry/Symmetry.lean",
     "FormalMath/Measurement/Mensuration.lean",
     "FormalMath/Relations/GraphResults.lean",
+    "FormalMath/Relations/CompositionResults.lean",
     "FormalMath/Geometry/SymmetryResults.lean",
     "FormalMath/Measurement/MensurationResults.lean",
     "FormalMath.Arithmetic.Exercises.NaturalNumberLaws",
@@ -153,6 +158,7 @@ required = {
     "FormalMath.Geometry.Symmetry",
     "FormalMath.Measurement.Mensuration",
     "FormalMath.Relations.GraphResults",
+    "FormalMath.Relations.CompositionResults",
     "FormalMath.Geometry.SymmetryResults",
     "FormalMath.Measurement.MensurationResults",
     "FormalMath.Algebra.factoredProduct",
@@ -175,6 +181,7 @@ required = {
     "FormalMath.Measurement.rectanglePerimeter",
     "FormalMath.Measurement.rectangularPrismVolume",
     "FormalMath.Relations.mem_graphOf_iff",
+    "FormalMath.Relations.mem_graphOf_comp_iff",
     "FormalMath.Geometry.isInvariantUnder_id",
     "FormalMath.Measurement.rectangleArea_comm",
     "FormalMath.Measurement.rectanglePerimeter_comm",
@@ -182,8 +189,8 @@ required = {
 }
 missing = sorted(item for item in required if item not in payload)
 assert not missing, missing
-assert len(artifacts) == 16, len(artifacts)
-assert len(sources) == 17, len(sources)
+assert len(artifacts) == 17, len(artifacts)
+assert len(sources) == 18, len(sources)
 
 artifact3 = next(record for record in artifacts if record["artifact_id"] == "FART-P2-000003")
 assert artifact3["artifact"]["current_locator_refs"] == ["FLOC-P2-000004"]
@@ -214,6 +221,11 @@ done
 lake exe traceability query curriculum CAND-P1-000009 | tee "$WORK/cand9.jsonl"
 for id in FLINK-P2-000007 FLINK-P2-000008 FLINK-P2-000009 FART-P2-000007 FART-P2-000008 FART-P2-000009 FLOC-P2-000008 FLOC-P2-000009 FLOC-P2-000010; do
   grep -Fq "$id" "$WORK/cand9.jsonl"
+done
+
+lake exe traceability query curriculum CAND-P1-000018 | tee "$WORK/cand18.jsonl"
+for id in FLINK-P2-000017 FART-P2-000017 FLOC-P2-000018; do
+  grep -Fq "$id" "$WORK/cand18.jsonl"
 done
 
 lake exe traceability query curriculum CAND-P1-000019 | tee "$WORK/cand19.jsonl"
@@ -272,6 +284,7 @@ FormalMath.Measurement.rectangleArea|FART-P2-000013|FLOC-P2-000014
 FormalMath.Measurement.rectanglePerimeter|FART-P2-000013|FLOC-P2-000014
 FormalMath.Measurement.rectangularPrismVolume|FART-P2-000013|FLOC-P2-000014
 FormalMath.Relations.mem_graphOf_iff|FART-P2-000014|FLOC-P2-000015
+FormalMath.Relations.mem_graphOf_comp_iff|FART-P2-000017|FLOC-P2-000018
 FormalMath.Geometry.isInvariantUnder_id|FART-P2-000015|FLOC-P2-000016
 FormalMath.Measurement.rectangleArea_comm|FART-P2-000016|FLOC-P2-000017
 FormalMath.Measurement.rectanglePerimeter_comm|FART-P2-000016|FLOC-P2-000017
