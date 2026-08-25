@@ -11,7 +11,7 @@ measurement or elementary algebra is completely formalized.
 - Repository: `formal-math-curriculum/lean`
 - Repository manifest: `RELEASES/P6-FORMALIZATION-RELEASE-v1.md`
 - Authorizing issue: [MAT-469](https://linear.app/verified-mathematics/issue/MAT-469/integrate-and-publish-p6-formalization-release-v1-and-close-project-6)
-- Integration PR: [#PR_NUMBER_PENDING](https://github.com/formal-math-curriculum/lean/pull/PR_NUMBER_PENDING)
+- Integration PR: [#35](https://github.com/formal-math-curriculum/lean/pull/35)
 - Frozen release base: `8228da5c2abfe6bf6eac6aebe4f3cada8ed30b94`
 - M6.9 adopted baseline: `9c4339f9-26eb-4868-a659-9945e54b4158@2026-08-25T19:39:25.754Z`
 - M6.9 current selector: `35e43976-3d21-4a7a-943c-b7145a2a9b37@2026-08-25T19:37:55.686Z`
