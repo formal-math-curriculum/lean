@@ -38,12 +38,12 @@ copy_production_root() {
 
 printf 'm210-roundtrip:start:production-validation\n'
 lake exe traceability validate | tee "$WORK/validate.log"
-grep -Fq 'traceability:validate:pass:fart=10;floc=11;flink=10;curriculum-identities=4' "$WORK/validate.log"
-grep -Fq 'traceability:resolve:pass:current-modules=10;declarations=14' "$WORK/validate.log"
+grep -Fq 'traceability:validate:pass:fart=13;floc=14;flink=13;curriculum-identities=7' "$WORK/validate.log"
+grep -Fq 'traceability:resolve:pass:current-modules=13;declarations=19' "$WORK/validate.log"
 
 printf 'm210-roundtrip:start:production-roundtrip\n'
 lake exe traceability roundtrip | tee "$WORK/roundtrip.log"
-grep -Fq 'traceability:roundtrip:pass:links=10;locator-link-checks=11' "$WORK/roundtrip.log"
+grep -Fq 'traceability:roundtrip:pass:links=13;locator-link-checks=14' "$WORK/roundtrip.log"
 
 printf 'm210-roundtrip:start:production-generated-views\n'
 first_output="$(lake exe traceability generate)"
@@ -79,6 +79,9 @@ required = {
     "CAND-P1-000017",
     "CAND-P1-000004",
     "CAND-P1-000009",
+    "CAND-P1-000019",
+    "CAND-P1-000024",
+    "CAND-P1-000027",
     "FART-P2-000001",
     "FART-P2-000002",
     "FART-P2-000003",
@@ -89,6 +92,9 @@ required = {
     "FART-P2-000008",
     "FART-P2-000009",
     "FART-P2-000010",
+    "FART-P2-000011",
+    "FART-P2-000012",
+    "FART-P2-000013",
     "FLOC-P2-000001",
     "FLOC-P2-000002",
     "FLOC-P2-000003",
@@ -100,6 +106,9 @@ required = {
     "FLOC-P2-000009",
     "FLOC-P2-000010",
     "FLOC-P2-000011",
+    "FLOC-P2-000012",
+    "FLOC-P2-000013",
+    "FLOC-P2-000014",
     "FLINK-P2-000001",
     "FLINK-P2-000002",
     "FLINK-P2-000003",
@@ -110,6 +119,9 @@ required = {
     "FLINK-P2-000008",
     "FLINK-P2-000009",
     "FLINK-P2-000010",
+    "FLINK-P2-000011",
+    "FLINK-P2-000012",
+    "FLINK-P2-000013",
     "FormalMath/Algebra/FactoredEquation.lean",
     "FormalMath/Algebra/ZeroProduct.lean",
     "FormalMath/Algebra/Examples/FactoredEquation.lean",
@@ -121,7 +133,13 @@ required = {
     "Mathlib/Algebra/Ring/Int/Defs.lean",
     "FormalMath/Arithmetic/Examples/IntegerSignLaws.lean",
     "FormalMath/Arithmetic/Exercises/NaturalNumberLaws.lean",
+    "FormalMath/Relations/Graph.lean",
+    "FormalMath/Geometry/Symmetry.lean",
+    "FormalMath/Measurement/Mensuration.lean",
     "FormalMath.Arithmetic.Exercises.NaturalNumberLaws",
+    "FormalMath.Relations.Graph",
+    "FormalMath.Geometry.Symmetry",
+    "FormalMath.Measurement.Mensuration",
     "FormalMath.Algebra.factoredProduct",
     "FormalMath.Algebra.factoredProduct_eq_zero_iff",
     "FormalMath.Algebra.Examples.two_five_factored_equation",
@@ -136,11 +154,16 @@ required = {
     "FormalMath.Arithmetic.Examples.seven_sub_neg_three",
     "FormalMath.Arithmetic.Exercises.distribute_first_addend_only_is_wrong",
     "FormalMath.Arithmetic.Exercises.distribute_then_cancel_solution",
+    "FormalMath.Relations.graphOf",
+    "FormalMath.Geometry.IsInvariantUnder",
+    "FormalMath.Measurement.rectangleArea",
+    "FormalMath.Measurement.rectanglePerimeter",
+    "FormalMath.Measurement.rectangularPrismVolume",
 }
 missing = sorted(item for item in required if item not in payload)
 assert not missing, missing
-assert len(artifacts) == 10, len(artifacts)
-assert len(sources) == 11, len(sources)
+assert len(artifacts) == 13, len(artifacts)
+assert len(sources) == 14, len(sources)
 
 artifact3 = next(record for record in artifacts if record["artifact_id"] == "FART-P2-000003")
 assert artifact3["artifact"]["current_locator_refs"] == ["FLOC-P2-000004"]
@@ -173,6 +196,21 @@ for id in FLINK-P2-000007 FLINK-P2-000008 FLINK-P2-000009 FART-P2-000007 FART-P2
   grep -Fq "$id" "$WORK/cand9.jsonl"
 done
 
+lake exe traceability query curriculum CAND-P1-000019 | tee "$WORK/cand19.jsonl"
+for id in FLINK-P2-000011 FART-P2-000011 FLOC-P2-000012; do
+  grep -Fq "$id" "$WORK/cand19.jsonl"
+done
+
+lake exe traceability query curriculum CAND-P1-000024 | tee "$WORK/cand24.jsonl"
+for id in FLINK-P2-000012 FART-P2-000012 FLOC-P2-000013; do
+  grep -Fq "$id" "$WORK/cand24.jsonl"
+done
+
+lake exe traceability query curriculum CAND-P1-000027 | tee "$WORK/cand27.jsonl"
+for id in FLINK-P2-000013 FART-P2-000013 FLOC-P2-000014; do
+  grep -Fq "$id" "$WORK/cand27.jsonl"
+done
+
 while IFS='|' read -r declaration fart floc; do
   lake exe traceability query declaration "$declaration" | tee "$WORK/source-query.jsonl"
   grep -Fq "$fart" "$WORK/source-query.jsonl"
@@ -201,6 +239,18 @@ FormalMath.Arithmetic.Examples.neg_seven_mul_neg_four|FART-P2-000009|FLOC-P2-000
 FormalMath.Arithmetic.Examples.seven_sub_neg_three|FART-P2-000009|FLOC-P2-000010
 FormalMath.Arithmetic.Exercises.distribute_first_addend_only_is_wrong|FART-P2-000010|FLOC-P2-000011
 FormalMath.Arithmetic.Exercises.distribute_then_cancel_solution|FART-P2-000010|FLOC-P2-000011
+EOF
+
+while IFS='|' read -r declaration fart floc; do
+  lake exe traceability query declaration "$declaration" | tee "$WORK/p6-source-query.jsonl"
+  grep -Fq "$fart" "$WORK/p6-source-query.jsonl"
+  grep -Fq "$floc" "$WORK/p6-source-query.jsonl"
+done <<'EOF'
+FormalMath.Relations.graphOf|FART-P2-000011|FLOC-P2-000012
+FormalMath.Geometry.IsInvariantUnder|FART-P2-000012|FLOC-P2-000013
+FormalMath.Measurement.rectangleArea|FART-P2-000013|FLOC-P2-000014
+FormalMath.Measurement.rectanglePerimeter|FART-P2-000013|FLOC-P2-000014
+FormalMath.Measurement.rectangularPrismVolume|FART-P2-000013|FLOC-P2-000014
 EOF
 
 printf 'm210-roundtrip:start:derived-rebuild\n'
