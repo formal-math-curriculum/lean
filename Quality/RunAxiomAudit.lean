@@ -20,8 +20,13 @@ run_cmd
       `FormalMath.Arithmetic.Exercises.distribute_first_addend_only_is_wrong,
       `FormalMath.Arithmetic.Exercises.distribute_then_cancel_solution,
       `FormalMath.Geometry.IsInvariantUnder,
+      `FormalMath.Geometry.isInvariantUnder_id,
       `FormalMath.Measurement.rectangleArea,
+      `FormalMath.Measurement.rectangleArea_comm,
       `FormalMath.Measurement.rectanglePerimeter,
+      `FormalMath.Measurement.rectanglePerimeter_comm,
       `FormalMath.Measurement.rectangularPrismVolume,
-      `FormalMath.Relations.graphOf
+      `FormalMath.Measurement.rectangularPrismVolume_swap_length_width,
+      `FormalMath.Relations.graphOf,
+      `FormalMath.Relations.mem_graphOf_iff
     ])

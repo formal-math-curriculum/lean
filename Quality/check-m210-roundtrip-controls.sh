@@ -38,12 +38,12 @@ copy_production_root() {
 
 printf 'm210-roundtrip:start:production-validation\n'
 lake exe traceability validate | tee "$WORK/validate.log"
-grep -Fq 'traceability:validate:pass:fart=13;floc=14;flink=13;curriculum-identities=7' "$WORK/validate.log"
-grep -Fq 'traceability:resolve:pass:current-modules=13;declarations=19' "$WORK/validate.log"
+grep -Fq 'traceability:validate:pass:fart=16;floc=17;flink=16;curriculum-identities=7' "$WORK/validate.log"
+grep -Fq 'traceability:resolve:pass:current-modules=16;declarations=24' "$WORK/validate.log"
 
 printf 'm210-roundtrip:start:production-roundtrip\n'
 lake exe traceability roundtrip | tee "$WORK/roundtrip.log"
-grep -Fq 'traceability:roundtrip:pass:links=13;locator-link-checks=14' "$WORK/roundtrip.log"
+grep -Fq 'traceability:roundtrip:pass:links=16;locator-link-checks=17' "$WORK/roundtrip.log"
 
 printf 'm210-roundtrip:start:production-generated-views\n'
 first_output="$(lake exe traceability generate)"
@@ -95,6 +95,9 @@ required = {
     "FART-P2-000011",
     "FART-P2-000012",
     "FART-P2-000013",
+    "FART-P2-000014",
+    "FART-P2-000015",
+    "FART-P2-000016",
     "FLOC-P2-000001",
     "FLOC-P2-000002",
     "FLOC-P2-000003",
@@ -109,6 +112,9 @@ required = {
     "FLOC-P2-000012",
     "FLOC-P2-000013",
     "FLOC-P2-000014",
+    "FLOC-P2-000015",
+    "FLOC-P2-000016",
+    "FLOC-P2-000017",
     "FLINK-P2-000001",
     "FLINK-P2-000002",
     "FLINK-P2-000003",
@@ -122,6 +128,9 @@ required = {
     "FLINK-P2-000011",
     "FLINK-P2-000012",
     "FLINK-P2-000013",
+    "FLINK-P2-000014",
+    "FLINK-P2-000015",
+    "FLINK-P2-000016",
     "FormalMath/Algebra/FactoredEquation.lean",
     "FormalMath/Algebra/ZeroProduct.lean",
     "FormalMath/Algebra/Examples/FactoredEquation.lean",
@@ -136,10 +145,16 @@ required = {
     "FormalMath/Relations/Graph.lean",
     "FormalMath/Geometry/Symmetry.lean",
     "FormalMath/Measurement/Mensuration.lean",
+    "FormalMath/Relations/GraphResults.lean",
+    "FormalMath/Geometry/SymmetryResults.lean",
+    "FormalMath/Measurement/MensurationResults.lean",
     "FormalMath.Arithmetic.Exercises.NaturalNumberLaws",
     "FormalMath.Relations.Graph",
     "FormalMath.Geometry.Symmetry",
     "FormalMath.Measurement.Mensuration",
+    "FormalMath.Relations.GraphResults",
+    "FormalMath.Geometry.SymmetryResults",
+    "FormalMath.Measurement.MensurationResults",
     "FormalMath.Algebra.factoredProduct",
     "FormalMath.Algebra.factoredProduct_eq_zero_iff",
     "FormalMath.Algebra.Examples.two_five_factored_equation",
@@ -159,11 +174,16 @@ required = {
     "FormalMath.Measurement.rectangleArea",
     "FormalMath.Measurement.rectanglePerimeter",
     "FormalMath.Measurement.rectangularPrismVolume",
+    "FormalMath.Relations.mem_graphOf_iff",
+    "FormalMath.Geometry.isInvariantUnder_id",
+    "FormalMath.Measurement.rectangleArea_comm",
+    "FormalMath.Measurement.rectanglePerimeter_comm",
+    "FormalMath.Measurement.rectangularPrismVolume_swap_length_width",
 }
 missing = sorted(item for item in required if item not in payload)
 assert not missing, missing
-assert len(artifacts) == 13, len(artifacts)
-assert len(sources) == 14, len(sources)
+assert len(artifacts) == 16, len(artifacts)
+assert len(sources) == 17, len(sources)
 
 artifact3 = next(record for record in artifacts if record["artifact_id"] == "FART-P2-000003")
 assert artifact3["artifact"]["current_locator_refs"] == ["FLOC-P2-000004"]
@@ -197,17 +217,17 @@ for id in FLINK-P2-000007 FLINK-P2-000008 FLINK-P2-000009 FART-P2-000007 FART-P2
 done
 
 lake exe traceability query curriculum CAND-P1-000019 | tee "$WORK/cand19.jsonl"
-for id in FLINK-P2-000011 FART-P2-000011 FLOC-P2-000012; do
+for id in FLINK-P2-000011 FLINK-P2-000014 FART-P2-000011 FART-P2-000014 FLOC-P2-000012 FLOC-P2-000015; do
   grep -Fq "$id" "$WORK/cand19.jsonl"
 done
 
 lake exe traceability query curriculum CAND-P1-000024 | tee "$WORK/cand24.jsonl"
-for id in FLINK-P2-000012 FART-P2-000012 FLOC-P2-000013; do
+for id in FLINK-P2-000012 FLINK-P2-000015 FART-P2-000012 FART-P2-000015 FLOC-P2-000013 FLOC-P2-000016; do
   grep -Fq "$id" "$WORK/cand24.jsonl"
 done
 
 lake exe traceability query curriculum CAND-P1-000027 | tee "$WORK/cand27.jsonl"
-for id in FLINK-P2-000013 FART-P2-000013 FLOC-P2-000014; do
+for id in FLINK-P2-000013 FLINK-P2-000016 FART-P2-000013 FART-P2-000016 FLOC-P2-000014 FLOC-P2-000017; do
   grep -Fq "$id" "$WORK/cand27.jsonl"
 done
 
@@ -251,6 +271,11 @@ FormalMath.Geometry.IsInvariantUnder|FART-P2-000012|FLOC-P2-000013
 FormalMath.Measurement.rectangleArea|FART-P2-000013|FLOC-P2-000014
 FormalMath.Measurement.rectanglePerimeter|FART-P2-000013|FLOC-P2-000014
 FormalMath.Measurement.rectangularPrismVolume|FART-P2-000013|FLOC-P2-000014
+FormalMath.Relations.mem_graphOf_iff|FART-P2-000014|FLOC-P2-000015
+FormalMath.Geometry.isInvariantUnder_id|FART-P2-000015|FLOC-P2-000016
+FormalMath.Measurement.rectangleArea_comm|FART-P2-000016|FLOC-P2-000017
+FormalMath.Measurement.rectanglePerimeter_comm|FART-P2-000016|FLOC-P2-000017
+FormalMath.Measurement.rectangularPrismVolume_swap_length_width|FART-P2-000016|FLOC-P2-000017
 EOF
 
 printf 'm210-roundtrip:start:derived-rebuild\n'
