@@ -18,5 +18,10 @@ run_cmd
       `FormalMath.Arithmetic.Examples.seven_distributes_over_four_plus_three,
       `FormalMath.Arithmetic.Examples.seven_sub_neg_three,
       `FormalMath.Arithmetic.Exercises.distribute_first_addend_only_is_wrong,
-      `FormalMath.Arithmetic.Exercises.distribute_then_cancel_solution
+      `FormalMath.Arithmetic.Exercises.distribute_then_cancel_solution,
+      `FormalMath.Geometry.IsInvariantUnder,
+      `FormalMath.Measurement.rectangleArea,
+      `FormalMath.Measurement.rectanglePerimeter,
+      `FormalMath.Measurement.rectangularPrismVolume,
+      `FormalMath.Relations.graphOf
     ])

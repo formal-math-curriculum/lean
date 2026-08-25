@@ -7,6 +7,7 @@ module
 import QualityTests.Regression
 import QualityTests.Computability
 import QualityTests.AntiConflation
+import QualityTests.P6CoreApi
 
 /-!
 # QualityTests
