@@ -21,9 +21,9 @@ public theorem rectangle_three_four_values :
     FormalMath.Measurement.rectanglePerimeter 3 4 = 14 ∧
       FormalMath.Measurement.rectangleArea 3 4 = 12 := by
   constructor
-  · change (2 : ℝ) * ((3 : ℝ) + (4 : ℝ)) = (14 : ℝ)
+  · change (((2 : ℕ) : ℝ) * (((3 : ℕ) : ℝ) + ((4 : ℕ) : ℝ))) = ((14 : ℕ) : ℝ)
     rw [← Nat.cast_add, ← Nat.cast_mul]
-  · change (3 : ℝ) * (4 : ℝ) = (12 : ℝ)
+  · change (((3 : ℕ) : ℝ) * ((4 : ℕ) : ℝ)) = ((12 : ℕ) : ℝ)
     rw [← Nat.cast_mul]
 
 /-- The concrete 3-by-4 rectangle witnesses that perimeter and area are not interchangeable. -/
@@ -32,6 +32,7 @@ public theorem rectangle_three_four_perimeter_ne_area :
       FormalMath.Measurement.rectangleArea 3 4 := by
   rw [rectangle_three_four_values.1, rectangle_three_four_values.2]
   intro h
+  change (((14 : ℕ) : ℝ) = ((12 : ℕ) : ℝ)) at h
   exact (by decide : (14 : ℕ) ≠ 12) (Nat.cast_inj.mp h)
 
 end FormalMath.Measurement.Examples

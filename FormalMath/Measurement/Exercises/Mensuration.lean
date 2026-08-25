@@ -18,7 +18,7 @@ namespace FormalMath.Measurement.Exercises
 /-- Solution theorem for the concrete rectangular-prism volume exercise 2 · 3 · 4. -/
 public theorem rectangularPrism_two_three_four_solution :
     FormalMath.Measurement.rectangularPrismVolume 2 3 4 = 24 := by
-  change ((2 : ℝ) * (3 : ℝ)) * (4 : ℝ) = (24 : ℝ)
+  change ((((2 : ℕ) : ℝ) * ((3 : ℕ) : ℝ)) * ((4 : ℕ) : ℝ)) = ((24 : ℕ) : ℝ)
   rw [← Nat.cast_mul, ← Nat.cast_mul]
 
 end FormalMath.Measurement.Exercises
