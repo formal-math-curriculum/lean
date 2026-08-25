@@ -148,15 +148,7 @@ def git_blob_sha(data: bytes) -> str:
     return hashlib.sha1(header + data).hexdigest()
 
 
-def validate_repository() -> None:
-    release_scope = load_json("publication/p6-v1/generated/release-scope.json")
-    authority = load_json("publication/p6-v1/generated/formal-authority.json")
-    dependencies = load_json("publication/p6-v1/generated/formal-dependencies.json")
-    bindings = load_json("publication/p6-v1/generated/representation-bindings.json")
-    external = load_json("publication/p6-v1/generated/external-alignment-coverage.json")
-    publication = load_json("publication/p6-v1/generated/publication-manifest.json")
-    floc = load_jsonl("metadata/formal-artifacts/floc/000001-001000.jsonl")
-
+def validate_scope_partition(release_scope: dict) -> None:
     rows = release_scope["records"]
     if release_scope["record_count"] != 52 or len(rows) != 52:
         fail("scope-count")
@@ -173,8 +165,20 @@ def validate_repository() -> None:
         for row in rows
         if row["formal_representation_state"] == "not_represented"
     }
-    if represented != EXPECTED_REPRESENTED or len(absent) != 44:
+    if represented != EXPECTED_REPRESENTED or absent != EXPECTED_ABSENT:
         fail("representation-partition")
+
+
+def validate_repository() -> None:
+    release_scope = load_json("publication/p6-v1/generated/release-scope.json")
+    authority = load_json("publication/p6-v1/generated/formal-authority.json")
+    dependencies = load_json("publication/p6-v1/generated/formal-dependencies.json")
+    bindings = load_json("publication/p6-v1/generated/representation-bindings.json")
+    external = load_json("publication/p6-v1/generated/external-alignment-coverage.json")
+    publication = load_json("publication/p6-v1/generated/publication-manifest.json")
+    floc = load_jsonl("metadata/formal-artifacts/floc/000001-001000.jsonl")
+
+    validate_scope_partition(release_scope)
 
     counts = publication["counts"]
     expected_counts = {
@@ -339,6 +343,19 @@ def expect_failure(label: str, expected: str, text: str) -> None:
     raise AssertionError(f"p6-release-control:unexpected-pass:{label}")
 
 
+def expect_scope_failure(label: str, expected: str, release_scope: dict) -> None:
+    try:
+        validate_scope_partition(release_scope)
+    except AssertionError as exc:
+        if expected not in str(exc):
+            raise AssertionError(
+                f"p6-release-control:wrong-failure:{label}:{exc}"
+            ) from exc
+        print(f"p6-release-control:expected-fail:{label}:{expected}")
+        return
+    raise AssertionError(f"p6-release-control:unexpected-pass:{label}")
+
+
 def main() -> int:
     text = MANIFEST.read_text(encoding="utf-8")
     validate_repository()
@@ -374,6 +391,18 @@ def main() -> int:
         "absent-identity",
         "p6-release:error:candidate-vector",
         text.replace("CAND-P1-000001", "CAND-P1-999998"),
+    )
+    mutated_release_scope = load_json(
+        "publication/p6-v1/generated/release-scope.json"
+    )
+    for row in mutated_release_scope["records"]:
+        if row["candidate_ref"] == "CAND-P1-000001":
+            row["candidate_ref"] = "CAND-P1-999998"
+            break
+    expect_scope_failure(
+        "repository-absent-identity",
+        "p6-release:error:representation-partition",
+        mutated_release_scope,
     )
     expect_failure(
         "integration-pr",
