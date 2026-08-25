@@ -1,0 +1,230 @@
+{
+  "authority_boundaries": [
+    "Lean owns formal artifacts, locators, links, formal dependencies and reproducibility evidence.",
+    "Content governance owns canonical content IDs, editorial truth and curated external mappings.",
+    "The site owns generated presentation outputs and does not become a source of authority."
+  ],
+  "counts": {
+    "external_alignment_coverage": 156,
+    "fart": 21,
+    "flink": 22,
+    "floc_active_current": 21,
+    "floc_historical": 1,
+    "floc_total": 22,
+    "formal_dependency_external_locators": 4,
+    "formal_dependency_import_edges": 19,
+    "formal_dependency_module_sources": 17,
+    "linked_identities": 8,
+    "release_scope": 52,
+    "representation_bindings": 22
+  },
+  "formal_subject_revision": "5b592af5807467d600184d376f1a1d5920ddddbd",
+  "generator": {
+    "fingerprint_algorithm": "sha256(exact-generator-source-bytes)",
+    "generator_fingerprint": "f64656afbdf2408b1845aa2f01cac031236f21ca559bcc0b7d08b5b092596aea",
+    "normalization": "UTF-8; sorted JSON keys; two-space indent; LF; one terminal newline",
+    "path": "publication/p6-v1/generate.py",
+    "runtime": "Python standard library only"
+  },
+  "inputs": [
+    {
+      "git_blob": "6aa8bd2575db54920629101a5629d355a6144be4",
+      "path": "FormalMath/Algebra/Examples/FactoredIntegerEquation.lean",
+      "sha256": "72149226029c918b125491ae3ccb85fe4b2d0cd321d274b2ddd34f9695c623dd"
+    },
+    {
+      "git_blob": "d72776caae133782d56c7c28eb2bad20779f0f0c",
+      "path": "FormalMath/Algebra/FactoredEquation.lean",
+      "sha256": "0c6272d5e3bfbf5788709ab4befd0f132b15251f7c4227c142fe774997d6240c"
+    },
+    {
+      "git_blob": "656646812841cb625ae35d7d2a71a86dfd89cfaf",
+      "path": "FormalMath/Algebra/ZeroProduct.lean",
+      "sha256": "02202f7565af16030f7759fb9c31ddec4333f5ff0f6073de50fb1497aef3e2b5"
+    },
+    {
+      "git_blob": "8380934117eb68f23ad3f713468792b619b0ee66",
+      "path": "FormalMath/Arithmetic/Examples/IntegerSignLaws.lean",
+      "sha256": "22b3f57cdd47faaa1c545f77da55975456c50fce4e79b2cad7935b37de4228d8"
+    },
+    {
+      "git_blob": "77d6cfb223ced68adc70bad8b21bc1dfd5e71ddf",
+      "path": "FormalMath/Arithmetic/Examples/NaturalNumberLaws.lean",
+      "sha256": "2fe97a8438b3dcb1d40791408b97ce1652781f1302ac2d74d0aa7fb85e9b8a28"
+    },
+    {
+      "git_blob": "e754baf70f30457131fcaa1660f1d44f0dba8bfe",
+      "path": "FormalMath/Arithmetic/Exercises/NaturalNumberLaws.lean",
+      "sha256": "04ac92783b7be29ddc22d93ab2af4eeb7cf2e758d8796cf0d258ebaabc330f02"
+    },
+    {
+      "git_blob": "02c58ecb58a611ca101a96dd7f6b4d2f418c70b3",
+      "path": "FormalMath/Geometry/Examples/Symmetry.lean",
+      "sha256": "08cf4c009365fd3e637328eb1fb6a1483427a9f6d4bf19537b833fb1178b696a"
+    },
+    {
+      "git_blob": "fb999a3396223454e9692c03db274e202af6694d",
+      "path": "FormalMath/Geometry/Symmetry.lean",
+      "sha256": "1a69fdcb9ebfaf56813c42b8a3fbbe34ef969bee1c9be8fd8ee410bef95684de"
+    },
+    {
+      "git_blob": "c7187588aba0fd8218ce4a76dafd083ab6ec4ae1",
+      "path": "FormalMath/Geometry/SymmetryResults.lean",
+      "sha256": "969f209f24bd9851775ee0e963b81f4429549a3033344621df5820c839b6c1aa"
+    },
+    {
+      "git_blob": "721a8dbebb53e7a43fbd2ec3898478694b376bc2",
+      "path": "FormalMath/Measurement/Examples/Mensuration.lean",
+      "sha256": "b3a6295d1c22c3269dc17326fd997402557c8d01dd6fe808be8a6b9bc0b2472f"
+    },
+    {
+      "git_blob": "31a0982e920b10e3cfa1ffb314491f433e5f318a",
+      "path": "FormalMath/Measurement/Exercises/Mensuration.lean",
+      "sha256": "3ba5b39224fab8426c364cebb23632e7f2372b56b415c3e4351213ebdfe1a9b2"
+    },
+    {
+      "git_blob": "74e8a3ab9b5c41c5e1b52428a0dd50e63768e8f9",
+      "path": "FormalMath/Measurement/Mensuration.lean",
+      "sha256": "b7004cf609e8b6a238f1fe8aa69560bc415d1487fb3687d9c8659a9cb6e1fb90"
+    },
+    {
+      "git_blob": "239d4c67bc9db5a36dbf0b5f083a2935fc2b778a",
+      "path": "FormalMath/Measurement/MensurationResults.lean",
+      "sha256": "997b011a6a1294cec740ee77c641b6028e5643135c5db2a4d53e71081c372d1b"
+    },
+    {
+      "git_blob": "679a269fc3981ef0a9fdaf21eb8632f613aa54b6",
+      "path": "FormalMath/Relations/CompositionResults.lean",
+      "sha256": "4256c1b06679261b15535868b0bb28ece5dbb2ec04737f7665bf6cb2411685d6"
+    },
+    {
+      "git_blob": "018a69cd470e9b17f6bfc8d1d58efd0629c51212",
+      "path": "FormalMath/Relations/Examples/Composition.lean",
+      "sha256": "3819a601125858872da2aa1adc35bca18be027918835b00c998736ad9ff7a44e"
+    },
+    {
+      "git_blob": "b29510687599e1328316bb619f989491acb8a094",
+      "path": "FormalMath/Relations/Graph.lean",
+      "sha256": "3346d7fdd6379f65df172972e882657336502489a568f6e4da6f8002018f8cdd"
+    },
+    {
+      "git_blob": "620c37af7485614d9bb323b5732c49dc74ed2309",
+      "path": "FormalMath/Relations/GraphResults.lean",
+      "sha256": "925ddf5eb5f123aed49bf831026cb6ad304012becdff3389188a9c1e96435ddf"
+    },
+    {
+      "git_blob": "b45d9c37e5168cf22bdd886bee5073f025cee29a",
+      "path": "lake-manifest.json",
+      "sha256": "5a895c6268ab3b09dcd8daf8e5ab06e13c81c9d08b539f0dd015eb4e17d792ed"
+    },
+    {
+      "git_blob": "025e59548e48cf71f2744154e2890beefe30a258",
+      "path": "lean-toolchain",
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    {
+      "git_blob": "d05fba62472bf73ff21dda858327fdb16e47c84b",
+      "path": "metadata/curriculum-lock/linked-identities.jsonl",
+      "sha256": "902759ab1d378506af7da18ef7edb827d05f1e476247b0f1f89485e2459b139e"
+    },
+    {
+      "git_blob": "7634a6e3408e633bedfd40e471137dced4225cab",
+      "path": "metadata/formal-artifacts/fart/000001-001000.jsonl",
+      "sha256": "c84cd84168ca159e336808fcd91fbb7ba3a45aba2642d99d4190a2eec06bd358"
+    },
+    {
+      "git_blob": "7ff47aa509f76d6c866d43084a91ba44d29e4563",
+      "path": "metadata/formal-artifacts/flink/000001-001000.jsonl",
+      "sha256": "57ac337769e1b4af32b2c3b96645ad861f8593960b5a06b9591336580741b51d"
+    },
+    {
+      "git_blob": "ef5c23897948a68c691fc741066586ee4832ea92",
+      "path": "metadata/formal-artifacts/floc/000001-001000.jsonl",
+      "sha256": "950d50760ec3865ad145d2669bebe1989154bea3f16b06e812faed8e9bb96299"
+    },
+    {
+      "git_blob": "1e9001529dba66d4223544c9510a60f12fef28db",
+      "path": "metadata/formal-artifacts/registry.json",
+      "sha256": "3ff4d6f07fe6a99b445de197390996008b50d20b4ffabae81865b72b5514f396"
+    },
+    {
+      "git_blob": "5b854e288d803d0cc56622c8f1c34fd083018997",
+      "path": "publication/p6-v1/generate.py",
+      "sha256": "f64656afbdf2408b1845aa2f01cac031236f21ca559bcc0b7d08b5b092596aea"
+    },
+    {
+      "git_blob": null,
+      "path": "publication/p6-v1/source/scope.json",
+      "sha256": "ccc1226317085d7133091cdb1bccff1a6a9dbea1e7d86c18e452f8b7bd0772e8"
+    }
+  ],
+  "lean_toolchain": "leanprover/lean4:v4.33.0",
+  "mathlib_revision": "db584cd6d46c92f209a44c0f1c829460d327499d",
+  "nonclaims": [
+    "No filesystem-derived Course hierarchy or learner prerequisites.",
+    "No invented canonical content IDs or OntoMathPRO/MSC2020/arXiv mappings.",
+    "No whole-curriculum verification claim, release tag, M6.8 work or Project 16."
+  ],
+  "outputs": [
+    {
+      "path": "publication/p6-v1/generated/external-alignment-coverage.json",
+      "record_count": 156,
+      "sha256": "e23701dfa9a1a32c0f2e1bea69b71da8cb7e5e458261b94c961ba6ebf8fb2293"
+    },
+    {
+      "path": "publication/p6-v1/generated/formal-authority.json",
+      "record_count": 73,
+      "sha256": "c0b17e560855dd0aeb633ccc67ce6c3813150c54f8270dd9ddeb4da77831e747"
+    },
+    {
+      "path": "publication/p6-v1/generated/formal-dependencies.json",
+      "record_count": 40,
+      "sha256": "7d3defcb6646f1a036950124600abcf361eaaa0adbb5eb73867b431f08f42ffd"
+    },
+    {
+      "path": "publication/p6-v1/generated/release-scope.json",
+      "record_count": 52,
+      "sha256": "a37250a202e228060a49c2119361ed84da5534759ea9e21b18f149612c9b880b"
+    },
+    {
+      "path": "publication/p6-v1/generated/representation-bindings.json",
+      "record_count": 22,
+      "sha256": "8d4b4390d892c6418228742650ec989415ec80d3904fc6e24ee3462833e9b9a4"
+    }
+  ],
+  "projection_compatibility": [
+    {
+      "boundary": "formal facts only; content/editorial/alignment adoption remains downstream",
+      "projection": "Course",
+      "state": "compatible"
+    },
+    {
+      "boundary": "formal facts only; content/editorial/alignment adoption remains downstream",
+      "projection": "OntoMathPRO",
+      "state": "compatible"
+    },
+    {
+      "boundary": "formal facts only; content/editorial/alignment adoption remains downstream",
+      "projection": "MSC2020",
+      "state": "compatible"
+    },
+    {
+      "boundary": "formal facts only; content/editorial/alignment adoption remains downstream",
+      "projection": "arXiv",
+      "state": "compatible"
+    },
+    {
+      "boundary": "exact FART/FLOC/FLINK, toolchain, mathlib and formal-dependency facts",
+      "projection": "Lean/mathlib",
+      "state": "compatible"
+    }
+  ],
+  "repository_heads_at_freeze": {
+    "content": "3a1e87c7c55c7b17e9fa7b3eb4deafd8b991e828",
+    "lean": "5b592af5807467d600184d376f1a1d5920ddddbd",
+    "site": "4a9039665a8b54443da55872223dc75c5598cad0"
+  },
+  "schema_version": "p6-publication-manifest/v1",
+  "semantic_fingerprint": "aad1d6b780fb6e766753b4832ab7310ebcef98c481b42a71bc7f184f6c861163",
+  "semantic_fingerprint_algorithm": "sha256(canonical-compact-json of schemas, revisions, ordered inputs, ordered outputs, counts and generator fingerprint)"
+}

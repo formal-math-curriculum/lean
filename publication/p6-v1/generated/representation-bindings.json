@@ -1,0 +1,942 @@
+{
+  "authority": "formal-math-curriculum/lean",
+  "formal_subject_revision": "5b592af5807467d600184d376f1a1d5920ddddbd",
+  "nonclaim": "Curriculum identity and correspondence remain treatment-scoped and independent of maturity.",
+  "record_count": 22,
+  "records": [
+    {
+      "binding_key": "FLINK-P2-000001::FART-P2-000001::FLOC-P2-000001",
+      "candidate_ref": "CAND-P1-000016",
+      "correspondence": {
+        "coverage_claim_scope": "factored integer expression construction used by the selected equation-solving treatment",
+        "identity_resolution": "resolved_exact",
+        "relation": "represents",
+        "treatment_scope": "factored_expression_construction"
+      },
+      "formal_artifact": {
+        "artifact_kind": "definition",
+        "formal_artifact_ref": "FART-P2-000001",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Factored integer expression construction"
+      },
+      "formal_link_ref": "FLINK-P2-000001",
+      "limitation": "Project-owned factored-expression construction supporting the selected equation-solving slice; no learner-prerequisite claim is inferred.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Algebra.factoredProduct"
+        ],
+        "file_path": "FormalMath/Algebra/FactoredEquation.lean",
+        "formal_locator_ref": "FLOC-P2-000001",
+        "locator_status": "current",
+        "module_name": "FormalMath.Algebra.FactoredEquation",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "0d48b18ea62783633470668692472c345ec8b548"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000002::FART-P2-000002::FLOC-P2-000002",
+      "candidate_ref": "CAND-P1-000017",
+      "correspondence": {
+        "coverage_claim_scope": "integer factored-equation zero-product solution characterization only",
+        "identity_resolution": "resolved_exact",
+        "relation": "represents",
+        "treatment_scope": "factored_integer_equation_solution_characterization"
+      },
+      "formal_artifact": {
+        "artifact_kind": "theorem",
+        "formal_artifact_ref": "FART-P2-000002",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Factored integer equation zero-product characterization"
+      },
+      "formal_link_ref": "FLINK-P2-000002",
+      "limitation": "Bounded to integer factored equations; formal proof dependencies do not modify learner readiness or curriculum prerequisites.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Algebra.factoredProduct_eq_zero_iff"
+        ],
+        "file_path": "FormalMath/Algebra/ZeroProduct.lean",
+        "formal_locator_ref": "FLOC-P2-000002",
+        "locator_status": "current",
+        "module_name": "FormalMath.Algebra.ZeroProduct",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "0d48b18ea62783633470668692472c345ec8b548"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000003::FART-P2-000003::FLOC-P2-000004",
+      "candidate_ref": "CAND-P1-000017",
+      "correspondence": {
+        "coverage_claim_scope": "single worked integer factored-equation example",
+        "identity_resolution": "resolved_exact",
+        "relation": "example_of",
+        "treatment_scope": "two_five_factored_integer_equation_example"
+      },
+      "formal_artifact": {
+        "artifact_kind": "example",
+        "formal_artifact_ref": "FART-P2-000003",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Worked factored integer equation example with roots 2 and 5"
+      },
+      "formal_link_ref": "FLINK-P2-000003",
+      "limitation": "Concrete roots 2 and 5; this is an example of the selected equation treatment and does not establish whole-topic coverage.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Algebra.Examples.two_five_factored_equation"
+        ],
+        "file_path": "FormalMath/Algebra/Examples/FactoredIntegerEquation.lean",
+        "formal_locator_ref": "FLOC-P2-000004",
+        "locator_status": "current",
+        "module_name": "FormalMath.Algebra.Examples.FactoredIntegerEquation",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "46ad79e7fe767975cb30a2658b7456032f71498d"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000004::FART-P2-000004::FLOC-P2-000005",
+      "candidate_ref": "CAND-P1-000004",
+      "correspondence": {
+        "coverage_claim_scope": "natural-number additive identity, associativity, commutativity and cancellation plus multiplicative identity, associativity and commutativity",
+        "identity_resolution": "resolved_exact",
+        "relation": "partially_represents",
+        "treatment_scope": "natural_number_additive_multiplicative_monoid_laws"
+      },
+      "formal_artifact": {
+        "artifact_kind": "theorem_family",
+        "formal_artifact_ref": "FART-P2-000004",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Natural-number additive and multiplicative monoid laws"
+      },
+      "formal_link_ref": "FLINK-P2-000004",
+      "limitation": "Natural-number identity, associativity, commutativity and additive-cancellation laws only; library structure and proof dependencies do not alter learner readiness.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "Nat.instAddCancelCommMonoid",
+          "Nat.instCommMonoid"
+        ],
+        "file_path": "Mathlib/Algebra/Group/Nat/Defs.lean",
+        "formal_locator_ref": "FLOC-P2-000005",
+        "locator_status": "current",
+        "module_name": "Mathlib.Algebra.Group.Nat.Defs",
+        "record_status": "active",
+        "repository": "leanprover-community/mathlib4",
+        "revision": "db584cd6d46c92f209a44c0f1c829460d327499d"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000005::FART-P2-000005::FLOC-P2-000006",
+      "candidate_ref": "CAND-P1-000004",
+      "correspondence": {
+        "coverage_claim_scope": "natural-number multiplication distributive over addition",
+        "identity_resolution": "resolved_exact",
+        "relation": "partially_represents",
+        "treatment_scope": "natural_number_distributive_laws"
+      },
+      "formal_artifact": {
+        "artifact_kind": "theorem_family",
+        "formal_artifact_ref": "FART-P2-000005",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Natural-number distributive laws"
+      },
+      "formal_link_ref": "FLINK-P2-000005",
+      "limitation": "Natural-number left and right distributivity only; no generic semiring or whole-topic curriculum claim.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "Nat.instDistrib"
+        ],
+        "file_path": "Mathlib/Algebra/Ring/Nat.lean",
+        "formal_locator_ref": "FLOC-P2-000006",
+        "locator_status": "current",
+        "module_name": "Mathlib.Algebra.Ring.Nat",
+        "record_status": "active",
+        "repository": "leanprover-community/mathlib4",
+        "revision": "db584cd6d46c92f209a44c0f1c829460d327499d"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000006::FART-P2-000006::FLOC-P2-000007",
+      "candidate_ref": "CAND-P1-000004",
+      "correspondence": {
+        "coverage_claim_scope": "example_only",
+        "identity_resolution": "resolved_exact",
+        "relation": "example_of",
+        "treatment_scope": "natural_number_operation_law_examples"
+      },
+      "formal_artifact": {
+        "artifact_kind": "example",
+        "formal_artifact_ref": "FART-P2-000006",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Natural-number operation-law worked examples"
+      },
+      "formal_link_ref": "FLINK-P2-000006",
+      "limitation": "Two concrete natural-number examples only; they do not establish full CAND4 coverage and do not create a learner-prerequisite edge.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Arithmetic.Examples.cancel_common_nine_addend",
+          "FormalMath.Arithmetic.Examples.seven_distributes_over_four_plus_three"
+        ],
+        "file_path": "FormalMath/Arithmetic/Examples/NaturalNumberLaws.lean",
+        "formal_locator_ref": "FLOC-P2-000007",
+        "locator_status": "current",
+        "module_name": "FormalMath.Arithmetic.Examples.NaturalNumberLaws",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "1b71481eec0973bea8f1bdbb52c72d8e28bbde89"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000007::FART-P2-000007::FLOC-P2-000008",
+      "candidate_ref": "CAND-P1-000009",
+      "correspondence": {
+        "coverage_claim_scope": "integer additive inverses and subtraction of a negative only",
+        "identity_resolution": "resolved_exact",
+        "relation": "partially_represents",
+        "treatment_scope": "integer_additive_inverse_and_signed_subtraction_laws"
+      },
+      "formal_artifact": {
+        "artifact_kind": "theorem_family",
+        "formal_artifact_ref": "FART-P2-000007",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Integer additive-group and signed-subtraction laws"
+      },
+      "formal_link_ref": "FLINK-P2-000007",
+      "limitation": "Integer additive inverses and subtraction of a negative only; library structure and proof dependencies do not alter learner readiness or curriculum prerequisites.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "Int.instAddCommGroup"
+        ],
+        "file_path": "Mathlib/Algebra/Group/Int/Defs.lean",
+        "formal_locator_ref": "FLOC-P2-000008",
+        "locator_status": "current",
+        "module_name": "Mathlib.Algebra.Group.Int.Defs",
+        "record_status": "active",
+        "repository": "leanprover-community/mathlib4",
+        "revision": "db584cd6d46c92f209a44c0f1c829460d327499d"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000008::FART-P2-000008::FLOC-P2-000009",
+      "candidate_ref": "CAND-P1-000009",
+      "correspondence": {
+        "coverage_claim_scope": "multiplication of two negative integers only",
+        "identity_resolution": "resolved_exact",
+        "relation": "partially_represents",
+        "treatment_scope": "integer_negative_product_laws"
+      },
+      "formal_artifact": {
+        "artifact_kind": "theorem_family",
+        "formal_artifact_ref": "FART-P2-000008",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Integer negative-product laws"
+      },
+      "formal_link_ref": "FLINK-P2-000008",
+      "limitation": "Multiplication of two negative integers only; no generic commutative-ring or whole-topic curriculum claim.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "Int.instCommRing"
+        ],
+        "file_path": "Mathlib/Algebra/Ring/Int/Defs.lean",
+        "formal_locator_ref": "FLOC-P2-000009",
+        "locator_status": "current",
+        "module_name": "Mathlib.Algebra.Ring.Int.Defs",
+        "record_status": "active",
+        "repository": "leanprover-community/mathlib4",
+        "revision": "db584cd6d46c92f209a44c0f1c829460d327499d"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000009::FART-P2-000009::FLOC-P2-000010",
+      "candidate_ref": "CAND-P1-000009",
+      "correspondence": {
+        "coverage_claim_scope": "example_only",
+        "identity_resolution": "resolved_exact",
+        "relation": "example_of",
+        "treatment_scope": "integer_signed_operation_law_examples"
+      },
+      "formal_artifact": {
+        "artifact_kind": "example",
+        "formal_artifact_ref": "FART-P2-000009",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Integer sign-law worked examples"
+      },
+      "formal_link_ref": "FLINK-P2-000009",
+      "limitation": "Two concrete signed-integer examples only; they do not establish full CAND9 coverage and do not create a learner-prerequisite edge.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Arithmetic.Examples.neg_seven_mul_neg_four",
+          "FormalMath.Arithmetic.Examples.seven_sub_neg_three"
+        ],
+        "file_path": "FormalMath/Arithmetic/Examples/IntegerSignLaws.lean",
+        "formal_locator_ref": "FLOC-P2-000010",
+        "locator_status": "current",
+        "module_name": "FormalMath.Arithmetic.Examples.IntegerSignLaws",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "f95f072cd3548f3863b5220fdeb2fe8237ac64ec"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000010::FART-P2-000010::FLOC-P2-000011",
+      "candidate_ref": "CAND-P1-000004",
+      "correspondence": {
+        "coverage_claim_scope": "one guided natural-number distributive-cancellation exercise and one diagnostic counterexample only",
+        "identity_resolution": "resolved_exact",
+        "relation": "exercise_for",
+        "treatment_scope": "natural_number_distributive_cancellation_exercise"
+      },
+      "formal_artifact": {
+        "artifact_kind": "exercise_solution",
+        "formal_artifact_ref": "FART-P2-000010",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Natural-number distributive-cancellation exercise and diagnostic"
+      },
+      "formal_link_ref": "FLINK-P2-000010",
+      "limitation": "One guided natural-number exercise and one diagnostic counterexample only; all three solution checkpoints are explicit; no full CAND4, generic-semiring, grade-order, or learner-readiness claim.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Arithmetic.Exercises.distribute_first_addend_only_is_wrong",
+          "FormalMath.Arithmetic.Exercises.distribute_then_cancel_solution"
+        ],
+        "file_path": "FormalMath/Arithmetic/Exercises/NaturalNumberLaws.lean",
+        "formal_locator_ref": "FLOC-P2-000011",
+        "locator_status": "current",
+        "module_name": "FormalMath.Arithmetic.Exercises.NaturalNumberLaws",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "02989949c176a839a733031514e7d0e6721350d1"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000011::FART-P2-000011::FLOC-P2-000012",
+      "candidate_ref": "CAND-P1-000019",
+      "correspondence": {
+        "coverage_claim_scope": "graph-of-a-function definition only",
+        "identity_resolution": "resolved_exact",
+        "relation": "partially_represents",
+        "treatment_scope": "p6_m6_3_graph_of_definition"
+      },
+      "formal_artifact": {
+        "artifact_kind": "definition",
+        "formal_artifact_ref": "FART-P2-000011",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Function graph as a set of ordered pairs"
+      },
+      "formal_link_ref": "FLINK-P2-000011",
+      "limitation": "Graph of one function as a set of pairs only; no intercept, slope, plotting, analytic-geometry or learner-readiness claim.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Relations.graphOf"
+        ],
+        "file_path": "FormalMath/Relations/Graph.lean",
+        "formal_locator_ref": "FLOC-P2-000012",
+        "locator_status": "current",
+        "module_name": "FormalMath.Relations.Graph",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "175050bdfc2be1ba14cf38cac011d53428526151"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000012::FART-P2-000012::FLOC-P2-000013",
+      "candidate_ref": "CAND-P1-000024",
+      "correspondence": {
+        "coverage_claim_scope": "elementary set-invariance predicate only",
+        "identity_resolution": "resolved_exact",
+        "relation": "partially_represents",
+        "treatment_scope": "p6_m6_3_elementary_set_invariance_definition"
+      },
+      "formal_artifact": {
+        "artifact_kind": "definition",
+        "formal_artifact_ref": "FART-P2-000012",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Elementary invariance of a set under a transformation"
+      },
+      "formal_link_ref": "FLINK-P2-000012",
+      "limitation": "Set-image invariance under one transformation only; no equivalence, group action, classification of symmetries or learner-readiness claim.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Geometry.IsInvariantUnder"
+        ],
+        "file_path": "FormalMath/Geometry/Symmetry.lean",
+        "formal_locator_ref": "FLOC-P2-000013",
+        "locator_status": "current",
+        "module_name": "FormalMath.Geometry.Symmetry",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "175050bdfc2be1ba14cf38cac011d53428526151"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000013::FART-P2-000013::FLOC-P2-000014",
+      "candidate_ref": "CAND-P1-000027",
+      "correspondence": {
+        "coverage_claim_scope": "rectangle perimeter/area and rectangular-prism volume definitions only",
+        "identity_resolution": "resolved_exact",
+        "relation": "partially_represents",
+        "treatment_scope": "p6_m6_3_bounded_mensuration_definitions"
+      },
+      "formal_artifact": {
+        "artifact_kind": "definition",
+        "formal_artifact_ref": "FART-P2-000013",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Bounded elementary mensuration formula definitions"
+      },
+      "formal_link_ref": "FLINK-P2-000013",
+      "limitation": "Formula definitions over real inputs only; positivity, units, formula theorems, examples and full mensuration coverage are excluded.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Measurement.rectangleArea",
+          "FormalMath.Measurement.rectanglePerimeter",
+          "FormalMath.Measurement.rectangularPrismVolume"
+        ],
+        "file_path": "FormalMath/Measurement/Mensuration.lean",
+        "formal_locator_ref": "FLOC-P2-000014",
+        "locator_status": "current",
+        "module_name": "FormalMath.Measurement.Mensuration",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "175050bdfc2be1ba14cf38cac011d53428526151"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000014::FART-P2-000014::FLOC-P2-000015",
+      "candidate_ref": "CAND-P1-000019",
+      "correspondence": {
+        "coverage_claim_scope": "one exact graph-membership characterization",
+        "identity_resolution": "resolved_exact",
+        "relation": "partially_represents",
+        "treatment_scope": "p6_m6_4_graph_membership_result"
+      },
+      "formal_artifact": {
+        "artifact_kind": "theorem",
+        "formal_artifact_ref": "FART-P2-000014",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Function-graph membership characterization"
+      },
+      "formal_link_ref": "FLINK-P2-000014",
+      "limitation": "Membership in the adopted graphOf representation only; no plotting, analytic geometry or learner-readiness claim.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Relations.mem_graphOf_iff"
+        ],
+        "file_path": "FormalMath/Relations/GraphResults.lean",
+        "formal_locator_ref": "FLOC-P2-000015",
+        "locator_status": "current",
+        "module_name": "FormalMath.Relations.GraphResults",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "e8d288f873f9e227907ad501cafc3671233b6f37"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000015::FART-P2-000015::FLOC-P2-000016",
+      "candidate_ref": "CAND-P1-000024",
+      "correspondence": {
+        "coverage_claim_scope": "identity-transformation invariance result only",
+        "identity_resolution": "resolved_exact",
+        "relation": "partially_represents",
+        "treatment_scope": "p6_m6_4_identity_invariance_result"
+      },
+      "formal_artifact": {
+        "artifact_kind": "theorem",
+        "formal_artifact_ref": "FART-P2-000015",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Identity-transformation set invariance"
+      },
+      "formal_link_ref": "FLINK-P2-000015",
+      "limitation": "Identity transformation and arbitrary sets only; no group action, symmetry classification or learner-readiness claim.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Geometry.isInvariantUnder_id"
+        ],
+        "file_path": "FormalMath/Geometry/SymmetryResults.lean",
+        "formal_locator_ref": "FLOC-P2-000016",
+        "locator_status": "current",
+        "module_name": "FormalMath.Geometry.SymmetryResults",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "ec47b85cd0f829b546405f315c8aaee2ccbbb8a9"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000016::FART-P2-000016::FLOC-P2-000017",
+      "candidate_ref": "CAND-P1-000027",
+      "correspondence": {
+        "coverage_claim_scope": "three length/width exchange results only",
+        "identity_resolution": "resolved_exact",
+        "relation": "partially_represents",
+        "treatment_scope": "p6_m6_4_mensuration_argument_symmetry_results"
+      },
+      "formal_artifact": {
+        "artifact_kind": "theorem_family",
+        "formal_artifact_ref": "FART-P2-000016",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Bounded mensuration argument-symmetry results"
+      },
+      "formal_link_ref": "FLINK-P2-000016",
+      "limitation": "Argument symmetry over real inputs only; no positivity, unit, derivation, geometric-existence or whole-mensuration claim.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Measurement.rectangleArea_comm",
+          "FormalMath.Measurement.rectanglePerimeter_comm",
+          "FormalMath.Measurement.rectangularPrismVolume_swap_length_width"
+        ],
+        "file_path": "FormalMath/Measurement/MensurationResults.lean",
+        "formal_locator_ref": "FLOC-P2-000017",
+        "locator_status": "current",
+        "module_name": "FormalMath.Measurement.MensurationResults",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "e8d288f873f9e227907ad501cafc3671233b6f37"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000017::FART-P2-000017::FLOC-P2-000018",
+      "candidate_ref": "CAND-P1-000018",
+      "correspondence": {
+        "coverage_claim_scope": "one composite-function graph-membership characterization",
+        "identity_resolution": "resolved_exact",
+        "relation": "partially_represents",
+        "treatment_scope": "p6_m6_5_function_composition_graph_membership_result"
+      },
+      "formal_artifact": {
+        "artifact_kind": "theorem",
+        "formal_artifact_ref": "FART-P2-000017",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Composite-function graph membership characterization"
+      },
+      "formal_link_ref": "FLINK-P2-000017",
+      "limitation": "Ordinary total functions and the adopted graphOf representation only; no domain/range taxonomy, relation equivalence, plotting, examples, learner-readiness or whole-row claim.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Relations.mem_graphOf_comp_iff"
+        ],
+        "file_path": "FormalMath/Relations/CompositionResults.lean",
+        "formal_locator_ref": "FLOC-P2-000018",
+        "locator_status": "current",
+        "module_name": "FormalMath.Relations.CompositionResults",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "8f2160ed3306f24279d47177b5f7f6996acb7632"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000018::FART-P2-000018::FLOC-P2-000019",
+      "candidate_ref": "CAND-P1-000018",
+      "correspondence": {
+        "coverage_claim_scope": "one concrete successor-then-double composition evaluation example",
+        "identity_resolution": "resolved_exact",
+        "relation": "example_of",
+        "treatment_scope": "p6_m6_6_composite_graph_example"
+      },
+      "formal_artifact": {
+        "artifact_kind": "example",
+        "formal_artifact_ref": "FART-P2-000018",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Concrete composite-function graph membership example"
+      },
+      "formal_link_ref": "FLINK-P2-000018",
+      "limitation": "Concrete Nat functions and one input/output pair only; no generic function, composition or learner-readiness claim.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Relations.Examples.successor_then_double_graph_contains_three_eight"
+        ],
+        "file_path": "FormalMath/Relations/Examples/Composition.lean",
+        "formal_locator_ref": "FLOC-P2-000019",
+        "locator_status": "current",
+        "module_name": "FormalMath.Relations.Examples.Composition",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "3125d1b24e0e5642354219ee6f5d2990537de65e"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000019::FART-P2-000018::FLOC-P2-000019",
+      "candidate_ref": "CAND-P1-000019",
+      "correspondence": {
+        "coverage_claim_scope": "one concrete graph-membership example",
+        "identity_resolution": "resolved_exact",
+        "relation": "example_of",
+        "treatment_scope": "p6_m6_6_composite_graph_example"
+      },
+      "formal_artifact": {
+        "artifact_kind": "example",
+        "formal_artifact_ref": "FART-P2-000018",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Concrete composite-function graph membership example"
+      },
+      "formal_link_ref": "FLINK-P2-000019",
+      "limitation": "One graph point for one composite Nat function only; no plotting, coordinate-family or whole-row claim.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Relations.Examples.successor_then_double_graph_contains_three_eight"
+        ],
+        "file_path": "FormalMath/Relations/Examples/Composition.lean",
+        "formal_locator_ref": "FLOC-P2-000019",
+        "locator_status": "current",
+        "module_name": "FormalMath.Relations.Examples.Composition",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "3125d1b24e0e5642354219ee6f5d2990537de65e"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000020::FART-P2-000019::FLOC-P2-000020",
+      "candidate_ref": "CAND-P1-000024",
+      "correspondence": {
+        "coverage_claim_scope": "one concrete identity-invariance specialization",
+        "identity_resolution": "resolved_exact",
+        "relation": "example_of",
+        "treatment_scope": "p6_m6_6_concrete_identity_invariance_example"
+      },
+      "formal_artifact": {
+        "artifact_kind": "example",
+        "formal_artifact_ref": "FART-P2-000019",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Concrete identity-invariance example on booleans"
+      },
+      "formal_link_ref": "FLINK-P2-000020",
+      "limitation": "Identity transformation over the universal Bool set only; no classification or learner-readiness claim.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Geometry.Examples.bool_univ_invariant_under_id"
+        ],
+        "file_path": "FormalMath/Geometry/Examples/Symmetry.lean",
+        "formal_locator_ref": "FLOC-P2-000020",
+        "locator_status": "current",
+        "module_name": "FormalMath.Geometry.Examples.Symmetry",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "3125d1b24e0e5642354219ee6f5d2990537de65e"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000021::FART-P2-000020::FLOC-P2-000021",
+      "candidate_ref": "CAND-P1-000027",
+      "correspondence": {
+        "coverage_claim_scope": "one rectangle computation and one perimeter-area diagnostic",
+        "identity_resolution": "resolved_exact",
+        "relation": "example_of",
+        "treatment_scope": "p6_m6_6_mensuration_worked_example_and_diagnostic"
+      },
+      "formal_artifact": {
+        "artifact_kind": "example",
+        "formal_artifact_ref": "FART-P2-000020",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Rectangle 3-by-4 worked values and perimeter-area diagnostic"
+      },
+      "formal_link_ref": "FLINK-P2-000021",
+      "limitation": "Displayed real side lengths 3 and 4 only; no unit semantics, general equality classification or whole-mensuration claim.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Measurement.Examples.rectangle_three_four_perimeter_ne_area",
+          "FormalMath.Measurement.Examples.rectangle_three_four_values"
+        ],
+        "file_path": "FormalMath/Measurement/Examples/Mensuration.lean",
+        "formal_locator_ref": "FLOC-P2-000021",
+        "locator_status": "current",
+        "module_name": "FormalMath.Measurement.Examples.Mensuration",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "6e159bed68f122d44eed1e23a8a72dd3f33e7de5"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    },
+    {
+      "binding_key": "FLINK-P2-000022::FART-P2-000021::FLOC-P2-000022",
+      "candidate_ref": "CAND-P1-000027",
+      "correspondence": {
+        "coverage_claim_scope": "one rectangular-prism volume exercise solution",
+        "identity_resolution": "resolved_exact",
+        "relation": "exercise_for",
+        "treatment_scope": "p6_m6_6_mensuration_exercise_solution"
+      },
+      "formal_artifact": {
+        "artifact_kind": "exercise_solution",
+        "formal_artifact_ref": "FART-P2-000021",
+        "quality_state": "reviewed",
+        "record_status": "active",
+        "representation_state": "represented",
+        "title_or_summary": "Rectangular-prism 2-by-3-by-4 volume exercise solution"
+      },
+      "formal_link_ref": "FLINK-P2-000022",
+      "limitation": "Displayed real dimensions 2, 3 and 4 only; no unit semantics, exercise-bank or forced-method claim.",
+      "maturity": {
+        "scope": "revision_scoped",
+        "state": "reviewed_active"
+      },
+      "source_locator": {
+        "declaration_names": [
+          "FormalMath.Measurement.Exercises.rectangularPrism_two_three_four_solution"
+        ],
+        "file_path": "FormalMath/Measurement/Exercises/Mensuration.lean",
+        "formal_locator_ref": "FLOC-P2-000022",
+        "locator_status": "current",
+        "module_name": "FormalMath.Measurement.Exercises.Mensuration",
+        "record_status": "active",
+        "repository": "formal-math-curriculum/lean",
+        "revision": "6e159bed68f122d44eed1e23a8a72dd3f33e7de5"
+      },
+      "verification_vector": {
+        "extraction_reproducibility": "verified_by_generator",
+        "lean_build": "qualified_at_frozen_subject",
+        "registry_join": "verified",
+        "source_location": "verified_by_current_floc"
+      }
+    }
+  ],
+  "schema_version": "p6-representation-bindings/v1"
+}

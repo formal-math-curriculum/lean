@@ -1,0 +1,537 @@
+{
+  "authority": "P6-M6.1 adopted scope plus Lean-derived representation state",
+  "formal_subject_revision": "5b592af5807467d600184d376f1a1d5920ddddbd",
+  "nonclaim": "No Course hierarchy, ordering, parentage or learner prerequisites are emitted.",
+  "record_count": 52,
+  "records": [
+    {
+      "candidate_ref": "CAND-P1-000001",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_umbrella_reference",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000002",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "mixed_formal_editorial_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000003",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000004",
+      "formal_artifact_refs": [
+        "FART-P2-000004",
+        "FART-P2-000005",
+        "FART-P2-000006",
+        "FART-P2-000010"
+      ],
+      "formal_representation_state": "represented",
+      "limitation": "Only the listed treatment-scoped formal links are represented; this is not a whole-row claim.",
+      "primary_disposition": "inherited_partial_incremental_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": [
+        "natural_number_additive_multiplicative_monoid_laws",
+        "natural_number_distributive_cancellation_exercise",
+        "natural_number_distributive_laws",
+        "natural_number_operation_law_examples"
+      ]
+    },
+    {
+      "candidate_ref": "CAND-P1-000005",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000006",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000007",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_umbrella_reference",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000008",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_umbrella_reference",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000009",
+      "formal_artifact_refs": [
+        "FART-P2-000007",
+        "FART-P2-000008",
+        "FART-P2-000009"
+      ],
+      "formal_representation_state": "represented",
+      "limitation": "Only the listed treatment-scoped formal links are represented; this is not a whole-row claim.",
+      "primary_disposition": "inherited_partial_incremental_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": [
+        "integer_additive_inverse_and_signed_subtraction_laws",
+        "integer_negative_product_laws",
+        "integer_signed_operation_law_examples"
+      ]
+    },
+    {
+      "candidate_ref": "CAND-P1-000010",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_umbrella_reference",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000011",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000012",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "mixed_formal_editorial_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000013",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_editorial_publication",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000014",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_umbrella_reference",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000015",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000016",
+      "formal_artifact_refs": [
+        "FART-P2-000001"
+      ],
+      "formal_representation_state": "represented",
+      "limitation": "Only the listed treatment-scoped formal links are represented; this is not a whole-row claim.",
+      "primary_disposition": "inherited_partial_incremental_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": [
+        "factored_expression_construction"
+      ]
+    },
+    {
+      "candidate_ref": "CAND-P1-000017",
+      "formal_artifact_refs": [
+        "FART-P2-000002",
+        "FART-P2-000003"
+      ],
+      "formal_representation_state": "represented",
+      "limitation": "Only the listed treatment-scoped formal links are represented; this is not a whole-row claim.",
+      "primary_disposition": "inherited_partial_incremental_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": [
+        "factored_integer_equation_solution_characterization",
+        "two_five_factored_integer_equation_example"
+      ]
+    },
+    {
+      "candidate_ref": "CAND-P1-000018",
+      "formal_artifact_refs": [
+        "FART-P2-000017",
+        "FART-P2-000018"
+      ],
+      "formal_representation_state": "represented",
+      "limitation": "Only the listed treatment-scoped formal links are represented; this is not a whole-row claim.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": [
+        "p6_m6_5_function_composition_graph_membership_result",
+        "p6_m6_6_composite_graph_example"
+      ]
+    },
+    {
+      "candidate_ref": "CAND-P1-000019",
+      "formal_artifact_refs": [
+        "FART-P2-000011",
+        "FART-P2-000014",
+        "FART-P2-000018"
+      ],
+      "formal_representation_state": "represented",
+      "limitation": "Only the listed treatment-scoped formal links are represented; this is not a whole-row claim.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": [
+        "p6_m6_3_graph_of_definition",
+        "p6_m6_4_graph_membership_result",
+        "p6_m6_6_composite_graph_example"
+      ]
+    },
+    {
+      "candidate_ref": "CAND-P1-000020",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000021",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_umbrella_reference",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000022",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_editorial_publication",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000023",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000024",
+      "formal_artifact_refs": [
+        "FART-P2-000012",
+        "FART-P2-000015",
+        "FART-P2-000019"
+      ],
+      "formal_representation_state": "represented",
+      "limitation": "Only the listed treatment-scoped formal links are represented; this is not a whole-row claim.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": [
+        "p6_m6_3_elementary_set_invariance_definition",
+        "p6_m6_4_identity_invariance_result",
+        "p6_m6_6_concrete_identity_invariance_example"
+      ]
+    },
+    {
+      "candidate_ref": "CAND-P1-000025",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000026",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000027",
+      "formal_artifact_refs": [
+        "FART-P2-000013",
+        "FART-P2-000016",
+        "FART-P2-000020",
+        "FART-P2-000021"
+      ],
+      "formal_representation_state": "represented",
+      "limitation": "Only the listed treatment-scoped formal links are represented; this is not a whole-row claim.",
+      "primary_disposition": "mixed_formal_editorial_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": [
+        "p6_m6_3_bounded_mensuration_definitions",
+        "p6_m6_4_mensuration_argument_symmetry_results",
+        "p6_m6_6_mensuration_exercise_solution",
+        "p6_m6_6_mensuration_worked_example_and_diagnostic"
+      ]
+    },
+    {
+      "candidate_ref": "CAND-P1-000028",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_editorial_publication",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000029",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000030",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_umbrella_reference",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000031",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_editorial_publication",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000032",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "mixed_formal_editorial_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000033",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_editorial_publication",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000034",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000035",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "mixed_formal_editorial_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000036",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_editorial_publication",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000037",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "mixed_formal_editorial_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000038",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_umbrella_reference",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000039",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000040",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000041",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000042",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000043",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000044",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000045",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000046",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_editorial_publication",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000521",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000522",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000529",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000530",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000531",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "bounded_formal_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    },
+    {
+      "candidate_ref": "CAND-P1-000532",
+      "formal_artifact_refs": [],
+      "formal_representation_state": "not_represented",
+      "limitation": "No active formal link is published at the frozen subject; absence does not alter curriculum scope.",
+      "primary_disposition": "mixed_formal_editorial_research",
+      "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+      "treatment_scope_refs": []
+    }
+  ],
+  "schema_version": "p6-release-scope/v1"
+}

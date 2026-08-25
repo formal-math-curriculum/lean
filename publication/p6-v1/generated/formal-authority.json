@@ -1,0 +1,1848 @@
+{
+  "authority": "formal-math-curriculum/lean",
+  "counts": {
+    "fart": 21,
+    "flink": 22,
+    "floc_active_current": 21,
+    "floc_historical": 1,
+    "floc_total": 22,
+    "linked_identities": 8
+  },
+  "formal_artifacts": [
+    {
+      "artifact_kind": "definition",
+      "created_revision": "0d48b18ea62783633470668692472c345ec8b548",
+      "current_locator_refs": [
+        "FLOC-P2-000001"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000001"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000001",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Project-owned construction qualified by MAT-217 exact-head quality on the selected M2.10 slice.",
+        "provenance_kind": "original_project",
+        "source_refs": [
+          "MAT-217",
+          "P2-ARCH-M2.10-MATHSPEC-v1"
+        ],
+        "statement_provenance_notes": "Bounded integer factored-expression construction selected by P2-ARCH-M2.10-MATHSPEC-v1."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Factored integer expression construction",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "theorem",
+      "created_revision": "0d48b18ea62783633470668692472c345ec8b548",
+      "current_locator_refs": [
+        "FLOC-P2-000002"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000002"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000002",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Project theorem qualified by MAT-217; proof reuses the pinned integer zero-product API under P2-DEP-M2.2-v1.",
+        "provenance_kind": "original_project",
+        "source_refs": [
+          "MAT-217",
+          "P2-ARCH-M2.10-MATHSPEC-v1",
+          "P2-ARCH-M2.10-REUSE-v1"
+        ],
+        "statement_provenance_notes": "Exact integer zero-product solution characterization fixed by P2-ARCH-M2.10-MATHSPEC-v1."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Factored integer equation zero-product characterization",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "example",
+      "created_revision": "0d48b18ea62783633470668692472c345ec8b548",
+      "current_locator_refs": [
+        "FLOC-P2-000004"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000003"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000003",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Concrete project example qualified by MAT-217 as a specialization of FART-P2-000002; its governed locator evolution is recorded by MAT-225.",
+        "provenance_kind": "original_project",
+        "source_refs": [
+          "MAT-217",
+          "MAT-225",
+          "P2-ARCH-M2.10-MATHSPEC-v1"
+        ],
+        "statement_provenance_notes": "Worked integer example using roots 2 and 5 from the selected M2.10 specification."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Worked factored integer equation example with roots 2 and 5",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "theorem_family",
+      "created_revision": "1b71481eec0973bea8f1bdbb52c72d8e28bbde89",
+      "current_locator_refs": [
+        "FLOC-P2-000005"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000004"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000004",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Direct representation by the pinned mathlib natural-number additive-cancellative and multiplicative commutative-monoid instances; no project wrapper is introduced.",
+        "provenance_kind": "direct_dependency_representation",
+        "source_refs": [
+          "MAT-402",
+          "P2-DEP-M2.2-v1",
+          "P4-M4.2-CAND4-RESEARCH-v1"
+        ],
+        "statement_provenance_notes": "Natural-number additive identity, associativity, commutativity and cancellation plus multiplicative identity, associativity and commutativity, bounded by the selected CAND4 treatment."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Natural-number additive and multiplicative monoid laws",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "theorem_family",
+      "created_revision": "1b71481eec0973bea8f1bdbb52c72d8e28bbde89",
+      "current_locator_refs": [
+        "FLOC-P2-000006"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000005"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000005",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Direct representation by the pinned mathlib natural-number distributivity instance; no project wrapper is introduced.",
+        "provenance_kind": "direct_dependency_representation",
+        "source_refs": [
+          "MAT-402",
+          "P2-DEP-M2.2-v1",
+          "P4-M4.2-CAND4-RESEARCH-v1"
+        ],
+        "statement_provenance_notes": "Left and right distributivity of natural-number multiplication over addition, bounded by the selected CAND4 treatment."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Natural-number distributive laws",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "example",
+      "created_revision": "1b71481eec0973bea8f1bdbb52c72d8e28bbde89",
+      "current_locator_refs": [
+        "FLOC-P2-000007"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000006"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000006",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Project-owned concrete examples elaborate by direct reuse of Nat.left_distrib and Nat.add_left_cancel under the selected environment.",
+        "provenance_kind": "original_project",
+        "source_refs": [
+          "MAT-402",
+          "P4-M4.2-CAND4-RESEARCH-v1"
+        ],
+        "statement_provenance_notes": "Two bounded natural-number examples showing distributive expansion and cancellation of a common left addend."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Natural-number operation-law worked examples",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "theorem_family",
+      "created_revision": "f95f072cd3548f3863b5220fdeb2fe8237ac64ec",
+      "current_locator_refs": [
+        "FLOC-P2-000008"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000007"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000007",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Direct representation by the pinned mathlib integer additive-commutative-group instance; Int.sub_neg supplies exact law provenance and no project wrapper is introduced.",
+        "provenance_kind": "direct_dependency_representation",
+        "source_refs": [
+          "MAT-404",
+          "MAT-405",
+          "P2-DEP-M2.2-v1",
+          "P4-M4.4-ADJACENT-SLICE-DECISION-v1"
+        ],
+        "statement_provenance_notes": "Integer additive inverses and subtraction of a negative as addition, bounded by the selected CAND9 treatment."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Integer additive-group and signed-subtraction laws",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "theorem_family",
+      "created_revision": "f95f072cd3548f3863b5220fdeb2fe8237ac64ec",
+      "current_locator_refs": [
+        "FLOC-P2-000009"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000008"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000008",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Direct representation by the pinned mathlib integer commutative-ring instance; Int.neg_mul_neg supplies exact law provenance and no project wrapper is introduced.",
+        "provenance_kind": "direct_dependency_representation",
+        "source_refs": [
+          "MAT-404",
+          "MAT-405",
+          "P2-DEP-M2.2-v1",
+          "P4-M4.4-ADJACENT-SLICE-DECISION-v1"
+        ],
+        "statement_provenance_notes": "The product of two negative integers equals the corresponding positive product, bounded by the selected CAND9 treatment."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Integer negative-product laws",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "example",
+      "created_revision": "f95f072cd3548f3863b5220fdeb2fe8237ac64ec",
+      "current_locator_refs": [
+        "FLOC-P2-000010"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000009"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000009",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Project-owned concrete examples elaborate by direct reuse of Int.sub_neg and Int.neg_mul_neg under the selected environment.",
+        "provenance_kind": "original_project",
+        "source_refs": [
+          "MAT-404",
+          "MAT-405",
+          "P4-M4.4-ADJACENT-SLICE-DECISION-v1"
+        ],
+        "statement_provenance_notes": "Two bounded signed-integer examples showing subtraction of a negative and multiplication of two negatives."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Integer sign-law worked examples",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "exercise_solution",
+      "created_revision": "02989949c176a839a733031514e7d0e6721350d1",
+      "current_locator_refs": [
+        "FLOC-P2-000011"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000010"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000010",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Project-owned guided solution directly reuses the governed CAND4 cancellation and distributivity examples; the diagnostic is a closed kernel-checked inequality.",
+        "provenance_kind": "original_project",
+        "source_refs": [
+          "MAT-406",
+          "MAT-407",
+          "P4-M4.5-PEDAGOGICAL-ALIGNMENT-DECISION-v1"
+        ],
+        "statement_provenance_notes": "One bounded natural-number exercise requiring explicit cancellation, distribution, and final-answer checkpoints plus a diagnostic counterexample."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Natural-number distributive-cancellation exercise and diagnostic",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "definition",
+      "created_revision": "4475f291dc711f0fbf992fe89f214a7ab9ce7bd8",
+      "current_locator_refs": [
+        "FLOC-P2-000012"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000011"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000011",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Project-owned minimal graph representation implemented by MAT-435 over pinned Function/Set primitives; M6.3 quality and audit gates remain revision-scoped.",
+        "provenance_kind": "original_project",
+        "source_refs": [
+          "MAT-434",
+          "MAT-435",
+          "P6-M6.2-ADOPTED-BASELINE-v1",
+          "P6-M6.3-MINIMAL-PUBLIC-API-AND-TRACEABILITY-DESIGN-v1"
+        ],
+        "statement_provenance_notes": "Bounded graph-of-a-function definition selected for CAND-P1-000019; no coordinate-geometry completeness claim."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Function graph as a set of ordered pairs",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "definition",
+      "created_revision": "4475f291dc711f0fbf992fe89f214a7ab9ce7bd8",
+      "current_locator_refs": [
+        "FLOC-P2-000013"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000012"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000012",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Project-owned minimal set-invariance predicate implemented by MAT-435 over pinned Function/Set primitives; no group-action wrapper is introduced.",
+        "provenance_kind": "original_project",
+        "source_refs": [
+          "MAT-434",
+          "MAT-435",
+          "P6-M6.2-ADOPTED-BASELINE-v1",
+          "P6-M6.3-MINIMAL-PUBLIC-API-AND-TRACEABILITY-DESIGN-v1"
+        ],
+        "statement_provenance_notes": "Bounded elementary symmetry predicate selected for CAND-P1-000024."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Elementary invariance of a set under a transformation",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "definition",
+      "created_revision": "4475f291dc711f0fbf992fe89f214a7ab9ce7bd8",
+      "current_locator_refs": [
+        "FLOC-P2-000014"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000013"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000013",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Project-owned formula definitions implemented by MAT-435 over pinned real arithmetic; positivity, units, results, examples and exercises are not inferred.",
+        "provenance_kind": "original_project",
+        "source_refs": [
+          "MAT-434",
+          "MAT-435",
+          "P6-M6.2-ADOPTED-BASELINE-v1",
+          "P6-M6.3-MINIMAL-PUBLIC-API-AND-TRACEABILITY-DESIGN-v1"
+        ],
+        "statement_provenance_notes": "Rectangle perimeter/area and rectangular-prism volume definitions selected for the bounded CAND-P1-000027 slice."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Bounded elementary mensuration formula definitions",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "theorem",
+      "created_revision": "e8d288f873f9e227907ad501cafc3671233b6f37",
+      "current_locator_refs": [
+        "FLOC-P2-000015"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000014"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000014",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Project-owned definitional theorem over the adopted graphOf API; M6.4 gates remain revision-scoped.",
+        "provenance_kind": "original_project",
+        "source_refs": [
+          "MAT-440",
+          "MAT-441",
+          "P6-M6.3-ADOPTED-BASELINE-v2",
+          "P6-M6.4-THEOREM-WAVE-FREEZE-v1"
+        ],
+        "statement_provenance_notes": "Exact membership characterization for the bounded graphOf representation selected for CAND-P1-000019."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Function-graph membership characterization",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "theorem",
+      "created_revision": "e8d288f873f9e227907ad501cafc3671233b6f37",
+      "current_locator_refs": [
+        "FLOC-P2-000016"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000015"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000015",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Project-owned specialization proved from Set.image identity behavior over the adopted IsInvariantUnder API.",
+        "provenance_kind": "original_project",
+        "source_refs": [
+          "MAT-440",
+          "MAT-441",
+          "P6-M6.3-ADOPTED-BASELINE-v2",
+          "P6-M6.4-THEOREM-WAVE-FREEZE-v1"
+        ],
+        "statement_provenance_notes": "Every set is invariant under the identity transformation, bounded to the CAND-P1-000024 slice."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Identity-transformation set invariance",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "theorem_family",
+      "created_revision": "e8d288f873f9e227907ad501cafc3671233b6f37",
+      "current_locator_refs": [
+        "FLOC-P2-000017"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000016"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000016",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Project-owned results from commutativity of real addition/multiplication over the adopted mensuration definitions; positivity, units and formula derivations are not inferred.",
+        "provenance_kind": "original_project",
+        "source_refs": [
+          "MAT-440",
+          "MAT-441",
+          "P6-M6.3-ADOPTED-BASELINE-v2",
+          "P6-M6.4-THEOREM-WAVE-FREEZE-v1"
+        ],
+        "statement_provenance_notes": "Length/width exchange results for rectangle perimeter, rectangle area and rectangular-prism volume in the bounded CAND-P1-000027 slice."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Bounded mensuration argument-symmetry results",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "theorem",
+      "created_revision": "a2a1e992009818401912bdf26c11be5ef167d8bf",
+      "current_locator_refs": [
+        "FLOC-P2-000018"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000017"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000017",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Project-owned definitional bridge over the adopted graphOf API and direct Function.comp primitive; the M6.5 slice adds no external import.",
+        "provenance_kind": "mixed",
+        "source_refs": [
+          "API-FUNCTION-SET",
+          "MAT-445",
+          "MAT-446",
+          "P6-M6.4-ADOPTED-BASELINE-v1",
+          "P6-M6.5-DEPENDENCY-ADJACENT-SLICE-FREEZE-v1"
+        ],
+        "statement_provenance_notes": "One bounded composition-membership result selected for CAND-P1-000018; no generic function, relation, domain/range or whole-row coverage claim."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Composite-function graph membership characterization",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "example",
+      "created_revision": "3125d1b24e0e5642354219ee6f5d2990537de65e",
+      "current_locator_refs": [
+        "FLOC-P2-000019"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000018",
+        "FLINK-P2-000019"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000018",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Original closed natural-number example checked over the adopted graphOf/composition result surface.",
+        "provenance_kind": "original_project",
+        "source_refs": [
+          "MAT-450",
+          "MAT-451",
+          "P6-M6.5-ADOPTED-BASELINE-v1",
+          "P6-M6.6-PEDAGOGICAL-ARTIFACT-FREEZE-v1"
+        ],
+        "statement_provenance_notes": "One concrete successor-then-double graph-membership example for CAND18/CAND19; no generic composition, plotting or whole-row claim."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Concrete composite-function graph membership example",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "example",
+      "created_revision": "3125d1b24e0e5642354219ee6f5d2990537de65e",
+      "current_locator_refs": [
+        "FLOC-P2-000020"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000020"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000019",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Original project example directly specializes the adopted identity-invariance theorem.",
+        "provenance_kind": "original_project",
+        "source_refs": [
+          "MAT-450",
+          "MAT-451",
+          "P6-M6.5-ADOPTED-BASELINE-v1",
+          "P6-M6.6-PEDAGOGICAL-ARTIFACT-FREEZE-v1"
+        ],
+        "statement_provenance_notes": "One concrete identity-invariance specialization for CAND24; no symmetry classification claim."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Concrete identity-invariance example on booleans",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "example",
+      "created_revision": "3125d1b24e0e5642354219ee6f5d2990537de65e",
+      "current_locator_refs": [
+        "FLOC-P2-000021"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000021"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000020",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Original closed real-arithmetic example and diagnostic over the adopted mensuration definitions.",
+        "provenance_kind": "original_project",
+        "source_refs": [
+          "MAT-450",
+          "MAT-451",
+          "P6-M6.5-ADOPTED-BASELINE-v1",
+          "P6-M6.6-PEDAGOGICAL-ARTIFACT-FREEZE-v1"
+        ],
+        "statement_provenance_notes": "One concrete rectangle computation plus one diagnostic inequality for CAND27; no general equality characterization or unit semantics."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Rectangle 3-by-4 worked values and perimeter-area diagnostic",
+      "verification_state": "regression_verified"
+    },
+    {
+      "artifact_kind": "exercise_solution",
+      "created_revision": "3125d1b24e0e5642354219ee6f5d2990537de65e",
+      "current_locator_refs": [
+        "FLOC-P2-000022"
+      ],
+      "curriculum_link_refs": [
+        "FLINK-P2-000022"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "id": "FART-P2-000021",
+      "lean_toolchain_ref": "P2-ENV-M2.5-v1",
+      "quality_state": "reviewed",
+      "record_status": "active",
+      "representation_state": "represented",
+      "schema_version": 1,
+      "source_provenance": {
+        "proof_or_implementation_provenance_notes": "Original project exercise solution evaluated against the adopted rectangularPrismVolume definition.",
+        "provenance_kind": "original_project",
+        "source_refs": [
+          "MAT-450",
+          "MAT-451",
+          "P6-M6.5-ADOPTED-BASELINE-v1",
+          "P6-M6.6-PEDAGOGICAL-ARTIFACT-FREEZE-v1"
+        ],
+        "statement_provenance_notes": "One original closed-arithmetic solution checkpoint for CAND27; no exercise-bank or forced-method claim."
+      },
+      "superseded_by": [],
+      "supersedes": [],
+      "title_or_summary": "Rectangular-prism 2-by-3-by-4 volume exercise solution",
+      "verification_state": "regression_verified"
+    }
+  ],
+  "formal_links": [
+    {
+      "assumptions_or_formulation_notes": "Project-owned factored-expression construction supporting the selected equation-solving slice; no learner-prerequisite claim is inferred.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "P1-CURR-v1 exact identity confirmed by M2.10 specification.",
+        "resolution_path": [
+          "CAND-P1-000016"
+        ],
+        "review_ref": "P2-ARCH-M2.10-MATHSPEC-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000016",
+      "candidate_ref_current_resolved": "CAND-P1-000016",
+      "coverage_claim_scope": "factored integer expression construction used by the selected equation-solving treatment",
+      "created_revision": "0d48b18ea62783633470668692472c345ec8b548",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000001",
+      "id": "FLINK-P2-000001",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "represents",
+      "schema_version": 1,
+      "treatment_scope": "factored_expression_construction"
+    },
+    {
+      "assumptions_or_formulation_notes": "Bounded to integer factored equations; formal proof dependencies do not modify learner readiness or curriculum prerequisites.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "P1-CURR-v1 exact identity confirmed by M2.10 specification.",
+        "resolution_path": [
+          "CAND-P1-000017"
+        ],
+        "review_ref": "P2-ARCH-M2.10-MATHSPEC-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000017",
+      "candidate_ref_current_resolved": "CAND-P1-000017",
+      "coverage_claim_scope": "integer factored-equation zero-product solution characterization only",
+      "created_revision": "0d48b18ea62783633470668692472c345ec8b548",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000002",
+      "id": "FLINK-P2-000002",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "represents",
+      "schema_version": 1,
+      "treatment_scope": "factored_integer_equation_solution_characterization"
+    },
+    {
+      "assumptions_or_formulation_notes": "Concrete roots 2 and 5; this is an example of the selected equation treatment and does not establish whole-topic coverage.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "P1-CURR-v1 exact identity confirmed by M2.10 specification.",
+        "resolution_path": [
+          "CAND-P1-000017"
+        ],
+        "review_ref": "P2-ARCH-M2.10-MATHSPEC-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000017",
+      "candidate_ref_current_resolved": "CAND-P1-000017",
+      "coverage_claim_scope": "single worked integer factored-equation example",
+      "created_revision": "0d48b18ea62783633470668692472c345ec8b548",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000003",
+      "id": "FLINK-P2-000003",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "example_of",
+      "schema_version": 1,
+      "treatment_scope": "two_five_factored_integer_equation_example"
+    },
+    {
+      "assumptions_or_formulation_notes": "Natural-number identity, associativity, commutativity and additive-cancellation laws only; library structure and proof dependencies do not alter learner readiness.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "P1-CURR-v1 exact identity and the bounded CAND4 treatment were confirmed by MAT-401 and MAT-402.",
+        "resolution_path": [
+          "CAND-P1-000004"
+        ],
+        "review_ref": "P4-M4.2-CAND4-RESEARCH-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000004",
+      "candidate_ref_current_resolved": "CAND-P1-000004",
+      "coverage_claim_scope": "natural-number additive identity, associativity, commutativity and cancellation plus multiplicative identity, associativity and commutativity",
+      "created_revision": "1b71481eec0973bea8f1bdbb52c72d8e28bbde89",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000004",
+      "id": "FLINK-P2-000004",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "partially_represents",
+      "schema_version": 1,
+      "treatment_scope": "natural_number_additive_multiplicative_monoid_laws"
+    },
+    {
+      "assumptions_or_formulation_notes": "Natural-number left and right distributivity only; no generic semiring or whole-topic curriculum claim.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "P1-CURR-v1 exact identity and the bounded CAND4 treatment were confirmed by MAT-401 and MAT-402.",
+        "resolution_path": [
+          "CAND-P1-000004"
+        ],
+        "review_ref": "P4-M4.2-CAND4-RESEARCH-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000004",
+      "candidate_ref_current_resolved": "CAND-P1-000004",
+      "coverage_claim_scope": "natural-number multiplication distributive over addition",
+      "created_revision": "1b71481eec0973bea8f1bdbb52c72d8e28bbde89",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000005",
+      "id": "FLINK-P2-000005",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "partially_represents",
+      "schema_version": 1,
+      "treatment_scope": "natural_number_distributive_laws"
+    },
+    {
+      "assumptions_or_formulation_notes": "Two concrete natural-number examples only; they do not establish full CAND4 coverage and do not create a learner-prerequisite edge.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "P1-CURR-v1 exact identity and the bounded CAND4 treatment were confirmed by MAT-401 and MAT-402.",
+        "resolution_path": [
+          "CAND-P1-000004"
+        ],
+        "review_ref": "P4-M4.2-CAND4-RESEARCH-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000004",
+      "candidate_ref_current_resolved": "CAND-P1-000004",
+      "coverage_claim_scope": "example_only",
+      "created_revision": "1b71481eec0973bea8f1bdbb52c72d8e28bbde89",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000006",
+      "id": "FLINK-P2-000006",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "example_of",
+      "schema_version": 1,
+      "treatment_scope": "natural_number_operation_law_examples"
+    },
+    {
+      "assumptions_or_formulation_notes": "Integer additive inverses and subtraction of a negative only; library structure and proof dependencies do not alter learner readiness or curriculum prerequisites.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "P1-CURR-v1 exact identity and the bounded CAND9 treatment were confirmed by MAT-404.",
+        "resolution_path": [
+          "CAND-P1-000009"
+        ],
+        "review_ref": "P4-M4.4-ADJACENT-SLICE-DECISION-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000009",
+      "candidate_ref_current_resolved": "CAND-P1-000009",
+      "coverage_claim_scope": "integer additive inverses and subtraction of a negative only",
+      "created_revision": "f95f072cd3548f3863b5220fdeb2fe8237ac64ec",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000007",
+      "id": "FLINK-P2-000007",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "partially_represents",
+      "schema_version": 1,
+      "treatment_scope": "integer_additive_inverse_and_signed_subtraction_laws"
+    },
+    {
+      "assumptions_or_formulation_notes": "Multiplication of two negative integers only; no generic commutative-ring or whole-topic curriculum claim.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "P1-CURR-v1 exact identity and the bounded CAND9 treatment were confirmed by MAT-404.",
+        "resolution_path": [
+          "CAND-P1-000009"
+        ],
+        "review_ref": "P4-M4.4-ADJACENT-SLICE-DECISION-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000009",
+      "candidate_ref_current_resolved": "CAND-P1-000009",
+      "coverage_claim_scope": "multiplication of two negative integers only",
+      "created_revision": "f95f072cd3548f3863b5220fdeb2fe8237ac64ec",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000008",
+      "id": "FLINK-P2-000008",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "partially_represents",
+      "schema_version": 1,
+      "treatment_scope": "integer_negative_product_laws"
+    },
+    {
+      "assumptions_or_formulation_notes": "Two concrete signed-integer examples only; they do not establish full CAND9 coverage and do not create a learner-prerequisite edge.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "P1-CURR-v1 exact identity and the bounded CAND9 treatment were confirmed by MAT-404.",
+        "resolution_path": [
+          "CAND-P1-000009"
+        ],
+        "review_ref": "P4-M4.4-ADJACENT-SLICE-DECISION-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000009",
+      "candidate_ref_current_resolved": "CAND-P1-000009",
+      "coverage_claim_scope": "example_only",
+      "created_revision": "f95f072cd3548f3863b5220fdeb2fe8237ac64ec",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000009",
+      "id": "FLINK-P2-000009",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "example_of",
+      "schema_version": 1,
+      "treatment_scope": "integer_signed_operation_law_examples"
+    },
+    {
+      "assumptions_or_formulation_notes": "One guided natural-number exercise and one diagnostic counterexample only; all three solution checkpoints are explicit; no full CAND4, generic-semiring, grade-order, or learner-readiness claim.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "P1-CURR-v1 exact identity and the reviewed bounded exercise treatment were confirmed by MAT-406.",
+        "resolution_path": [
+          "CAND-P1-000004"
+        ],
+        "review_ref": "P4-M4.5-PEDAGOGICAL-ALIGNMENT-DECISION-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000004",
+      "candidate_ref_current_resolved": "CAND-P1-000004",
+      "coverage_claim_scope": "one guided natural-number distributive-cancellation exercise and one diagnostic counterexample only",
+      "created_revision": "02989949c176a839a733031514e7d0e6721350d1",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000010",
+      "id": "FLINK-P2-000010",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "exercise_for",
+      "schema_version": 1,
+      "treatment_scope": "natural_number_distributive_cancellation_exercise"
+    },
+    {
+      "assumptions_or_formulation_notes": "Graph of one function as a set of pairs only; no intercept, slope, plotting, analytic-geometry or learner-readiness claim.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "M6.1 exact identity and M6.2 new-local-artifact disposition were requalified and adopted.",
+        "resolution_path": [
+          "CAND-P1-000019"
+        ],
+        "review_ref": "P6-M6.3-MINIMAL-PUBLIC-API-AND-TRACEABILITY-DESIGN-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000019",
+      "candidate_ref_current_resolved": "CAND-P1-000019",
+      "coverage_claim_scope": "graph-of-a-function definition only",
+      "created_revision": "4475f291dc711f0fbf992fe89f214a7ab9ce7bd8",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000011",
+      "id": "FLINK-P2-000011",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "partially_represents",
+      "schema_version": 1,
+      "treatment_scope": "p6_m6_3_graph_of_definition"
+    },
+    {
+      "assumptions_or_formulation_notes": "Set-image invariance under one transformation only; no equivalence, group action, classification of symmetries or learner-readiness claim.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "M6.1 exact identity and M6.2 new-local-artifact disposition were requalified and adopted.",
+        "resolution_path": [
+          "CAND-P1-000024"
+        ],
+        "review_ref": "P6-M6.3-MINIMAL-PUBLIC-API-AND-TRACEABILITY-DESIGN-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000024",
+      "candidate_ref_current_resolved": "CAND-P1-000024",
+      "coverage_claim_scope": "elementary set-invariance predicate only",
+      "created_revision": "4475f291dc711f0fbf992fe89f214a7ab9ce7bd8",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000012",
+      "id": "FLINK-P2-000012",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "partially_represents",
+      "schema_version": 1,
+      "treatment_scope": "p6_m6_3_elementary_set_invariance_definition"
+    },
+    {
+      "assumptions_or_formulation_notes": "Formula definitions over real inputs only; positivity, units, formula theorems, examples and full mensuration coverage are excluded.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "M6.1 exact identity and M6.2 new-local-artifact disposition were requalified and adopted.",
+        "resolution_path": [
+          "CAND-P1-000027"
+        ],
+        "review_ref": "P6-M6.3-MINIMAL-PUBLIC-API-AND-TRACEABILITY-DESIGN-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000027",
+      "candidate_ref_current_resolved": "CAND-P1-000027",
+      "coverage_claim_scope": "rectangle perimeter/area and rectangular-prism volume definitions only",
+      "created_revision": "4475f291dc711f0fbf992fe89f214a7ab9ce7bd8",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000013",
+      "id": "FLINK-P2-000013",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "partially_represents",
+      "schema_version": 1,
+      "treatment_scope": "p6_m6_3_bounded_mensuration_definitions"
+    },
+    {
+      "assumptions_or_formulation_notes": "Membership in the adopted graphOf representation only; no plotting, analytic geometry or learner-readiness claim.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "M6.3 adopted API and M6.4 frozen theorem obligation were directly resolved.",
+        "resolution_path": [
+          "CAND-P1-000019"
+        ],
+        "review_ref": "P6-M6.4-THEOREM-WAVE-FREEZE-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000019",
+      "candidate_ref_current_resolved": "CAND-P1-000019",
+      "coverage_claim_scope": "one exact graph-membership characterization",
+      "created_revision": "e8d288f873f9e227907ad501cafc3671233b6f37",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000014",
+      "id": "FLINK-P2-000014",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "partially_represents",
+      "schema_version": 1,
+      "treatment_scope": "p6_m6_4_graph_membership_result"
+    },
+    {
+      "assumptions_or_formulation_notes": "Identity transformation and arbitrary sets only; no group action, symmetry classification or learner-readiness claim.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "M6.3 adopted API and M6.4 frozen theorem obligation were directly resolved.",
+        "resolution_path": [
+          "CAND-P1-000024"
+        ],
+        "review_ref": "P6-M6.4-THEOREM-WAVE-FREEZE-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000024",
+      "candidate_ref_current_resolved": "CAND-P1-000024",
+      "coverage_claim_scope": "identity-transformation invariance result only",
+      "created_revision": "e8d288f873f9e227907ad501cafc3671233b6f37",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000015",
+      "id": "FLINK-P2-000015",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "partially_represents",
+      "schema_version": 1,
+      "treatment_scope": "p6_m6_4_identity_invariance_result"
+    },
+    {
+      "assumptions_or_formulation_notes": "Argument symmetry over real inputs only; no positivity, unit, derivation, geometric-existence or whole-mensuration claim.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "M6.3 adopted API and M6.4 frozen theorem obligation were directly resolved.",
+        "resolution_path": [
+          "CAND-P1-000027"
+        ],
+        "review_ref": "P6-M6.4-THEOREM-WAVE-FREEZE-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000027",
+      "candidate_ref_current_resolved": "CAND-P1-000027",
+      "coverage_claim_scope": "three length/width exchange results only",
+      "created_revision": "e8d288f873f9e227907ad501cafc3671233b6f37",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000016",
+      "id": "FLINK-P2-000016",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "partially_represents",
+      "schema_version": 1,
+      "treatment_scope": "p6_m6_4_mensuration_argument_symmetry_results"
+    },
+    {
+      "assumptions_or_formulation_notes": "Ordinary total functions and the adopted graphOf representation only; no domain/range taxonomy, relation equivalence, plotting, examples, learner-readiness or whole-row claim.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "M6.1 included bounded formal treatment, M6.2 direct Function/Set reuse, and the adopted M6.4 graph API were directly resolved.",
+        "resolution_path": [
+          "CAND-P1-000018"
+        ],
+        "review_ref": "P6-M6.5-DEPENDENCY-ADJACENT-SLICE-FREEZE-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000018",
+      "candidate_ref_current_resolved": "CAND-P1-000018",
+      "coverage_claim_scope": "one composite-function graph-membership characterization",
+      "created_revision": "a2a1e992009818401912bdf26c11be5ef167d8bf",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000017",
+      "id": "FLINK-P2-000017",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "partially_represents",
+      "schema_version": 1,
+      "treatment_scope": "p6_m6_5_function_composition_graph_membership_result"
+    },
+    {
+      "assumptions_or_formulation_notes": "Concrete Nat functions and one input/output pair only; no generic function, composition or learner-readiness claim.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "M6.1 required representative pedagogy and the adopted M6.5 formal surface were directly resolved.",
+        "resolution_path": [
+          "CAND-P1-000018"
+        ],
+        "review_ref": "P6-M6.6-PEDAGOGICAL-ARTIFACT-FREEZE-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000018",
+      "candidate_ref_current_resolved": "CAND-P1-000018",
+      "coverage_claim_scope": "one concrete successor-then-double composition evaluation example",
+      "created_revision": "3125d1b24e0e5642354219ee6f5d2990537de65e",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000018",
+      "id": "FLINK-P2-000018",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "example_of",
+      "schema_version": 1,
+      "treatment_scope": "p6_m6_6_composite_graph_example"
+    },
+    {
+      "assumptions_or_formulation_notes": "One graph point for one composite Nat function only; no plotting, coordinate-family or whole-row claim.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "M6.1 required representative pedagogy and the adopted M6.5 formal surface were directly resolved.",
+        "resolution_path": [
+          "CAND-P1-000019"
+        ],
+        "review_ref": "P6-M6.6-PEDAGOGICAL-ARTIFACT-FREEZE-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000019",
+      "candidate_ref_current_resolved": "CAND-P1-000019",
+      "coverage_claim_scope": "one concrete graph-membership example",
+      "created_revision": "3125d1b24e0e5642354219ee6f5d2990537de65e",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000018",
+      "id": "FLINK-P2-000019",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "example_of",
+      "schema_version": 1,
+      "treatment_scope": "p6_m6_6_composite_graph_example"
+    },
+    {
+      "assumptions_or_formulation_notes": "Identity transformation over the universal Bool set only; no classification or learner-readiness claim.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "M6.1 required representative pedagogy and the adopted M6.5 formal surface were directly resolved.",
+        "resolution_path": [
+          "CAND-P1-000024"
+        ],
+        "review_ref": "P6-M6.6-PEDAGOGICAL-ARTIFACT-FREEZE-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000024",
+      "candidate_ref_current_resolved": "CAND-P1-000024",
+      "coverage_claim_scope": "one concrete identity-invariance specialization",
+      "created_revision": "3125d1b24e0e5642354219ee6f5d2990537de65e",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000019",
+      "id": "FLINK-P2-000020",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "example_of",
+      "schema_version": 1,
+      "treatment_scope": "p6_m6_6_concrete_identity_invariance_example"
+    },
+    {
+      "assumptions_or_formulation_notes": "Displayed real side lengths 3 and 4 only; no unit semantics, general equality classification or whole-mensuration claim.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "M6.1 required representative pedagogy and the adopted M6.5 formal surface were directly resolved.",
+        "resolution_path": [
+          "CAND-P1-000027"
+        ],
+        "review_ref": "P6-M6.6-PEDAGOGICAL-ARTIFACT-FREEZE-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000027",
+      "candidate_ref_current_resolved": "CAND-P1-000027",
+      "coverage_claim_scope": "one rectangle computation and one perimeter-area diagnostic",
+      "created_revision": "3125d1b24e0e5642354219ee6f5d2990537de65e",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000020",
+      "id": "FLINK-P2-000021",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "example_of",
+      "schema_version": 1,
+      "treatment_scope": "p6_m6_6_mensuration_worked_example_and_diagnostic"
+    },
+    {
+      "assumptions_or_formulation_notes": "Displayed real dimensions 2, 3 and 4 only; no unit semantics, exercise-bank or forced-method claim.",
+      "candidate_lineage_resolution": {
+        "resolution_context": "M6.1 required representative pedagogy and the adopted M6.5 formal surface were directly resolved.",
+        "resolution_path": [
+          "CAND-P1-000027"
+        ],
+        "review_ref": "P6-M6.6-PEDAGOGICAL-ARTIFACT-FREEZE-v1",
+        "state": "resolved_exact"
+      },
+      "candidate_ref_as_recorded": "CAND-P1-000027",
+      "candidate_ref_current_resolved": "CAND-P1-000027",
+      "coverage_claim_scope": "one rectangular-prism volume exercise solution",
+      "created_revision": "3125d1b24e0e5642354219ee6f5d2990537de65e",
+      "curriculum_release_ref": "P1-CURR-v1",
+      "formal_artifact_ref": "FART-P2-000021",
+      "id": "FLINK-P2-000022",
+      "link_confidence": "established",
+      "link_status": "current",
+      "record_status": "active",
+      "representation_relation": "exercise_for",
+      "schema_version": 1,
+      "treatment_scope": "p6_m6_6_mensuration_exercise_solution"
+    }
+  ],
+  "formal_locators": [
+    {
+      "created_revision": "0d48b18ea62783633470668692472c345ec8b548",
+      "declaration_names": [
+        "FormalMath.Algebra.factoredProduct"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Algebra/FactoredEquation.lean",
+      "formal_artifact_ref": "FART-P2-000001",
+      "id": "FLOC-P2-000001",
+      "locator_status": "current",
+      "module_name": "FormalMath.Algebra.FactoredEquation",
+      "observed_at": "2026-08-17T00:16:58Z",
+      "record_status": "active",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "0d48b18ea62783633470668692472c345ec8b548",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:d72776caae133782d56c7c28eb2bad20779f0f0c"
+      ],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "0d48b18ea62783633470668692472c345ec8b548",
+      "declaration_names": [
+        "FormalMath.Algebra.factoredProduct_eq_zero_iff"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Algebra/ZeroProduct.lean",
+      "formal_artifact_ref": "FART-P2-000002",
+      "id": "FLOC-P2-000002",
+      "locator_status": "current",
+      "module_name": "FormalMath.Algebra.ZeroProduct",
+      "observed_at": "2026-08-17T00:16:58Z",
+      "record_status": "active",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "0d48b18ea62783633470668692472c345ec8b548",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:656646812841cb625ae35d7d2a71a86dfd89cfaf"
+      ],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "0d48b18ea62783633470668692472c345ec8b548",
+      "declaration_names": [
+        "FormalMath.Algebra.Examples.two_five_factored_equation"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Algebra/Examples/FactoredEquation.lean",
+      "formal_artifact_ref": "FART-P2-000003",
+      "id": "FLOC-P2-000003",
+      "locator_status": "historical",
+      "module_name": "FormalMath.Algebra.Examples.FactoredEquation",
+      "observed_at": "2026-08-17T00:16:58Z",
+      "record_status": "historical",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "0d48b18ea62783633470668692472c345ec8b548",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:76be154f4f68b72be75f208b98110dc071be8a78"
+      ],
+      "superseded_by_locator_refs": [
+        "FLOC-P2-000004"
+      ],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "46ad79e7fe767975cb30a2658b7456032f71498d",
+      "declaration_names": [
+        "FormalMath.Algebra.Examples.two_five_factored_equation"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Algebra/Examples/FactoredIntegerEquation.lean",
+      "formal_artifact_ref": "FART-P2-000003",
+      "id": "FLOC-P2-000004",
+      "locator_status": "current",
+      "module_name": "FormalMath.Algebra.Examples.FactoredIntegerEquation",
+      "observed_at": "2026-08-17T16:42:28Z",
+      "record_status": "active",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "46ad79e7fe767975cb30a2658b7456032f71498d",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:6aa8bd2575db54920629101a5629d355a6144be4"
+      ],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": [
+        "FLOC-P2-000003"
+      ]
+    },
+    {
+      "created_revision": "1b71481eec0973bea8f1bdbb52c72d8e28bbde89",
+      "declaration_names": [
+        "Nat.instAddCancelCommMonoid",
+        "Nat.instCommMonoid"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "file_path": "Mathlib/Algebra/Group/Nat/Defs.lean",
+      "formal_artifact_ref": "FART-P2-000004",
+      "id": "FLOC-P2-000005",
+      "locator_status": "current",
+      "module_name": "Mathlib.Algebra.Group.Nat.Defs",
+      "observed_at": "2026-08-19T21:11:33Z",
+      "record_status": "active",
+      "repository": "leanprover-community/mathlib4",
+      "revision": "db584cd6d46c92f209a44c0f1c829460d327499d",
+      "schema_version": 1,
+      "source_kind": "dependency_repository",
+      "structural_anchors": [],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "1b71481eec0973bea8f1bdbb52c72d8e28bbde89",
+      "declaration_names": [
+        "Nat.instDistrib"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "file_path": "Mathlib/Algebra/Ring/Nat.lean",
+      "formal_artifact_ref": "FART-P2-000005",
+      "id": "FLOC-P2-000006",
+      "locator_status": "current",
+      "module_name": "Mathlib.Algebra.Ring.Nat",
+      "observed_at": "2026-08-19T21:11:33Z",
+      "record_status": "active",
+      "repository": "leanprover-community/mathlib4",
+      "revision": "db584cd6d46c92f209a44c0f1c829460d327499d",
+      "schema_version": 1,
+      "source_kind": "dependency_repository",
+      "structural_anchors": [],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "1b71481eec0973bea8f1bdbb52c72d8e28bbde89",
+      "declaration_names": [
+        "FormalMath.Arithmetic.Examples.cancel_common_nine_addend",
+        "FormalMath.Arithmetic.Examples.seven_distributes_over_four_plus_three"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Arithmetic/Examples/NaturalNumberLaws.lean",
+      "formal_artifact_ref": "FART-P2-000006",
+      "id": "FLOC-P2-000007",
+      "locator_status": "current",
+      "module_name": "FormalMath.Arithmetic.Examples.NaturalNumberLaws",
+      "observed_at": "2026-08-19T21:11:33Z",
+      "record_status": "active",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "1b71481eec0973bea8f1bdbb52c72d8e28bbde89",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:77d6cfb223ced68adc70bad8b21bc1dfd5e71ddf"
+      ],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "f95f072cd3548f3863b5220fdeb2fe8237ac64ec",
+      "declaration_names": [
+        "Int.instAddCommGroup"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "file_path": "Mathlib/Algebra/Group/Int/Defs.lean",
+      "formal_artifact_ref": "FART-P2-000007",
+      "id": "FLOC-P2-000008",
+      "locator_status": "current",
+      "module_name": "Mathlib.Algebra.Group.Int.Defs",
+      "observed_at": "2026-08-20T00:35:18Z",
+      "record_status": "active",
+      "repository": "leanprover-community/mathlib4",
+      "revision": "db584cd6d46c92f209a44c0f1c829460d327499d",
+      "schema_version": 1,
+      "source_kind": "dependency_repository",
+      "structural_anchors": [],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "f95f072cd3548f3863b5220fdeb2fe8237ac64ec",
+      "declaration_names": [
+        "Int.instCommRing"
+      ],
+      "dependency_baseline_ref": "P2-DEP-M2.2-v1",
+      "file_path": "Mathlib/Algebra/Ring/Int/Defs.lean",
+      "formal_artifact_ref": "FART-P2-000008",
+      "id": "FLOC-P2-000009",
+      "locator_status": "current",
+      "module_name": "Mathlib.Algebra.Ring.Int.Defs",
+      "observed_at": "2026-08-20T00:35:18Z",
+      "record_status": "active",
+      "repository": "leanprover-community/mathlib4",
+      "revision": "db584cd6d46c92f209a44c0f1c829460d327499d",
+      "schema_version": 1,
+      "source_kind": "dependency_repository",
+      "structural_anchors": [],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "f95f072cd3548f3863b5220fdeb2fe8237ac64ec",
+      "declaration_names": [
+        "FormalMath.Arithmetic.Examples.neg_seven_mul_neg_four",
+        "FormalMath.Arithmetic.Examples.seven_sub_neg_three"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Arithmetic/Examples/IntegerSignLaws.lean",
+      "formal_artifact_ref": "FART-P2-000009",
+      "id": "FLOC-P2-000010",
+      "locator_status": "current",
+      "module_name": "FormalMath.Arithmetic.Examples.IntegerSignLaws",
+      "observed_at": "2026-08-20T00:35:18Z",
+      "record_status": "active",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "f95f072cd3548f3863b5220fdeb2fe8237ac64ec",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:8380934117eb68f23ad3f713468792b619b0ee66"
+      ],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "02989949c176a839a733031514e7d0e6721350d1",
+      "declaration_names": [
+        "FormalMath.Arithmetic.Exercises.distribute_first_addend_only_is_wrong",
+        "FormalMath.Arithmetic.Exercises.distribute_then_cancel_solution"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Arithmetic/Exercises/NaturalNumberLaws.lean",
+      "formal_artifact_ref": "FART-P2-000010",
+      "id": "FLOC-P2-000011",
+      "locator_status": "current",
+      "module_name": "FormalMath.Arithmetic.Exercises.NaturalNumberLaws",
+      "observed_at": "2026-08-20T02:11:02Z",
+      "record_status": "active",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "02989949c176a839a733031514e7d0e6721350d1",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:e754baf70f30457131fcaa1660f1d44f0dba8bfe"
+      ],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "175050bdfc2be1ba14cf38cac011d53428526151",
+      "declaration_names": [
+        "FormalMath.Relations.graphOf"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Relations/Graph.lean",
+      "formal_artifact_ref": "FART-P2-000011",
+      "id": "FLOC-P2-000012",
+      "locator_status": "current",
+      "module_name": "FormalMath.Relations.Graph",
+      "observed_at": "2026-08-25T00:52:00Z",
+      "record_status": "active",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "175050bdfc2be1ba14cf38cac011d53428526151",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:b29510687599e1328316bb619f989491acb8a094"
+      ],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "175050bdfc2be1ba14cf38cac011d53428526151",
+      "declaration_names": [
+        "FormalMath.Geometry.IsInvariantUnder"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Geometry/Symmetry.lean",
+      "formal_artifact_ref": "FART-P2-000012",
+      "id": "FLOC-P2-000013",
+      "locator_status": "current",
+      "module_name": "FormalMath.Geometry.Symmetry",
+      "observed_at": "2026-08-25T00:52:00Z",
+      "record_status": "active",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "175050bdfc2be1ba14cf38cac011d53428526151",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:fb999a3396223454e9692c03db274e202af6694d"
+      ],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "175050bdfc2be1ba14cf38cac011d53428526151",
+      "declaration_names": [
+        "FormalMath.Measurement.rectangleArea",
+        "FormalMath.Measurement.rectanglePerimeter",
+        "FormalMath.Measurement.rectangularPrismVolume"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Measurement/Mensuration.lean",
+      "formal_artifact_ref": "FART-P2-000013",
+      "id": "FLOC-P2-000014",
+      "locator_status": "current",
+      "module_name": "FormalMath.Measurement.Mensuration",
+      "observed_at": "2026-08-25T00:52:00Z",
+      "record_status": "active",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "175050bdfc2be1ba14cf38cac011d53428526151",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:74e8a3ab9b5c41c5e1b52428a0dd50e63768e8f9"
+      ],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "e8d288f873f9e227907ad501cafc3671233b6f37",
+      "declaration_names": [
+        "FormalMath.Relations.mem_graphOf_iff"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Relations/GraphResults.lean",
+      "formal_artifact_ref": "FART-P2-000014",
+      "id": "FLOC-P2-000015",
+      "locator_status": "current",
+      "module_name": "FormalMath.Relations.GraphResults",
+      "observed_at": "2026-08-25T01:33:00Z",
+      "record_status": "active",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "e8d288f873f9e227907ad501cafc3671233b6f37",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:620c37af7485614d9bb323b5732c49dc74ed2309"
+      ],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "ec47b85cd0f829b546405f315c8aaee2ccbbb8a9",
+      "declaration_names": [
+        "FormalMath.Geometry.isInvariantUnder_id"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Geometry/SymmetryResults.lean",
+      "formal_artifact_ref": "FART-P2-000015",
+      "id": "FLOC-P2-000016",
+      "locator_status": "current",
+      "module_name": "FormalMath.Geometry.SymmetryResults",
+      "observed_at": "2026-08-25T01:39:00Z",
+      "record_status": "active",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "ec47b85cd0f829b546405f315c8aaee2ccbbb8a9",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:c7187588aba0fd8218ce4a76dafd083ab6ec4ae1"
+      ],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "e8d288f873f9e227907ad501cafc3671233b6f37",
+      "declaration_names": [
+        "FormalMath.Measurement.rectangleArea_comm",
+        "FormalMath.Measurement.rectanglePerimeter_comm",
+        "FormalMath.Measurement.rectangularPrismVolume_swap_length_width"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Measurement/MensurationResults.lean",
+      "formal_artifact_ref": "FART-P2-000016",
+      "id": "FLOC-P2-000017",
+      "locator_status": "current",
+      "module_name": "FormalMath.Measurement.MensurationResults",
+      "observed_at": "2026-08-25T01:33:00Z",
+      "record_status": "active",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "e8d288f873f9e227907ad501cafc3671233b6f37",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:239d4c67bc9db5a36dbf0b5f083a2935fc2b778a"
+      ],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "8f2160ed3306f24279d47177b5f7f6996acb7632",
+      "declaration_names": [
+        "FormalMath.Relations.mem_graphOf_comp_iff"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Relations/CompositionResults.lean",
+      "formal_artifact_ref": "FART-P2-000017",
+      "id": "FLOC-P2-000018",
+      "locator_status": "current",
+      "module_name": "FormalMath.Relations.CompositionResults",
+      "observed_at": "2026-08-25T02:10:00Z",
+      "record_status": "active",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "8f2160ed3306f24279d47177b5f7f6996acb7632",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:679a269fc3981ef0a9fdaf21eb8632f613aa54b6"
+      ],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "3125d1b24e0e5642354219ee6f5d2990537de65e",
+      "declaration_names": [
+        "FormalMath.Relations.Examples.successor_then_double_graph_contains_three_eight"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Relations/Examples/Composition.lean",
+      "formal_artifact_ref": "FART-P2-000018",
+      "id": "FLOC-P2-000019",
+      "locator_status": "current",
+      "module_name": "FormalMath.Relations.Examples.Composition",
+      "observed_at": "2026-08-25T02:32:00Z",
+      "record_status": "active",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "3125d1b24e0e5642354219ee6f5d2990537de65e",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:018a69cd470e9b17f6bfc8d1d58efd0629c51212"
+      ],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "3125d1b24e0e5642354219ee6f5d2990537de65e",
+      "declaration_names": [
+        "FormalMath.Geometry.Examples.bool_univ_invariant_under_id"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Geometry/Examples/Symmetry.lean",
+      "formal_artifact_ref": "FART-P2-000019",
+      "id": "FLOC-P2-000020",
+      "locator_status": "current",
+      "module_name": "FormalMath.Geometry.Examples.Symmetry",
+      "observed_at": "2026-08-25T02:32:00Z",
+      "record_status": "active",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "3125d1b24e0e5642354219ee6f5d2990537de65e",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:02c58ecb58a611ca101a96dd7f6b4d2f418c70b3"
+      ],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "3125d1b24e0e5642354219ee6f5d2990537de65e",
+      "declaration_names": [
+        "FormalMath.Measurement.Examples.rectangle_three_four_perimeter_ne_area",
+        "FormalMath.Measurement.Examples.rectangle_three_four_values"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Measurement/Examples/Mensuration.lean",
+      "formal_artifact_ref": "FART-P2-000020",
+      "id": "FLOC-P2-000021",
+      "locator_status": "current",
+      "module_name": "FormalMath.Measurement.Examples.Mensuration",
+      "observed_at": "2026-08-25T02:45:10.567Z",
+      "record_status": "active",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "6e159bed68f122d44eed1e23a8a72dd3f33e7de5",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:721a8dbebb53e7a43fbd2ec3898478694b376bc2"
+      ],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    },
+    {
+      "created_revision": "3125d1b24e0e5642354219ee6f5d2990537de65e",
+      "declaration_names": [
+        "FormalMath.Measurement.Exercises.rectangularPrism_two_three_four_solution"
+      ],
+      "dependency_baseline_ref": "not_applicable",
+      "file_path": "FormalMath/Measurement/Exercises/Mensuration.lean",
+      "formal_artifact_ref": "FART-P2-000021",
+      "id": "FLOC-P2-000022",
+      "locator_status": "current",
+      "module_name": "FormalMath.Measurement.Exercises.Mensuration",
+      "observed_at": "2026-08-25T02:45:10.567Z",
+      "record_status": "active",
+      "repository": "formal-math-curriculum/lean",
+      "revision": "6e159bed68f122d44eed1e23a8a72dd3f33e7de5",
+      "schema_version": 1,
+      "source_kind": "project_repository",
+      "structural_anchors": [
+        "git-blob:31a0982e920b10e3cfa1ffb314491f433e5f318a"
+      ],
+      "superseded_by_locator_refs": [],
+      "supersedes_locator_refs": []
+    }
+  ],
+  "formal_subject_revision": "5b592af5807467d600184d376f1a1d5920ddddbd",
+  "linked_identities": [
+    {
+      "candidate_ref_as_recorded": "CAND-P1-000004",
+      "candidate_ref_current_resolved": "CAND-P1-000004",
+      "record_status": "current",
+      "resolution_path": [
+        "CAND-P1-000004"
+      ],
+      "resolution_state": "resolved_exact",
+      "schema_version": 1,
+      "treatment_scopes": [
+        "natural_number_additive_multiplicative_monoid_laws",
+        "natural_number_distributive_cancellation_exercise",
+        "natural_number_distributive_laws",
+        "natural_number_operation_law_examples"
+      ]
+    },
+    {
+      "candidate_ref_as_recorded": "CAND-P1-000009",
+      "candidate_ref_current_resolved": "CAND-P1-000009",
+      "record_status": "current",
+      "resolution_path": [
+        "CAND-P1-000009"
+      ],
+      "resolution_state": "resolved_exact",
+      "schema_version": 1,
+      "treatment_scopes": [
+        "integer_additive_inverse_and_signed_subtraction_laws",
+        "integer_negative_product_laws",
+        "integer_signed_operation_law_examples"
+      ]
+    },
+    {
+      "candidate_ref_as_recorded": "CAND-P1-000016",
+      "candidate_ref_current_resolved": "CAND-P1-000016",
+      "record_status": "current",
+      "resolution_path": [
+        "CAND-P1-000016"
+      ],
+      "resolution_state": "resolved_exact",
+      "schema_version": 1,
+      "treatment_scopes": [
+        "factored_expression_construction"
+      ]
+    },
+    {
+      "candidate_ref_as_recorded": "CAND-P1-000017",
+      "candidate_ref_current_resolved": "CAND-P1-000017",
+      "record_status": "current",
+      "resolution_path": [
+        "CAND-P1-000017"
+      ],
+      "resolution_state": "resolved_exact",
+      "schema_version": 1,
+      "treatment_scopes": [
+        "factored_integer_equation_solution_characterization",
+        "two_five_factored_integer_equation_example"
+      ]
+    },
+    {
+      "candidate_ref_as_recorded": "CAND-P1-000018",
+      "candidate_ref_current_resolved": "CAND-P1-000018",
+      "record_status": "current",
+      "resolution_path": [
+        "CAND-P1-000018"
+      ],
+      "resolution_state": "resolved_exact",
+      "schema_version": 1,
+      "treatment_scopes": [
+        "p6_m6_5_function_composition_graph_membership_result",
+        "p6_m6_6_composite_graph_example"
+      ]
+    },
+    {
+      "candidate_ref_as_recorded": "CAND-P1-000019",
+      "candidate_ref_current_resolved": "CAND-P1-000019",
+      "record_status": "current",
+      "resolution_path": [
+        "CAND-P1-000019"
+      ],
+      "resolution_state": "resolved_exact",
+      "schema_version": 1,
+      "treatment_scopes": [
+        "p6_m6_3_graph_of_definition",
+        "p6_m6_4_graph_membership_result",
+        "p6_m6_6_composite_graph_example"
+      ]
+    },
+    {
+      "candidate_ref_as_recorded": "CAND-P1-000024",
+      "candidate_ref_current_resolved": "CAND-P1-000024",
+      "record_status": "current",
+      "resolution_path": [
+        "CAND-P1-000024"
+      ],
+      "resolution_state": "resolved_exact",
+      "schema_version": 1,
+      "treatment_scopes": [
+        "p6_m6_3_elementary_set_invariance_definition",
+        "p6_m6_4_identity_invariance_result",
+        "p6_m6_6_concrete_identity_invariance_example"
+      ]
+    },
+    {
+      "candidate_ref_as_recorded": "CAND-P1-000027",
+      "candidate_ref_current_resolved": "CAND-P1-000027",
+      "record_status": "current",
+      "resolution_path": [
+        "CAND-P1-000027"
+      ],
+      "resolution_state": "resolved_exact",
+      "schema_version": 1,
+      "treatment_scopes": [
+        "p6_m6_3_bounded_mensuration_definitions",
+        "p6_m6_4_mensuration_argument_symmetry_results",
+        "p6_m6_6_mensuration_exercise_solution",
+        "p6_m6_6_mensuration_worked_example_and_diagnostic"
+      ]
+    }
+  ],
+  "schema_version": "p6-formal-authority/v1",
+  "source_registry_blobs": {
+    "metadata/curriculum-lock/linked-identities.jsonl": "d05fba62472bf73ff21dda858327fdb16e47c84b",
+    "metadata/formal-artifacts/fart/000001-001000.jsonl": "7634a6e3408e633bedfd40e471137dced4225cab",
+    "metadata/formal-artifacts/flink/000001-001000.jsonl": "7ff47aa509f76d6c866d43084a91ba44d29e4563",
+    "metadata/formal-artifacts/floc/000001-001000.jsonl": "ef5c23897948a68c691fc741066586ee4832ea92"
+  }
+}

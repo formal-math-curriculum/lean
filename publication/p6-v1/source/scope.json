@@ -1,0 +1,339 @@
+{
+  "schema_version": "p6-m67-source/v1",
+  "formal_subject_revision": "5b592af5807467d600184d376f1a1d5920ddddbd",
+  "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+  "freeze_authority_refs": [
+    "dd66f3e0-643e-458c-97ef-4cac9f30adeb@2026-08-25T03:11:06.039Z",
+    "904b9844-f4f7-40a0-b970-7e9b1b4e0b89@2026-08-25T03:12:04.953Z"
+  ],
+  "contract_authority_refs": [
+    "c9024607-a7fe-46cc-963b-bd49cf2371f3",
+    "c1aba952-2328-4a77-a7cb-ed4154d25b37",
+    "976aa425-3bd0-41e0-9c38-4d179bb564b3",
+    "00753b6e-67c8-4ec3-9b5f-7ac5abba33cc",
+    "1084ed41-9c72-4a3a-bf90-5a98160d4a86",
+    "8f98ff80-eaae-42ea-bb2b-3c8d28cb5bfd",
+    "de866709-bea5-4cc3-83da-c2468d011eb1",
+    "e7d34ba3-0bba-4f1d-bb5e-9ba37a447be9"
+  ],
+  "repository_heads_at_freeze": {
+    "lean": "5b592af5807467d600184d376f1a1d5920ddddbd",
+    "content": "3a1e87c7c55c7b17e9fa7b3eb4deafd8b991e828",
+    "site": "4a9039665a8b54443da55872223dc75c5598cad0"
+  },
+  "lean_toolchain": "leanprover/lean4:v4.33.0",
+  "mathlib_revision": "db584cd6d46c92f209a44c0f1c829460d327499d",
+  "external_systems": [
+    "arXiv",
+    "MSC2020",
+    "OntoMathPRO"
+  ],
+  "frozen_inputs": [
+    {
+      "path": "FormalMath/Algebra/Examples/FactoredIntegerEquation.lean",
+      "git_blob": "6aa8bd2575db54920629101a5629d355a6144be4"
+    },
+    {
+      "path": "FormalMath/Algebra/FactoredEquation.lean",
+      "git_blob": "d72776caae133782d56c7c28eb2bad20779f0f0c"
+    },
+    {
+      "path": "FormalMath/Algebra/ZeroProduct.lean",
+      "git_blob": "656646812841cb625ae35d7d2a71a86dfd89cfaf"
+    },
+    {
+      "path": "FormalMath/Arithmetic/Examples/IntegerSignLaws.lean",
+      "git_blob": "8380934117eb68f23ad3f713468792b619b0ee66"
+    },
+    {
+      "path": "FormalMath/Arithmetic/Examples/NaturalNumberLaws.lean",
+      "git_blob": "77d6cfb223ced68adc70bad8b21bc1dfd5e71ddf"
+    },
+    {
+      "path": "FormalMath/Arithmetic/Exercises/NaturalNumberLaws.lean",
+      "git_blob": "e754baf70f30457131fcaa1660f1d44f0dba8bfe"
+    },
+    {
+      "path": "FormalMath/Geometry/Examples/Symmetry.lean",
+      "git_blob": "02c58ecb58a611ca101a96dd7f6b4d2f418c70b3"
+    },
+    {
+      "path": "FormalMath/Geometry/Symmetry.lean",
+      "git_blob": "fb999a3396223454e9692c03db274e202af6694d"
+    },
+    {
+      "path": "FormalMath/Geometry/SymmetryResults.lean",
+      "git_blob": "c7187588aba0fd8218ce4a76dafd083ab6ec4ae1"
+    },
+    {
+      "path": "FormalMath/Measurement/Examples/Mensuration.lean",
+      "git_blob": "721a8dbebb53e7a43fbd2ec3898478694b376bc2"
+    },
+    {
+      "path": "FormalMath/Measurement/Exercises/Mensuration.lean",
+      "git_blob": "31a0982e920b10e3cfa1ffb314491f433e5f318a"
+    },
+    {
+      "path": "FormalMath/Measurement/Mensuration.lean",
+      "git_blob": "74e8a3ab9b5c41c5e1b52428a0dd50e63768e8f9"
+    },
+    {
+      "path": "FormalMath/Measurement/MensurationResults.lean",
+      "git_blob": "239d4c67bc9db5a36dbf0b5f083a2935fc2b778a"
+    },
+    {
+      "path": "FormalMath/Relations/CompositionResults.lean",
+      "git_blob": "679a269fc3981ef0a9fdaf21eb8632f613aa54b6"
+    },
+    {
+      "path": "FormalMath/Relations/Examples/Composition.lean",
+      "git_blob": "018a69cd470e9b17f6bfc8d1d58efd0629c51212"
+    },
+    {
+      "path": "FormalMath/Relations/Graph.lean",
+      "git_blob": "b29510687599e1328316bb619f989491acb8a094"
+    },
+    {
+      "path": "FormalMath/Relations/GraphResults.lean",
+      "git_blob": "620c37af7485614d9bb323b5732c49dc74ed2309"
+    },
+    {
+      "path": "lake-manifest.json",
+      "git_blob": "b45d9c37e5168cf22bdd886bee5073f025cee29a"
+    },
+    {
+      "path": "lean-toolchain",
+      "git_blob": "025e59548e48cf71f2744154e2890beefe30a258"
+    },
+    {
+      "path": "metadata/curriculum-lock/linked-identities.jsonl",
+      "git_blob": "d05fba62472bf73ff21dda858327fdb16e47c84b"
+    },
+    {
+      "path": "metadata/formal-artifacts/fart/000001-001000.jsonl",
+      "git_blob": "7634a6e3408e633bedfd40e471137dced4225cab"
+    },
+    {
+      "path": "metadata/formal-artifacts/flink/000001-001000.jsonl",
+      "git_blob": "7ff47aa509f76d6c866d43084a91ba44d29e4563"
+    },
+    {
+      "path": "metadata/formal-artifacts/floc/000001-001000.jsonl",
+      "git_blob": "ef5c23897948a68c691fc741066586ee4832ea92"
+    },
+    {
+      "path": "metadata/formal-artifacts/registry.json",
+      "git_blob": "1e9001529dba66d4223544c9510a60f12fef28db"
+    }
+  ],
+  "scope_rows": [
+    {
+      "candidate_ref": "CAND-P1-000001",
+      "primary_disposition": "bounded_umbrella_reference"
+    },
+    {
+      "candidate_ref": "CAND-P1-000002",
+      "primary_disposition": "mixed_formal_editorial_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000003",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000004",
+      "primary_disposition": "inherited_partial_incremental_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000005",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000006",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000007",
+      "primary_disposition": "bounded_umbrella_reference"
+    },
+    {
+      "candidate_ref": "CAND-P1-000008",
+      "primary_disposition": "bounded_umbrella_reference"
+    },
+    {
+      "candidate_ref": "CAND-P1-000009",
+      "primary_disposition": "inherited_partial_incremental_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000010",
+      "primary_disposition": "bounded_umbrella_reference"
+    },
+    {
+      "candidate_ref": "CAND-P1-000011",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000012",
+      "primary_disposition": "mixed_formal_editorial_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000013",
+      "primary_disposition": "bounded_editorial_publication"
+    },
+    {
+      "candidate_ref": "CAND-P1-000014",
+      "primary_disposition": "bounded_umbrella_reference"
+    },
+    {
+      "candidate_ref": "CAND-P1-000015",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000016",
+      "primary_disposition": "inherited_partial_incremental_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000017",
+      "primary_disposition": "inherited_partial_incremental_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000018",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000019",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000020",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000021",
+      "primary_disposition": "bounded_umbrella_reference"
+    },
+    {
+      "candidate_ref": "CAND-P1-000022",
+      "primary_disposition": "bounded_editorial_publication"
+    },
+    {
+      "candidate_ref": "CAND-P1-000023",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000024",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000025",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000026",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000027",
+      "primary_disposition": "mixed_formal_editorial_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000028",
+      "primary_disposition": "bounded_editorial_publication"
+    },
+    {
+      "candidate_ref": "CAND-P1-000029",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000030",
+      "primary_disposition": "bounded_umbrella_reference"
+    },
+    {
+      "candidate_ref": "CAND-P1-000031",
+      "primary_disposition": "bounded_editorial_publication"
+    },
+    {
+      "candidate_ref": "CAND-P1-000032",
+      "primary_disposition": "mixed_formal_editorial_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000033",
+      "primary_disposition": "bounded_editorial_publication"
+    },
+    {
+      "candidate_ref": "CAND-P1-000034",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000035",
+      "primary_disposition": "mixed_formal_editorial_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000036",
+      "primary_disposition": "bounded_editorial_publication"
+    },
+    {
+      "candidate_ref": "CAND-P1-000037",
+      "primary_disposition": "mixed_formal_editorial_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000038",
+      "primary_disposition": "bounded_umbrella_reference"
+    },
+    {
+      "candidate_ref": "CAND-P1-000039",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000040",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000041",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000042",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000043",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000044",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000045",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000046",
+      "primary_disposition": "bounded_editorial_publication"
+    },
+    {
+      "candidate_ref": "CAND-P1-000521",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000522",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000529",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000530",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000531",
+      "primary_disposition": "bounded_formal_research"
+    },
+    {
+      "candidate_ref": "CAND-P1-000532",
+      "primary_disposition": "mixed_formal_editorial_research"
+    }
+  ]
+}
