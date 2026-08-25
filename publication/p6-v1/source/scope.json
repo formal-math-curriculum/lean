@@ -1,20 +1,20 @@
 {
   "schema_version": "p6-m67-source/v1",
   "formal_subject_revision": "5b592af5807467d600184d376f1a1d5920ddddbd",
-  "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17",
+  "scope_authority_ref": "fa30ef14-3bdc-466b-be0e-7d80af66ee17@2026-08-24T23:44:58.959Z",
   "freeze_authority_refs": [
     "dd66f3e0-643e-458c-97ef-4cac9f30adeb@2026-08-25T03:11:06.039Z",
     "904b9844-f4f7-40a0-b970-7e9b1b4e0b89@2026-08-25T03:12:04.953Z"
   ],
   "contract_authority_refs": [
-    "c9024607-a7fe-46cc-963b-bd49cf2371f3",
-    "c1aba952-2328-4a77-a7cb-ed4154d25b37",
-    "976aa425-3bd0-41e0-9c38-4d179bb564b3",
-    "00753b6e-67c8-4ec3-9b5f-7ac5abba33cc",
-    "1084ed41-9c72-4a3a-bf90-5a98160d4a86",
-    "8f98ff80-eaae-42ea-bb2b-3c8d28cb5bfd",
-    "de866709-bea5-4cc3-83da-c2468d011eb1",
-    "e7d34ba3-0bba-4f1d-bb5e-9ba37a447be9"
+    "c9024607-a7fe-46cc-963b-bd49cf2371f3@2026-08-23T23:46:56.940Z",
+    "c1aba952-2328-4a77-a7cb-ed4154d25b37@2026-08-24T16:01:34.112Z",
+    "976aa425-3bd0-41e0-9c38-4d179bb564b3@2026-08-24T16:01:30.031Z",
+    "00753b6e-67c8-4ec3-9b5f-7ac5abba33cc@2026-08-23T18:58:47.510Z",
+    "1084ed41-9c72-4a3a-bf90-5a98160d4a86@2026-08-23T23:46:38.928Z",
+    "8f98ff80-eaae-42ea-bb2b-3c8d28cb5bfd@2026-08-24T23:53:49.454Z",
+    "de866709-bea5-4cc3-83da-c2468d011eb1@2026-08-24T23:54:18.420Z",
+    "e7d34ba3-0bba-4f1d-bb5e-9ba37a447be9@2026-08-24T23:44:36.417Z"
   ],
   "repository_heads_at_freeze": {
     "lean": "5b592af5807467d600184d376f1a1d5920ddddbd",

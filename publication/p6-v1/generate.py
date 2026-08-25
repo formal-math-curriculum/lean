@@ -539,14 +539,19 @@ def validate_packet_objects(
         locator = binding["source_locator"]
         if locator["record_status"] != "active" or locator["locator_status"] != "current":
             fail("binding-noncurrent-locator", binding["binding_key"])
+        if binding.get("maturity") != {
+            "scope": "revision_scoped",
+            "state": "reviewed_active",
+        }:
+            fail("maturity-overclaim", binding["binding_key"])
         vector = binding.get("verification_vector", {})
-        if tuple(sorted(vector)) != (
-            "extraction_reproducibility",
-            "lean_build",
-            "registry_join",
-            "source_location",
-        ):
-            fail("verification-vector", binding["binding_key"])
+        if vector != {
+            "extraction_reproducibility": "verified_by_generator",
+            "lean_build": "qualified_at_frozen_subject",
+            "registry_join": "verified",
+            "source_location": "verified_by_current_floc",
+        }:
+            fail("verification-overclaim", binding["binding_key"])
     source_candidates = [row["candidate_ref"] for row in scope["scope_rows"]]
     output_candidates = [row["candidate_ref"] for row in release_records]
     if source_candidates != output_candidates:
@@ -560,10 +565,11 @@ def build_manifest(
     rendered: dict[str, bytes],
 ) -> dict[str, Any]:
     generator_data = read_bytes(root, GENERATOR_REL)
+    scope_data = read_bytes(root, SCOPE_REL)
     input_rows = [{
-        "git_blob": None,
+        "git_blob": git_blob_sha(scope_data),
         "path": SCOPE_REL,
-        "sha256": sha256(read_bytes(root, SCOPE_REL)),
+        "sha256": sha256(scope_data),
     }, {
         "git_blob": git_blob_sha(generator_data),
         "path": GENERATOR_REL,
@@ -590,6 +596,7 @@ def build_manifest(
         else:
             record_count = objects[rel]["record_count"]
         output_rows.append({
+            "git_blob": git_blob_sha(rendered[rel]),
             "path": rel,
             "record_count": record_count,
             "sha256": sha256(rendered[rel]),

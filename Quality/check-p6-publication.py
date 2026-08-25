@@ -75,6 +75,14 @@ def main() -> int:
         lambda: generator.validate_scope(stale_subject),
     )
 
+    stale_blob = copy.deepcopy(scope)
+    stale_blob["frozen_inputs"][0]["git_blob"] = "0" * 40
+    expect_failure(
+        "stale-input-blob",
+        "p6-publication:error:stale-input-blob:",
+        lambda: generator.validate_input_blobs(ROOT, stale_blob),
+    )
+
     invented_mapping = copy.deepcopy(objects)
     invented_mapping[generator.OUTPUT_RELS[0]]["records"][0]["external_id"] = "invented:1"
     expect_failure(
@@ -97,6 +105,22 @@ def main() -> int:
         "hierarchy-leakage",
         "p6-publication:error:hierarchy-leakage:",
         lambda: generator.validate_scope(hierarchy),
+    )
+
+    maturity_overclaim = copy.deepcopy(objects)
+    maturity_overclaim[generator.OUTPUT_RELS[4]]["records"][0]["maturity"]["state"] = "production_complete"
+    expect_failure(
+        "maturity-overclaim",
+        "p6-publication:error:maturity-overclaim:",
+        lambda: generator.validate_packet_objects(maturity_overclaim, scope, authority),
+    )
+
+    verification_overclaim = copy.deepcopy(objects)
+    verification_overclaim[generator.OUTPUT_RELS[4]]["records"][0]["verification_vector"]["lean_build"] = "verified_forever"
+    expect_failure(
+        "verification-overclaim",
+        "p6-publication:error:verification-overclaim:",
+        lambda: generator.validate_packet_objects(verification_overclaim, scope, authority),
     )
 
     nondeterministic = dict(baseline)

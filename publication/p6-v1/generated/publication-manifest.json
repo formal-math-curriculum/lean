@@ -21,7 +21,7 @@
   "formal_subject_revision": "5b592af5807467d600184d376f1a1d5920ddddbd",
   "generator": {
     "fingerprint_algorithm": "sha256(exact-generator-source-bytes)",
-    "generator_fingerprint": "f64656afbdf2408b1845aa2f01cac031236f21ca559bcc0b7d08b5b092596aea",
+    "generator_fingerprint": "318b48b3e02bf2a37e320879a58e58ffde5a9269f7f86e6dddb97d6c7131c6f9",
     "normalization": "UTF-8; sorted JSON keys; two-space indent; LF; one terminal newline",
     "path": "publication/p6-v1/generate.py",
     "runtime": "Python standard library only"
@@ -148,14 +148,14 @@
       "sha256": "3ff4d6f07fe6a99b445de197390996008b50d20b4ffabae81865b72b5514f396"
     },
     {
-      "git_blob": "5b854e288d803d0cc56622c8f1c34fd083018997",
+      "git_blob": "d3c7db2b9bcb5a492b0863dbe836e1a7889908f0",
       "path": "publication/p6-v1/generate.py",
-      "sha256": "f64656afbdf2408b1845aa2f01cac031236f21ca559bcc0b7d08b5b092596aea"
+      "sha256": "318b48b3e02bf2a37e320879a58e58ffde5a9269f7f86e6dddb97d6c7131c6f9"
     },
     {
-      "git_blob": null,
+      "git_blob": "0ec3ecb795599569f9557226ff5ef6bb3c8a10a5",
       "path": "publication/p6-v1/source/scope.json",
-      "sha256": "ccc1226317085d7133091cdb1bccff1a6a9dbea1e7d86c18e452f8b7bd0772e8"
+      "sha256": "0201abb95c7c7dcb7890fe55e669c7ec406c7c36c7b2b525d55b667a6eebe6f5"
     }
   ],
   "lean_toolchain": "leanprover/lean4:v4.33.0",
@@ -167,26 +167,31 @@
   ],
   "outputs": [
     {
+      "git_blob": "8a11310156c9f3bf6b286371531edbcadc23125e",
       "path": "publication/p6-v1/generated/external-alignment-coverage.json",
       "record_count": 156,
       "sha256": "e23701dfa9a1a32c0f2e1bea69b71da8cb7e5e458261b94c961ba6ebf8fb2293"
     },
     {
+      "git_blob": "460906e7ab4098fdffdba380ad0f62ae0c3b17ef",
       "path": "publication/p6-v1/generated/formal-authority.json",
       "record_count": 73,
       "sha256": "c0b17e560855dd0aeb633ccc67ce6c3813150c54f8270dd9ddeb4da77831e747"
     },
     {
+      "git_blob": "6b13fef287afa0530158a8d27888b0b711d99eb2",
       "path": "publication/p6-v1/generated/formal-dependencies.json",
       "record_count": 40,
       "sha256": "7d3defcb6646f1a036950124600abcf361eaaa0adbb5eb73867b431f08f42ffd"
     },
     {
+      "git_blob": "6a56e86bd91e74368548541a328338f151ac3001",
       "path": "publication/p6-v1/generated/release-scope.json",
       "record_count": 52,
-      "sha256": "a37250a202e228060a49c2119361ed84da5534759ea9e21b18f149612c9b880b"
+      "sha256": "55671c424178740b946fb5815289008487d020cbeeb7808656c2a5faf4349d6a"
     },
     {
+      "git_blob": "7b65fca119f9ff786829917a9978df575aedec31",
       "path": "publication/p6-v1/generated/representation-bindings.json",
       "record_count": 22,
       "sha256": "8d4b4390d892c6418228742650ec989415ec80d3904fc6e24ee3462833e9b9a4"
@@ -225,6 +230,6 @@
     "site": "4a9039665a8b54443da55872223dc75c5598cad0"
   },
   "schema_version": "p6-publication-manifest/v1",
-  "semantic_fingerprint": "aad1d6b780fb6e766753b4832ab7310ebcef98c481b42a71bc7f184f6c861163",
+  "semantic_fingerprint": "cc71d82820de2fe29f30364067996dececb6cae2458e67d83f73cc74548116ab",
   "semantic_fingerprint_algorithm": "sha256(canonical-compact-json of schemas, revisions, ordered inputs, ordered outputs, counts and generator fingerprint)"
 }
