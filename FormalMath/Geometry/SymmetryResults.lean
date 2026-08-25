@@ -19,6 +19,14 @@ namespace FormalMath.Geometry
 @[simp]
 public theorem isInvariantUnder_id {α : Type*} (figure : Set α) :
     IsInvariantUnder id figure := by
-  simp [IsInvariantUnder]
+  apply Set.ext
+  intro x
+  constructor
+  · intro hx
+    rcases hx with ⟨y, hy, hxy⟩
+    change y = x at hxy
+    exact hxy ▸ hy
+  · intro hx
+    exact ⟨x, hx, rfl⟩
 
 end FormalMath.Geometry
