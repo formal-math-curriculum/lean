@@ -9,6 +9,9 @@ public import FormalMath.Arithmetic.Examples.IntegerSignLaws
 public import FormalMath.Arithmetic.Examples.NaturalNumberLaws
 public import FormalMath.Arithmetic.Exercises.NaturalNumberLaws
 public import FormalMath.Basic
+public import FormalMath.Geometry.Symmetry
+public import FormalMath.Measurement.Mensuration
+public import FormalMath.Relations.Graph
 
 /-!
 # FormalMath
@@ -18,7 +21,8 @@ Root import surface for the Formal Mathematics Curriculum Lean library.
 This file is an umbrella for downstream convenience. Production `FormalMath.*` modules must import
 their semantic dependencies directly rather than importing this root umbrella. The current public
 surface includes the bounded M2.10 factored-integer-equation slice, bounded Project-4 natural-number
-operation-law and integer sign-law examples, one bounded natural-number exercise solution and
-diagnostic, and supporting infrastructure. It does not claim curriculum coverage or formalization
+operation-law and integer sign-law examples, one bounded natural-number exercise solution and diagnostic, three bounded Project-6 core-definition
+surfaces (graph representation, set invariance, and elementary mensuration), and supporting
+infrastructure. It does not claim curriculum coverage or formalization
 completeness.
 -/
