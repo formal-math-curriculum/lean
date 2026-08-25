@@ -1,0 +1,1256 @@
+{
+  "authority": "coverage-only ledger; curated mapping authority remains with content governance",
+  "formal_subject_revision": "5b592af5807467d600184d376f1a1d5920ddddbd",
+  "record_count": 156,
+  "records": [
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000001",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000001",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000001",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000002",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000002",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000002",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000003",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000003",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000003",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000004",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000004",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000004",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000005",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000005",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000005",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000006",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000006",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000006",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000007",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000007",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000007",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000008",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000008",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000008",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000009",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000009",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000009",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000010",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000010",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000010",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000011",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000011",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000011",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000012",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000012",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000012",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000013",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000013",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000013",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000014",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000014",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000014",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000015",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000015",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000015",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000016",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000016",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000016",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000017",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000017",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000017",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000018",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000018",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000018",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000019",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000019",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000019",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000020",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000020",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000020",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000021",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000021",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000021",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000022",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000022",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000022",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000023",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000023",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000023",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000024",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000024",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000024",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000025",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000025",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000025",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000026",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000026",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000026",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000027",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000027",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000027",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000028",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000028",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000028",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000029",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000029",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000029",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000030",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000030",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000030",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000031",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000031",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000031",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000032",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000032",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000032",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000033",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000033",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000033",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000034",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000034",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000034",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000035",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000035",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000035",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000036",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000036",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000036",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000037",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000037",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000037",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000038",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000038",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000038",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000039",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000039",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000039",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000040",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000040",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000040",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000041",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000041",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000041",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000042",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000042",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000042",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000043",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000043",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000043",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000044",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000044",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000044",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000045",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000045",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000045",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000046",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000046",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000046",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000521",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000521",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000521",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000522",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000522",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000522",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000529",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000529",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000529",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000530",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000530",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000530",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000531",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000531",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000531",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000532",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "MSC2020"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000532",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "OntoMathPRO"
+    },
+    {
+      "adoption_authority": "formal-math-curriculum/content governance",
+      "candidate_ref": "CAND-P1-000532",
+      "external_id": null,
+      "mapping_state": "needs_review",
+      "nonclaim": "Coverage state only; no mapping is proposed or adopted by the Lean repository.",
+      "system": "arXiv"
+    }
+  ],
+  "schema_version": "p6-external-alignment-coverage/v1"
+}

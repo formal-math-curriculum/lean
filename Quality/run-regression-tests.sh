@@ -108,6 +108,7 @@ run_pass p6-core-api-policy bash Quality/check-p6-core-api.sh
 run_pass p6-fundamental-results-policy bash Quality/check-p6-fundamental-results.sh
 run_pass p6-adjacent-functions-policy bash Quality/check-p6-adjacent-functions.sh
 run_pass p6-pedagogy-policy bash Quality/check-p6-pedagogy.sh
+run_pass p6-publication-contract python3 Quality/check-p6-publication.py
 run_pass production-traceability-registry lake exe traceability validate
 run_pass project-floc-revision-controls bash Quality/check-project-floc-revision-controls.sh
 run_pass m210-production-roundtrip-controls bash Quality/check-m210-roundtrip-controls.sh
