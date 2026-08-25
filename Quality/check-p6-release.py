@@ -21,6 +21,53 @@ EXPECTED_REPRESENTED = {
     "CAND-P1-000027",
 }
 
+EXPECTED_ABSENT = {
+    "CAND-P1-000001",
+    "CAND-P1-000002",
+    "CAND-P1-000003",
+    "CAND-P1-000005",
+    "CAND-P1-000006",
+    "CAND-P1-000007",
+    "CAND-P1-000008",
+    "CAND-P1-000010",
+    "CAND-P1-000011",
+    "CAND-P1-000012",
+    "CAND-P1-000013",
+    "CAND-P1-000014",
+    "CAND-P1-000015",
+    "CAND-P1-000020",
+    "CAND-P1-000021",
+    "CAND-P1-000022",
+    "CAND-P1-000023",
+    "CAND-P1-000025",
+    "CAND-P1-000026",
+    "CAND-P1-000028",
+    "CAND-P1-000029",
+    "CAND-P1-000030",
+    "CAND-P1-000031",
+    "CAND-P1-000032",
+    "CAND-P1-000033",
+    "CAND-P1-000034",
+    "CAND-P1-000035",
+    "CAND-P1-000036",
+    "CAND-P1-000037",
+    "CAND-P1-000038",
+    "CAND-P1-000039",
+    "CAND-P1-000040",
+    "CAND-P1-000041",
+    "CAND-P1-000042",
+    "CAND-P1-000043",
+    "CAND-P1-000044",
+    "CAND-P1-000045",
+    "CAND-P1-000046",
+    "CAND-P1-000521",
+    "CAND-P1-000522",
+    "CAND-P1-000529",
+    "CAND-P1-000530",
+    "CAND-P1-000531",
+    "CAND-P1-000532",
+}
+
 EXPECTED_DECLARATIONS = {
     "FormalMath.Algebra.factoredProduct",
     "FormalMath.Algebra.factoredProduct_eq_zero_iff",
@@ -195,6 +242,7 @@ def validate_manifest(text: str) -> None:
     required = {
         "release-id": "Release identity: `P6-FORMALIZATION-RELEASE-v1`",
         "manifest-path": "Repository manifest: `RELEASES/P6-FORMALIZATION-RELEASE-v1.md`",
+        "integration-pr-exact": "Integration PR: [#35](https://github.com/formal-math-curriculum/lean/pull/35)",
         "tag": "Annotated tag: [`formalization/p6-v1`]",
         "base": "Frozen release base: `8228da5c2abfe6bf6eac6aebe4f3cada8ed30b94`",
         "m69-adopted": "9c4339f9-26eb-4868-a659-9945e54b4158@2026-08-25T19:39:25.754Z",
@@ -223,6 +271,12 @@ def validate_manifest(text: str) -> None:
 
     if not re.search(r"Integration PR: \[#\d+\]\(https://github\.com/.+/pull/\d+\)", text):
         fail("integration-pr")
+    manifest_candidates = re.findall(r"CAND-P1-\d{6}", text)
+    if (
+        len(manifest_candidates) != 52
+        or set(manifest_candidates) != EXPECTED_REPRESENTED | EXPECTED_ABSENT
+    ):
+        fail("candidate-vector")
     for candidate in EXPECTED_REPRESENTED:
         require(text, candidate, "represented-identity")
     for declaration in EXPECTED_DECLARATIONS:
@@ -272,8 +326,22 @@ def main() -> int:
     )
     expect_failure(
         "represented-identity",
-        "p6-release:error:represented-identity",
+        "p6-release:error:candidate-vector",
         text.replace("CAND-P1-000004", "CAND-P1-999999"),
+    )
+    expect_failure(
+        "absent-identity",
+        "p6-release:error:candidate-vector",
+        text.replace("CAND-P1-000001", "CAND-P1-999998"),
+    )
+    expect_failure(
+        "integration-pr",
+        "p6-release:error:integration-pr-exact",
+        text.replace(
+            "Integration PR: [#35](https://github.com/formal-math-curriculum/lean/pull/35)",
+            "Integration PR: [#36](https://github.com/formal-math-curriculum/lean/pull/36)",
+            1,
+        ),
     )
     expect_failure(
         "semantic-fingerprint",
