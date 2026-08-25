@@ -38,12 +38,12 @@ copy_production_root() {
 
 printf 'm210-roundtrip:start:production-validation\n'
 lake exe traceability validate | tee "$WORK/validate.log"
-grep -Fq 'traceability:validate:pass:fart=17;floc=18;flink=17;curriculum-identities=8' "$WORK/validate.log"
-grep -Fq 'traceability:resolve:pass:current-modules=17;declarations=25' "$WORK/validate.log"
+grep -Fq 'traceability:validate:pass:fart=21;floc=22;flink=22;curriculum-identities=8' "$WORK/validate.log"
+grep -Fq 'traceability:resolve:pass:current-modules=21;declarations=30' "$WORK/validate.log"
 
 printf 'm210-roundtrip:start:production-roundtrip\n'
 lake exe traceability roundtrip | tee "$WORK/roundtrip.log"
-grep -Fq 'traceability:roundtrip:pass:links=17;locator-link-checks=18' "$WORK/roundtrip.log"
+grep -Fq 'traceability:roundtrip:pass:links=22;locator-link-checks=22' "$WORK/roundtrip.log"
 
 printf 'm210-roundtrip:start:production-generated-views\n'
 first_output="$(lake exe traceability generate)"
@@ -100,6 +100,10 @@ required = {
     "FART-P2-000015",
     "FART-P2-000016",
     "FART-P2-000017",
+    "FART-P2-000018",
+    "FART-P2-000019",
+    "FART-P2-000020",
+    "FART-P2-000021",
     "FLOC-P2-000001",
     "FLOC-P2-000002",
     "FLOC-P2-000003",
@@ -118,6 +122,10 @@ required = {
     "FLOC-P2-000016",
     "FLOC-P2-000017",
     "FLOC-P2-000018",
+    "FLOC-P2-000019",
+    "FLOC-P2-000020",
+    "FLOC-P2-000021",
+    "FLOC-P2-000022",
     "FLINK-P2-000001",
     "FLINK-P2-000002",
     "FLINK-P2-000003",
@@ -135,6 +143,11 @@ required = {
     "FLINK-P2-000015",
     "FLINK-P2-000016",
     "FLINK-P2-000017",
+    "FLINK-P2-000018",
+    "FLINK-P2-000019",
+    "FLINK-P2-000020",
+    "FLINK-P2-000021",
+    "FLINK-P2-000022",
     "FormalMath/Algebra/FactoredEquation.lean",
     "FormalMath/Algebra/ZeroProduct.lean",
     "FormalMath/Algebra/Examples/FactoredEquation.lean",
@@ -151,6 +164,10 @@ required = {
     "FormalMath/Measurement/Mensuration.lean",
     "FormalMath/Relations/GraphResults.lean",
     "FormalMath/Relations/CompositionResults.lean",
+    "FormalMath/Relations/Examples/Composition.lean",
+    "FormalMath/Geometry/Examples/Symmetry.lean",
+    "FormalMath/Measurement/Examples/Mensuration.lean",
+    "FormalMath/Measurement/Exercises/Mensuration.lean",
     "FormalMath/Geometry/SymmetryResults.lean",
     "FormalMath/Measurement/MensurationResults.lean",
     "FormalMath.Arithmetic.Exercises.NaturalNumberLaws",
@@ -159,6 +176,10 @@ required = {
     "FormalMath.Measurement.Mensuration",
     "FormalMath.Relations.GraphResults",
     "FormalMath.Relations.CompositionResults",
+    "FormalMath.Relations.Examples.Composition",
+    "FormalMath.Geometry.Examples.Symmetry",
+    "FormalMath.Measurement.Examples.Mensuration",
+    "FormalMath.Measurement.Exercises.Mensuration",
     "FormalMath.Geometry.SymmetryResults",
     "FormalMath.Measurement.MensurationResults",
     "FormalMath.Algebra.factoredProduct",
@@ -182,6 +203,11 @@ required = {
     "FormalMath.Measurement.rectangularPrismVolume",
     "FormalMath.Relations.mem_graphOf_iff",
     "FormalMath.Relations.mem_graphOf_comp_iff",
+    "FormalMath.Relations.Examples.successor_then_double_graph_contains_three_eight",
+    "FormalMath.Geometry.Examples.bool_univ_invariant_under_id",
+    "FormalMath.Measurement.Examples.rectangle_three_four_perimeter_ne_area",
+    "FormalMath.Measurement.Examples.rectangle_three_four_values",
+    "FormalMath.Measurement.Exercises.rectangularPrism_two_three_four_solution",
     "FormalMath.Geometry.isInvariantUnder_id",
     "FormalMath.Measurement.rectangleArea_comm",
     "FormalMath.Measurement.rectanglePerimeter_comm",
@@ -189,8 +215,8 @@ required = {
 }
 missing = sorted(item for item in required if item not in payload)
 assert not missing, missing
-assert len(artifacts) == 17, len(artifacts)
-assert len(sources) == 18, len(sources)
+assert len(artifacts) == 21, len(artifacts)
+assert len(sources) == 22, len(sources)
 
 artifact3 = next(record for record in artifacts if record["artifact_id"] == "FART-P2-000003")
 assert artifact3["artifact"]["current_locator_refs"] == ["FLOC-P2-000004"]
@@ -224,22 +250,22 @@ for id in FLINK-P2-000007 FLINK-P2-000008 FLINK-P2-000009 FART-P2-000007 FART-P2
 done
 
 lake exe traceability query curriculum CAND-P1-000018 | tee "$WORK/cand18.jsonl"
-for id in FLINK-P2-000017 FART-P2-000017 FLOC-P2-000018; do
+for id in FLINK-P2-000017 FLINK-P2-000018 FART-P2-000017 FART-P2-000018 FLOC-P2-000018 FLOC-P2-000019; do
   grep -Fq "$id" "$WORK/cand18.jsonl"
 done
 
 lake exe traceability query curriculum CAND-P1-000019 | tee "$WORK/cand19.jsonl"
-for id in FLINK-P2-000011 FLINK-P2-000014 FART-P2-000011 FART-P2-000014 FLOC-P2-000012 FLOC-P2-000015; do
+for id in FLINK-P2-000011 FLINK-P2-000014 FLINK-P2-000019 FART-P2-000011 FART-P2-000014 FART-P2-000018 FLOC-P2-000012 FLOC-P2-000015 FLOC-P2-000019; do
   grep -Fq "$id" "$WORK/cand19.jsonl"
 done
 
 lake exe traceability query curriculum CAND-P1-000024 | tee "$WORK/cand24.jsonl"
-for id in FLINK-P2-000012 FLINK-P2-000015 FART-P2-000012 FART-P2-000015 FLOC-P2-000013 FLOC-P2-000016; do
+for id in FLINK-P2-000012 FLINK-P2-000015 FLINK-P2-000020 FART-P2-000012 FART-P2-000015 FART-P2-000019 FLOC-P2-000013 FLOC-P2-000016 FLOC-P2-000020; do
   grep -Fq "$id" "$WORK/cand24.jsonl"
 done
 
 lake exe traceability query curriculum CAND-P1-000027 | tee "$WORK/cand27.jsonl"
-for id in FLINK-P2-000013 FLINK-P2-000016 FART-P2-000013 FART-P2-000016 FLOC-P2-000014 FLOC-P2-000017; do
+for id in FLINK-P2-000013 FLINK-P2-000016 FLINK-P2-000021 FLINK-P2-000022 FART-P2-000013 FART-P2-000016 FART-P2-000020 FART-P2-000021 FLOC-P2-000014 FLOC-P2-000017 FLOC-P2-000021 FLOC-P2-000022; do
   grep -Fq "$id" "$WORK/cand27.jsonl"
 done
 
@@ -285,6 +311,11 @@ FormalMath.Measurement.rectanglePerimeter|FART-P2-000013|FLOC-P2-000014
 FormalMath.Measurement.rectangularPrismVolume|FART-P2-000013|FLOC-P2-000014
 FormalMath.Relations.mem_graphOf_iff|FART-P2-000014|FLOC-P2-000015
 FormalMath.Relations.mem_graphOf_comp_iff|FART-P2-000017|FLOC-P2-000018
+FormalMath.Relations.Examples.successor_then_double_graph_contains_three_eight|FART-P2-000018|FLOC-P2-000019
+FormalMath.Geometry.Examples.bool_univ_invariant_under_id|FART-P2-000019|FLOC-P2-000020
+FormalMath.Measurement.Examples.rectangle_three_four_perimeter_ne_area|FART-P2-000020|FLOC-P2-000021
+FormalMath.Measurement.Examples.rectangle_three_four_values|FART-P2-000020|FLOC-P2-000021
+FormalMath.Measurement.Exercises.rectangularPrism_two_three_four_solution|FART-P2-000021|FLOC-P2-000022
 FormalMath.Geometry.isInvariantUnder_id|FART-P2-000015|FLOC-P2-000016
 FormalMath.Measurement.rectangleArea_comm|FART-P2-000016|FLOC-P2-000017
 FormalMath.Measurement.rectanglePerimeter_comm|FART-P2-000016|FLOC-P2-000017

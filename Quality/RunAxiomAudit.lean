@@ -21,13 +21,18 @@ run_cmd
       `FormalMath.Arithmetic.Exercises.distribute_then_cancel_solution,
       `FormalMath.Geometry.IsInvariantUnder,
       `FormalMath.Geometry.isInvariantUnder_id,
+      `FormalMath.Geometry.Examples.bool_univ_invariant_under_id,
       `FormalMath.Measurement.rectangleArea,
       `FormalMath.Measurement.rectangleArea_comm,
       `FormalMath.Measurement.rectanglePerimeter,
       `FormalMath.Measurement.rectanglePerimeter_comm,
       `FormalMath.Measurement.rectangularPrismVolume,
       `FormalMath.Measurement.rectangularPrismVolume_swap_length_width,
+      `FormalMath.Measurement.Examples.rectangle_three_four_perimeter_ne_area,
+      `FormalMath.Measurement.Examples.rectangle_three_four_values,
+      `FormalMath.Measurement.Exercises.rectangularPrism_two_three_four_solution,
       `FormalMath.Relations.graphOf,
       `FormalMath.Relations.mem_graphOf_comp_iff,
-      `FormalMath.Relations.mem_graphOf_iff
+      `FormalMath.Relations.mem_graphOf_iff,
+      `FormalMath.Relations.Examples.successor_then_double_graph_contains_three_eight
     ])
