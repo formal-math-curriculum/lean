@@ -106,6 +106,7 @@ run_pass traceability-validator-build lake build --wfail traceability
 run_pass production-source-quality bash Quality/check-source-quality.sh production
 run_pass p6-core-api-policy bash Quality/check-p6-core-api.sh
 run_pass p7-core-api-policy bash Quality/check-p7-core-api.sh
+run_pass p7-fundamental-results-policy python3 Quality/check-p7-fundamental-results.py
 run_pass p6-fundamental-results-policy bash Quality/check-p6-fundamental-results.sh
 run_pass p6-adjacent-functions-policy bash Quality/check-p6-adjacent-functions.sh
 run_pass p6-pedagogy-policy bash Quality/check-p6-pedagogy.sh
@@ -319,6 +320,25 @@ expect_fail_contains p7-core-api-missing-root-export \
 expect_fail_contains p7-algorithm-correctness-negative \
   "is not definitionally equal to the right-hand side" \
   lake env lean -DwarningAsError=true Quality/Fixtures/P7IncorrectAlgorithm.lean
+
+run_pass p7-m74-extra-public-theorem-fixture-compiles \
+  lake env lean -DwarningAsError=true Quality/Fixtures/P7M74ExtraPublicTheorem.lean
+expect_fail_contains p7-m74-extra-public-theorem \
+  "p7-m74:error:unplanned-public-surface:exact-results" \
+  env P7_M74_EXACT_FILE=Quality/Fixtures/P7M74ExtraPublicTheorem.lean \
+  python3 Quality/check-p7-fundamental-results.py
+run_pass p7-m74-wrong-choose-specification-fixture-compiles \
+  lake env lean -DwarningAsError=true Quality/Fixtures/P7M74WrongChooseSpecification.lean
+expect_fail_contains p7-m74-wrong-choose-specification \
+  "p7-m74:error:signature-drift:nat-choose" \
+  env P7_M74_CHOOSE_FILE=Quality/Fixtures/P7M74WrongChooseSpecification.lean \
+  python3 Quality/check-p7-fundamental-results.py
+expect_fail_contains p7-m74-missing-root-export \
+  "p7-m74:error:missing-root-export:fixture" \
+  env P7_M74_MISSING_EXPORT_FIXTURE=1 python3 Quality/check-p7-fundamental-results.py
+expect_fail_contains p7-m74-stale-mathlib-revision \
+  "p7-m74:error:mathlib-revision-mismatch" \
+  env P7_M74_EXPECTED_MATHLIB_REV=deadbeef python3 Quality/check-p7-fundamental-results.py
 
 run_pass p6-integration-controls bash Quality/check-p6-integration-controls.sh
 printf 'quality-regression:summary:pass\n'
