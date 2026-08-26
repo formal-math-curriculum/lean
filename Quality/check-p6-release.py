@@ -8,6 +8,8 @@ import hashlib
 import re
 from pathlib import Path
 
+from p6_frozen_authority import build_frozen_overlay
+
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "RELEASES/P6-FORMALIZATION-RELEASE-v1.md"
 
@@ -176,7 +178,15 @@ def validate_repository() -> None:
     bindings = load_json("publication/p6-v1/generated/representation-bindings.json")
     external = load_json("publication/p6-v1/generated/external-alignment-coverage.json")
     publication = load_json("publication/p6-v1/generated/publication-manifest.json")
-    floc = load_jsonl("metadata/formal-artifacts/floc/000001-001000.jsonl")
+    scope = load_json("publication/p6-v1/source/scope.json")
+    frozen_overlay = build_frozen_overlay(ROOT, scope)
+    floc = [
+        json.loads(line)
+        for line in frozen_overlay[
+            "metadata/formal-artifacts/floc/000001-001000.jsonl"
+        ].decode("utf-8").splitlines()
+        if line
+    ]
 
     validate_scope_partition(release_scope)
 
