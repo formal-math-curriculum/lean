@@ -295,9 +295,24 @@ run_pass_contains optional-cache-timeout-unavailable-nonblocking \
   env QUALITY_REPORT_DIR="$CONTROL_REPORT_DIR" QUALITY_CACHE_TIMEOUT_UNAVAILABLE_FIXTURE=1 \
   bash Quality/quality.sh env
 
-expect_fail_contains p7-core-api-extra-public-declaration \
+run_pass p7-core-api-attribute-prefixed-fixture-compiles \
+  lake env lean -DwarningAsError=true Quality/Fixtures/P7AttributePrefixedPublicTheorem.lean
+expect_fail_contains p7-core-api-attribute-prefixed-public-theorem \
   "p7-core-api:error:unplanned-public-surface" \
-  env P7_CORE_API_EXTRA_DECLARATION_FIXTURE=1 bash Quality/check-p7-core-api.sh
+  env P7_CORE_API_FILE=Quality/Fixtures/P7AttributePrefixedPublicTheorem.lean \
+  bash Quality/check-p7-core-api.sh
+run_pass p7-core-api-indented-fixture-compiles \
+  lake env lean -DwarningAsError=true Quality/Fixtures/P7IndentedPublicDeclaration.lean
+expect_fail_contains p7-core-api-indented-public-declaration \
+  "p7-core-api:error:unplanned-public-surface" \
+  env P7_CORE_API_FILE=Quality/Fixtures/P7IndentedPublicDeclaration.lean \
+  bash Quality/check-p7-core-api.sh
+run_pass p7-core-api-unsupported-kind-fixture-compiles \
+  lake env lean -DwarningAsError=true Quality/Fixtures/P7UnsupportedPublicOpaque.lean
+expect_fail_contains p7-core-api-unsupported-public-opaque \
+  "p7-core-api:error:unplanned-public-surface" \
+  env P7_CORE_API_FILE=Quality/Fixtures/P7UnsupportedPublicOpaque.lean \
+  bash Quality/check-p7-core-api.sh
 expect_fail_contains p7-core-api-missing-root-export \
   "p7-core-api:error:missing-root-export" \
   env P7_CORE_API_MISSING_EXPORT_FIXTURE=1 bash Quality/check-p7-core-api.sh
