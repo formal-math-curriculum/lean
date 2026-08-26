@@ -15,6 +15,8 @@ import Mathlib.FieldTheory.Finite.Basic
 Exact consumers for the two local M7.4 theorems and four pinned direct-dependency results.
 -/
 
+open Filter Asymptotics
+
 namespace QualityTests.P7FundamentalResults
 
 example {M P : Type*} [Zero P] :
@@ -41,6 +43,10 @@ example (K : Type*) [Field K] [Fintype K] (p : Nat) [CharP K p] :
 example {V : Type*} {G : SimpleGraph V} (h : G.IsTree) : G.Connected :=
   h.connected
 
-#check AkraBazziRecurrence.isTheta_asympBound
+example {α : Type*} [Fintype α] [Nonempty α]
+    {T : ℕ → ℝ} {g : ℝ → ℝ} {a b : α → ℝ} {r : α → ℕ → ℕ}
+    (R : AkraBazziRecurrence T g a b r) :
+    T =Θ[atTop] AkraBazziRecurrence.asympBound g a b :=
+  R.isTheta_asympBound
 
 end QualityTests.P7FundamentalResults
