@@ -302,7 +302,7 @@ expect_fail_contains p7-core-api-missing-root-export \
   "p7-core-api:error:missing-root-export" \
   env P7_CORE_API_MISSING_EXPORT_FIXTURE=1 bash Quality/check-p7-core-api.sh
 expect_fail_contains p7-algorithm-correctness-negative \
-  "tactic 'rfl' failed" \
+  "is not definitionally equal to the right-hand side" \
   lake env lean -DwarningAsError=true Quality/Fixtures/P7IncorrectAlgorithm.lean
 
 run_pass p6-integration-controls bash Quality/check-p6-integration-controls.sh
