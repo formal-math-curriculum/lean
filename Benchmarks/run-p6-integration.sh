@@ -148,7 +148,11 @@ run_series clean-formal-math-build root_clean \
 run_series warm-noop-formal-math-build root_warm \
   lake build --wfail FormalMath
 run_series traceability-validate root_warm \
-  lake exe traceability validate
+  bash -c 'lake build --wfail \
+    Mathlib.FieldTheory.Finite.Basic \
+    Mathlib.Combinatorics.SimpleGraph.Acyclic \
+    Mathlib.Computability.AkraBazzi.AkraBazzi && \
+    lake exe traceability validate'
 run_series p6-publication-check root_warm \
   python3 Quality/check-p6-publication.py
 

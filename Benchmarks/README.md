@@ -53,6 +53,10 @@ baseline; it adopts no numeric runtime threshold and makes no claim about proof
 difficulty, curriculum importance, future repository size or whole-domain
 coverage.
 
+The traceability workload prepares the exact pinned mathlib modules referenced by
+dependency-backed current locators before validation. They intentionally remain outside the
+project umbrella and are consumed without project wrappers.
+
 Environment controls:
 
 - `P6_INTEGRATION_REPETITIONS` — measured repetitions per workload (default 3);
