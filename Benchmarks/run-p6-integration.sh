@@ -9,7 +9,7 @@ cd "$ROOT"
 PROTOCOL="P6-M6.8-INTEGRATION-PERF-v1"
 SCHEMA="P6-M6.8-INTEGRATION-EVIDENCE-v1"
 REPETITIONS="${P6_INTEGRATION_REPETITIONS:-3}"
-TIMEOUT_SECONDS="${P6_INTEGRATION_TIMEOUT_SECONDS:-1800}"
+TIMEOUT_SECONDS="${P6_INTEGRATION_TIMEOUT_SECONDS:-1080}"
 ACTUAL_SHA="$(git rev-parse HEAD)"
 SUBJECT_HEAD_SHA="${P6_INTEGRATION_HEAD_SHA:-$ACTUAL_SHA}"
 SUBJECT_INTEGRATION_SHA="${P6_INTEGRATION_INTEGRATION_SHA:-$ACTUAL_SHA}"
@@ -148,10 +148,11 @@ run_series clean-formal-math-build root_clean \
 run_series warm-noop-formal-math-build root_warm \
   lake build --wfail FormalMath
 run_series traceability-validate root_warm \
-  bash -c 'lake build --wfail \
-    Mathlib.FieldTheory.Finite.Basic \
-    Mathlib.Combinatorics.SimpleGraph.Acyclic \
-    Mathlib.Computability.AkraBazzi.AkraBazzi && \
+  bash -c 'lake exe cache get && \
+    lake build --wfail \
+      Mathlib.FieldTheory.Finite.Basic \
+      Mathlib.Combinatorics.SimpleGraph.Acyclic \
+      Mathlib.Computability.AkraBazzi.AkraBazzi && \
     lake exe traceability validate'
 run_series p6-publication-check root_warm \
   python3 Quality/check-p6-publication.py
