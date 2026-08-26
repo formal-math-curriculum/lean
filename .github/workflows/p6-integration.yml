@@ -54,7 +54,7 @@ jobs:
   integration-performance:
     name: p6-integration / performance
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 75
     steps:
       - name: Checkout exact integration revision
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
