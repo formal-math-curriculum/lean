@@ -11,7 +11,7 @@ if [[ ! -f "$file" ]]; then
   exit 1
 fi
 
-surface_pattern='^[[:space:]]*(@\[[^]]*\][[:space:]]*)*public[[:space:]]+'
+surface_pattern='^[[:space:]]*(@\[[^]]*\][[:space:]]*)*public([^A-Za-z0-9_]|$)'
 authorized_pattern='^[[:space:]]*(@\[[^]]*\][[:space:]]*)*public[[:space:]]+def[[:space:]]+IsCorrectFor([^A-Za-z0-9_]|$)'
 instance_pattern='^[[:space:]]*(@\[[^]]*\][[:space:]]*)*((public|private|protected|local)[[:space:]]+)*instance[[:space:]]'
 notation_pattern='(^|[[:space:]])notation[0-9]*[[:space:]]'
