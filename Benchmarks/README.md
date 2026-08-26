@@ -47,7 +47,7 @@ excluded warmup and three measured repetitions for:
 
 The harness writes revision-, toolchain-, dependency- and runner-bound CSV,
 metadata and JSON summary evidence below `.lake/build/p6-integration/`. The
-default 600-second command timeout and 45-minute workflow timeout are anti-hang
+default 720-second command timeout and 45-minute workflow timeout are anti-hang
 budgets, not SLAs. This first production series establishes a comparison
 baseline; it adopts no numeric runtime threshold and makes no claim about proof
 difficulty, curriculum importance, future repository size or whole-domain
@@ -56,7 +56,7 @@ coverage.
 Environment controls:
 
 - `P6_INTEGRATION_REPETITIONS` — measured repetitions per workload (default 3);
-- `P6_INTEGRATION_TIMEOUT_SECONDS` — fail-closed command timeout (default 600);
+- `P6_INTEGRATION_TIMEOUT_SECONDS` — fail-closed command timeout (default 720);
 - `P6_INTEGRATION_HEAD_SHA` — exact PR head or main subject to record;
 - `P6_INTEGRATION_INTEGRATION_SHA` — required checked-out Git subject;
 - `P6_INTEGRATION_OUT_ROOT` — final evidence directory.
