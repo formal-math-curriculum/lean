@@ -5,6 +5,9 @@ Authors: Formal Mathematics Curriculum contributors
 module
 
 import FormalMath
+import Mathlib.Combinatorics.SimpleGraph.Acyclic
+import Mathlib.Computability.AkraBazzi.AkraBazzi
+import Mathlib.FieldTheory.Finite.Basic
 
 /-!
 # Project-7 fundamental-results contracts
