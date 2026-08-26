@@ -105,6 +105,7 @@ run_pass positive-regression-and-contract-build lake build --wfail QualityTests
 run_pass traceability-validator-build lake build --wfail traceability
 run_pass production-source-quality bash Quality/check-source-quality.sh production
 run_pass p6-core-api-policy bash Quality/check-p6-core-api.sh
+run_pass p7-core-api-policy bash Quality/check-p7-core-api.sh
 run_pass p6-fundamental-results-policy bash Quality/check-p6-fundamental-results.sh
 run_pass p6-adjacent-functions-policy bash Quality/check-p6-adjacent-functions.sh
 run_pass p6-pedagogy-policy bash Quality/check-p6-pedagogy.sh
@@ -293,6 +294,16 @@ run_pass_contains optional-cache-timeout-unavailable-nonblocking \
   "quality-env:cache:nonblocking-timeout-unavailable:exit=69" \
   env QUALITY_REPORT_DIR="$CONTROL_REPORT_DIR" QUALITY_CACHE_TIMEOUT_UNAVAILABLE_FIXTURE=1 \
   bash Quality/quality.sh env
+
+expect_fail_contains p7-core-api-extra-public-declaration \
+  "p7-core-api:error:unplanned-public-surface" \
+  env P7_CORE_API_EXTRA_DECLARATION_FIXTURE=1 bash Quality/check-p7-core-api.sh
+expect_fail_contains p7-core-api-missing-root-export \
+  "p7-core-api:error:missing-root-export" \
+  env P7_CORE_API_MISSING_EXPORT_FIXTURE=1 bash Quality/check-p7-core-api.sh
+expect_fail_contains p7-algorithm-correctness-negative \
+  "is not definitionally equal to the right-hand side" \
+  lake env lean -DwarningAsError=true Quality/Fixtures/P7IncorrectAlgorithm.lean
 
 run_pass p6-integration-controls bash Quality/check-p6-integration-controls.sh
 printf 'quality-regression:summary:pass\n'

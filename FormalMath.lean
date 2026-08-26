@@ -5,6 +5,7 @@ Authors: Formal Mathematics Curriculum contributors
 module
 
 public import FormalMath.Algebra.Examples.FactoredIntegerEquation
+public import FormalMath.Algorithms.Correctness
 public import FormalMath.Arithmetic.Examples.IntegerSignLaws
 public import FormalMath.Arithmetic.Examples.NaturalNumberLaws
 public import FormalMath.Arithmetic.Exercises.NaturalNumberLaws
@@ -32,6 +33,6 @@ surface includes the bounded M2.10 factored-integer-equation slice, bounded Proj
 operation-law and integer sign-law examples, one bounded natural-number exercise solution and
 diagnostic, three bounded Project-6 core-definition surfaces, their five bounded M6.4 interface
 results, one bounded M6.5 function-composition graph result, five bounded M6.6 pedagogical
-artifacts, and supporting infrastructure. It does not claim curriculum coverage or formalization
-completeness.
+artifacts, one bounded Project-7 algorithm-correctness contract, and supporting infrastructure. It
+does not claim curriculum coverage or formalization completeness.
 -/

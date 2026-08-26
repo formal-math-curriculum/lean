@@ -38,12 +38,12 @@ copy_production_root() {
 
 printf 'm210-roundtrip:start:production-validation\n'
 lake exe traceability validate | tee "$WORK/validate.log"
-grep -Fq 'traceability:validate:pass:fart=21;floc=22;flink=22;curriculum-identities=8' "$WORK/validate.log"
-grep -Fq 'traceability:resolve:pass:current-modules=21;declarations=30' "$WORK/validate.log"
+grep -Fq 'traceability:validate:pass:fart=22;floc=23;flink=23;curriculum-identities=9' "$WORK/validate.log"
+grep -Fq 'traceability:resolve:pass:current-modules=22;declarations=31' "$WORK/validate.log"
 
 printf 'm210-roundtrip:start:production-roundtrip\n'
 lake exe traceability roundtrip | tee "$WORK/roundtrip.log"
-grep -Fq 'traceability:roundtrip:pass:links=22;locator-link-checks=23' "$WORK/roundtrip.log"
+grep -Fq 'traceability:roundtrip:pass:links=23;locator-link-checks=24' "$WORK/roundtrip.log"
 
 printf 'm210-roundtrip:start:production-generated-views\n'
 first_output="$(lake exe traceability generate)"
@@ -83,6 +83,7 @@ required = {
     "CAND-P1-000019",
     "CAND-P1-000024",
     "CAND-P1-000027",
+    "CAND-P1-000090",
     "FART-P2-000001",
     "FART-P2-000002",
     "FART-P2-000003",
@@ -104,6 +105,7 @@ required = {
     "FART-P2-000019",
     "FART-P2-000020",
     "FART-P2-000021",
+    "FART-P2-000022",
     "FLOC-P2-000001",
     "FLOC-P2-000002",
     "FLOC-P2-000003",
@@ -126,6 +128,7 @@ required = {
     "FLOC-P2-000020",
     "FLOC-P2-000021",
     "FLOC-P2-000022",
+    "FLOC-P2-000023",
     "FLINK-P2-000001",
     "FLINK-P2-000002",
     "FLINK-P2-000003",
@@ -148,6 +151,7 @@ required = {
     "FLINK-P2-000020",
     "FLINK-P2-000021",
     "FLINK-P2-000022",
+    "FLINK-P2-000023",
     "FormalMath/Algebra/FactoredEquation.lean",
     "FormalMath/Algebra/ZeroProduct.lean",
     "FormalMath/Algebra/Examples/FactoredEquation.lean",
@@ -168,6 +172,7 @@ required = {
     "FormalMath/Geometry/Examples/Symmetry.lean",
     "FormalMath/Measurement/Examples/Mensuration.lean",
     "FormalMath/Measurement/Exercises/Mensuration.lean",
+    "FormalMath/Algorithms/Correctness.lean",
     "FormalMath/Geometry/SymmetryResults.lean",
     "FormalMath/Measurement/MensurationResults.lean",
     "FormalMath.Arithmetic.Exercises.NaturalNumberLaws",
@@ -182,6 +187,7 @@ required = {
     "FormalMath.Measurement.Exercises.Mensuration",
     "FormalMath.Geometry.SymmetryResults",
     "FormalMath.Measurement.MensurationResults",
+    "FormalMath.Algorithms.Correctness",
     "FormalMath.Algebra.factoredProduct",
     "FormalMath.Algebra.factoredProduct_eq_zero_iff",
     "FormalMath.Algebra.Examples.two_five_factored_equation",
@@ -212,11 +218,12 @@ required = {
     "FormalMath.Measurement.rectangleArea_comm",
     "FormalMath.Measurement.rectanglePerimeter_comm",
     "FormalMath.Measurement.rectangularPrismVolume_swap_length_width",
+    "FormalMath.Algorithms.IsCorrectFor",
 }
 missing = sorted(item for item in required if item not in payload)
 assert not missing, missing
-assert len(artifacts) == 21, len(artifacts)
-assert len(sources) == 22, len(sources)
+assert len(artifacts) == 22, len(artifacts)
+assert len(sources) == 23, len(sources)
 
 artifact3 = next(record for record in artifacts if record["artifact_id"] == "FART-P2-000003")
 assert artifact3["artifact"]["current_locator_refs"] == ["FLOC-P2-000004"]
@@ -321,6 +328,16 @@ FormalMath.Measurement.rectangleArea_comm|FART-P2-000016|FLOC-P2-000017
 FormalMath.Measurement.rectanglePerimeter_comm|FART-P2-000016|FLOC-P2-000017
 FormalMath.Measurement.rectangularPrismVolume_swap_length_width|FART-P2-000016|FLOC-P2-000017
 EOF
+
+
+lake exe traceability query curriculum CAND-P1-000090 | tee "$WORK/cand90.jsonl"
+for id in FLINK-P2-000023 FART-P2-000022 FLOC-P2-000023; do
+  grep -Fq "$id" "$WORK/cand90.jsonl"
+done
+
+lake exe traceability query declaration FormalMath.Algorithms.IsCorrectFor | tee "$WORK/p7-source-query.jsonl"
+grep -Fq 'FART-P2-000022' "$WORK/p7-source-query.jsonl"
+grep -Fq 'FLOC-P2-000023' "$WORK/p7-source-query.jsonl"
 
 printf 'm210-roundtrip:start:derived-rebuild\n'
 rm -rf "$generated"

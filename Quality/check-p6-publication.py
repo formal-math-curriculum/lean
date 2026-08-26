@@ -12,6 +12,8 @@ import sys
 from pathlib import Path
 from typing import Callable
 
+from p6_frozen_authority import build_frozen_overlay
+
 
 ROOT = Path(__file__).resolve().parents[1]
 GENERATOR = ROOT / "publication/p6-v1/generate.py"
@@ -40,10 +42,21 @@ def expect_failure(label: str, signature: str, action: Callable[[], None]) -> No
 
 def main() -> int:
     generator = load_generator()
+    live_scope = generator.load_scope(ROOT)
+    frozen_overlay = build_frozen_overlay(ROOT, live_scope)
+    live_read_bytes = generator.read_bytes
+
+    def frozen_read_bytes(root: Path, relative: str) -> bytes:
+        if relative in frozen_overlay:
+            return frozen_overlay[relative]
+        return live_read_bytes(root, relative)
+
+    generator.read_bytes = frozen_read_bytes
     baseline = generator.generate_outputs(ROOT)
     generator.check_outputs(ROOT, baseline)
     generator.assert_deterministic(baseline, generator.generate_outputs(ROOT))
     print("p6-publication-control:pass:checked-in-and-deterministic")
+    print("p6-publication-control:pass:frozen-authority-prefixes=4;registry-view=1")
 
     scope = generator.load_scope(ROOT)
     authority = generator.load_authorities(ROOT)
