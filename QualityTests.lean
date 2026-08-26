@@ -12,6 +12,7 @@ import QualityTests.P6FundamentalResults
 import QualityTests.P6AdjacentFunctions
 import QualityTests.P6Pedagogy
 import QualityTests.P7CoreApi
+import QualityTests.P7FundamentalResults
 
 /-!
 # QualityTests

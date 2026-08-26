@@ -5,7 +5,9 @@ Authors: Formal Mathematics Curriculum contributors
 module
 
 public import FormalMath.Algebra.Examples.FactoredIntegerEquation
+public import FormalMath.Algebra.ExactResults
 public import FormalMath.Algorithms.Correctness
+public import FormalMath.Algorithms.NatChoose
 public import FormalMath.Arithmetic.Examples.IntegerSignLaws
 public import FormalMath.Arithmetic.Examples.NaturalNumberLaws
 public import FormalMath.Arithmetic.Exercises.NaturalNumberLaws
@@ -34,5 +36,7 @@ operation-law and integer sign-law examples, one bounded natural-number exercise
 diagnostic, three bounded Project-6 core-definition surfaces, their five bounded M6.4 interface
 results, one bounded M6.5 function-composition graph result, five bounded M6.6 pedagogical
 artifacts, one bounded Project-7 algorithm-correctness contract, and supporting infrastructure. It
-does not claim curriculum coverage or formalization completeness.
+also exposes two bounded Project-7 M7.4 local results while four exact M7.4 result artifacts remain
+direct pinned mathlib representations. It does not claim curriculum coverage or formalization
+completeness.
 -/

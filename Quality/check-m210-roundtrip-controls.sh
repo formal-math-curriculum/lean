@@ -38,12 +38,12 @@ copy_production_root() {
 
 printf 'm210-roundtrip:start:production-validation\n'
 lake exe traceability validate | tee "$WORK/validate.log"
-grep -Fq 'traceability:validate:pass:fart=22;floc=23;flink=23;curriculum-identities=9' "$WORK/validate.log"
-grep -Fq 'traceability:resolve:pass:current-modules=22;declarations=31' "$WORK/validate.log"
+grep -Fq 'traceability:validate:pass:fart=28;floc=29;flink=36;curriculum-identities=21' "$WORK/validate.log"
+grep -Fq 'traceability:resolve:pass:current-modules=28;declarations=37' "$WORK/validate.log"
 
 printf 'm210-roundtrip:start:production-roundtrip\n'
 lake exe traceability roundtrip | tee "$WORK/roundtrip.log"
-grep -Fq 'traceability:roundtrip:pass:links=23;locator-link-checks=24' "$WORK/roundtrip.log"
+grep -Fq 'traceability:roundtrip:pass:links=36;locator-link-checks=37' "$WORK/roundtrip.log"
 
 printf 'm210-roundtrip:start:production-generated-views\n'
 first_output="$(lake exe traceability generate)"
@@ -222,8 +222,8 @@ required = {
 }
 missing = sorted(item for item in required if item not in payload)
 assert not missing, missing
-assert len(artifacts) == 22, len(artifacts)
-assert len(sources) == 23, len(sources)
+assert len(artifacts) == 28, len(artifacts)
+assert len(sources) == 29, len(sources)
 
 artifact3 = next(record for record in artifacts if record["artifact_id"] == "FART-P2-000003")
 assert artifact3["artifact"]["current_locator_refs"] == ["FLOC-P2-000004"]
