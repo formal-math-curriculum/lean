@@ -333,6 +333,12 @@ expect_fail_contains p7-m74-wrong-choose-specification \
   "p7-m74:error:signature-drift:nat-choose" \
   env P7_M74_CHOOSE_FILE=Quality/Fixtures/P7M74WrongChooseSpecification.lean \
   python3 Quality/check-p7-fundamental-results.py
+run_pass p7-m74-omitted-exactness-obligation-fixture-compiles \
+  lake env lean -DwarningAsError=true Quality/Fixtures/P7M74OmittedExactnessObligation.lean
+expect_fail_contains p7-m74-omitted-exactness-obligation \
+  "p7-m74:error:signature-drift:identity-exact-zero" \
+  env P7_M74_EXACT_FILE=Quality/Fixtures/P7M74OmittedExactnessObligation.lean \
+  python3 Quality/check-p7-fundamental-results.py
 expect_fail_contains p7-m74-missing-root-export \
   "p7-m74:error:missing-root-export:fixture" \
   env P7_M74_MISSING_EXPORT_FIXTURE=1 python3 Quality/check-p7-fundamental-results.py
