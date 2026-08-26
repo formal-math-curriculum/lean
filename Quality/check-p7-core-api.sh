@@ -4,35 +4,44 @@
 set -euo pipefail
 
 root="${P7_CORE_API_ROOT:-.}"
-file="$root/FormalMath/Algorithms/Correctness.lean"
+file="${P7_CORE_API_FILE:-$root/FormalMath/Algorithms/Correctness.lean}"
 
 if [[ ! -f "$file" ]]; then
   printf 'p7-core-api:error:missing-file:%s\n' "$file" >&2
   exit 1
 fi
 
+surface_pattern='^[[:space:]]*(@\[[^]]*\][[:space:]]*)*public[[:space:]]+'
+authorized_pattern='^[[:space:]]*(@\[[^]]*\][[:space:]]*)*public[[:space:]]+def[[:space:]]+IsCorrectFor([^A-Za-z0-9_]|$)'
+instance_pattern='^[[:space:]]*(@\[[^]]*\][[:space:]]*)*((public|private|protected|local)[[:space:]]+)*instance[[:space:]]'
+notation_pattern='(^|[[:space:]])notation[0-9]*[[:space:]]'
+import_pattern='^[[:space:]]*(public[[:space:]]+)?import([[:space:]]+all)?[[:space:]]+'
+
+surface_lines="$({ grep -hE "$surface_pattern" "$file" || true; })"
+surface_count="$(awk 'NF { count++ } END { print count + 0 }' <<<"$surface_lines")"
+authorized_count="$({ grep -hEc "$authorized_pattern" "$file" || true; })"
 actual="$(
-  grep -hE '^public (def|theorem|lemma|abbrev|structure|class|instance) [A-Za-z0-9_]+' "$file" |
-    sed -E 's/^public (def|theorem|lemma|abbrev|structure|class|instance) ([A-Za-z0-9_]+).*/\2/' |
+  sed -E 's/^[[:space:]]*(@\[[^]]*\][[:space:]]*)*public[[:space:]]+//' <<<"$surface_lines" |
     LC_ALL=C sort
 )"
-expected="IsCorrectFor"
+expected="def IsCorrectFor"
 
-if [[ "${P7_CORE_API_EXTRA_DECLARATION_FIXTURE:-0}" == "1" ]]; then
-  actual="$(printf '%s\nunplannedFixture\n' "$actual" | LC_ALL=C sort)"
-fi
-
-if [[ "$actual" != "$expected" ]]; then
+if (( surface_count != 1 || authorized_count != 1 )); then
   printf 'p7-core-api:error:unplanned-public-surface\nexpected:\n%s\nactual:\n%s\n' "$expected" "$actual" >&2
   exit 1
 fi
 
-if grep -nE '^public (theorem|lemma|abbrev|structure|class|instance) |(^|[[:space:]])notation[0-9]*|^instance ' "$file"; then
+instance_count="$(grep -cE "$instance_pattern" "$file" || true)"
+notation_count="$(grep -cE "$notation_pattern" "$file" || true)"
+if (( instance_count > 0 || notation_count > 0 )); then
+  grep -nE "$instance_pattern|$notation_pattern" "$file" || true
   printf 'p7-core-api:error:forbidden-surface-kind\n' >&2
   exit 1
 fi
 
-if grep -nE '^(public[[:space:]]+)?import([[:space:]]+all)?[[:space:]]+' "$file"; then
+import_count="$(grep -cE "$import_pattern" "$file" || true)"
+if (( import_count > 0 )); then
+  grep -nE "$import_pattern" "$file" || true
   printf 'p7-core-api:error:unplanned-import\n' >&2
   exit 1
 fi
@@ -49,4 +58,6 @@ if ! grep -Fq 'import QualityTests.P7CoreApi' "$root/QualityTests.lean"; then
   exit 1
 fi
 
-printf 'p7-core-api:pass:definitions=1;modules=1;root-exports=1;imports=0;instances=0;notations=0;compatibility-contract=present\n'
+definition_count="$authorized_count"
+printf 'p7-core-api:pass:definitions=%d;modules=1;root-exports=1;imports=%d;instances=%d;notations=%d;compatibility-contract=present\n' \
+  "$definition_count" "$import_count" "$instance_count" "$notation_count"
