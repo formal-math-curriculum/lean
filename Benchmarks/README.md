@@ -47,7 +47,7 @@ excluded warmup and three measured repetitions for:
 
 The harness writes revision-, toolchain-, dependency- and runner-bound CSV,
 metadata and JSON summary evidence below `.lake/build/p6-integration/`. The
-default 1080-second command timeout and 75-minute workflow timeout are anti-hang
+default 1080-second command timeout and 90-minute workflow timeout are anti-hang
 budgets, not SLAs. This first production series establishes a comparison
 baseline; it adopts no numeric runtime threshold and makes no claim about proof
 difficulty, curriculum importance, future repository size or whole-domain
