@@ -23,8 +23,8 @@ public theorem natChoose_isCorrectFor :
       (fun input : Nat × Nat => Nat.choose input.1 input.2)
       (fun input output =>
         match input with
-        | (n, 0) => output = 1
-        | (0, k + 1) => output = 0
+        | (_n, 0) => output = 1
+        | (0, _k + 1) => output = 0
         | (n + 1, k + 1) => output = Nat.choose n k + Nat.choose n (k + 1)) := by
   rintro ⟨n, k⟩
   cases n <;> cases k <;> rfl
