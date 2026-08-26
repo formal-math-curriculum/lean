@@ -14,9 +14,11 @@ complexity, partiality, randomness, state, termination, or whole-topic coverage.
 
 namespace FormalMath.Algorithms
 
+universe u v
+
 /-- A total algorithm is correct when its output satisfies the specification for every input. -/
 @[expose]
-public def IsCorrectFor {Input Output : Type*}
+public def IsCorrectFor {Input : Type u} {Output : Type v}
     (algorithm : Input → Output) (specification : Input → Output → Prop) : Prop :=
   ∀ input, specification input (algorithm input)
 
